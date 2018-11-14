@@ -15,6 +15,11 @@
 				{{ session('success') }}
 			</div>
 		@endif
+		<form  action="{{route('item_archive',['id'=>Request::segment(4)])}}" method="get">
+			<div class="form-group">
+				<input type="type" class="form-control input-lg" name="key" placeholder="Pencarian">
+			</div>
+		</form>
 		<div class="panel">
 			<div class="table-responsive">
 				<table class="table table-striped m-b-none">
@@ -41,7 +46,7 @@
 							</tr>
 						@empty
 							<tr>
-								<td colspan="6" align="center">No Directory</td>
+								<td colspan="6" align="center">No Directory <a href='{{route('item_archive',['id'=>Request::segment(4)])}}'>Back</a> </td>
 							</tr>
 						@endforelse
 					</tbody>
@@ -50,7 +55,7 @@
 		</div>
 		<div class="text-center m-t-lg m-b-lg">
 			<ul class="pagination pagination-md">
-				{{ $archive->render() }}
+				{{ $archive->appends(request()->except('page'))->links() }}
 			</ul>
 		</div>
 	</div>

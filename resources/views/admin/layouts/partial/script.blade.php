@@ -71,6 +71,11 @@
            imageManagerLoadMethod: "GET",
            imageManagerPageSize: 20,
            imageManagerScrollOffset: 10
+         }).on('froalaEditor.image.inserted', function (e, editor, $img) {
+           var content = $(".fr-element.fr-view").html();
+           for (var i = 0; i < $img.length; i++) {
+             $(".fr-element.fr-view").html(content.replace($img[i].outerHTML,'<a href='+$($img[i]).attr('src')+'>'+$img[i].outerHTML+'</a>'));
+           }
          });
        }
     });

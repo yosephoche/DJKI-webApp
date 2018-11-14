@@ -19,14 +19,17 @@
 				{{ session('success') }}
 			</div>
 		@endif
-
+		<form  action="{{route('pages')}}" method="get">
+			<div class="form-group">
+				<input type="type" class="form-control input-lg" name="key" placeholder="Pencarian">
+			</div>
+		</form>
 		<div class="panel">
 			<div class="table-responsive">
 				<table class="table table-striped m-b-none">
 					<thead>
 						<tr>
 							<th style="width: 40%">Page Title</th>
-							<th colspan="2">View</th>
 							<th>URL</th>
 							<th style="width:120px;"></th>
 						</tr>
@@ -38,12 +41,6 @@
 								<td>
 									<a href="{{ route('pages_detail', [ 'slug' => $p->slug ]) }}">{{ $p->title }}</a>
 								</td>
-								<td style="width: 100px">
-									<div class="progress progress-xs m-t-xs m-b-none">
-										<div class="progress-bar bg-info" data-toggle="tooltip" style="width: {{ $views }}%"></div>
-									</div>
-								</td>
-								<td>{{ $views }} Views</td>
 								<td>/page/{{ $p->slug }}</td>
 								<td>
 									<a href="{{ route('pages_edit', [ 'id' => $p->id ]) }}" class="btn btn-default btn-xs">Edit</a>
@@ -52,7 +49,7 @@
 							</tr>
 						@empty
 							<tr>
-								<td colspan="6" align="center">No pages, please create a new pages</td>
+								<td colspan="6" align="center">No pages, please create a new pages or <a href='{{route('pages')}}'>Back</a></td>
 							</tr>
 						@endforelse
 					</tbody>
@@ -61,7 +58,7 @@
 		</div>
 		<div class="text-center m-t-lg m-b-lg">
 			<ul class="pagination pagination-md">
-				{{ $pages->render() }}
+				{{ $pages->appends(request()->except('page'))->links() }}
 			</ul>
 		</div>
 	</div>
