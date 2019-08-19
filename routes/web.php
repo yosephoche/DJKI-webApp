@@ -222,7 +222,8 @@ Route::group(['namespace' => 'Admin'], function () {
         /* Posts */
         Route::group(['prefix' => '/posts'], function () {
             Route::get('/', 'PostsController@index')->name('posts');
-            Route::get('/create', 'PostsController@create')->name('posts_create');
+            Route::get('/createID', 'PostsController@createID')->name('posts_createID');
+            Route::get('/createEN', 'PostsController@createEN')->name('posts_createEN');
             Route::get('/preview', 'PostsController@preview')->name('posts_preview');
             Route::post('/store', 'PostsController@store')->name('posts_store');
             Route::get('/{slug?}', 'PostsController@detail')->name('posts_detail');

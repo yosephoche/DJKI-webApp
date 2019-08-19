@@ -3,7 +3,7 @@
 @section('title', 'Posts')
 
 @section('contents')
-	<a href="{{ route('posts_create') }}" class="new-btn" title="New Posts"><i class="glyphicon glyphicon-pencil"></i></a>
+	<a href="{{ route('posts_createID') }}" class="new-btn" title="New Posts"><i class="glyphicon glyphicon-pencil"></i></a>
 
 	<div class="bg-light lter b-b wrapper-md">
 		<h1 class="m-n font-thin h3">Post</h1>

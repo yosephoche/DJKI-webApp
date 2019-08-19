@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Posts, App\User, App\Comments, App\Images, App\Category;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class PostsController extends Controller
 		}
 
 		/*Get Posts*/
-		$data['posts'] = GlobalClass::Posts()->where('title','like','%'.$key.'%')->paginate(10);
+		$data['posts'] = GlobalClass::Posts()->where('title', 'like', '%' . $key . '%')->paginate(10);
 
 		/*Get Recent Posts*/
 		$data['recent_posts'] = GlobalClass::Posts()->limit(5)->get();
@@ -39,26 +40,35 @@ class PostsController extends Controller
 		return view('admin.posts.index', $data);
 	}
 
-	public function create()
+	public function createID()
 	{
 		GlobalClass::Roleback(['Customer Service']);
 
 		/*Category*/
 		$data['categories'] = Category::get();
-		return view('admin.posts.create', $data);
+		return view('admin.posts.createID', $data);
+	}
+
+	public function createEN()
+	{
+		GlobalClass::Roleback(['Customer Service']);
+
+		/*Category*/
+		$data['categories'] = Category::get();
+		return view('admin.posts.createEN', $data);
 	}
 
 	public function store(Request $r)
 	{
 		GlobalClass::Roleback(['Customer Service']);
 
-		$r->session()->flash('listImages',$r->image);
+		$r->session()->flash('listImages', $r->image);
 
 		/*Validation Store*/
-		$this->validate($r,[
-			'title'=>'required',
-			'content'=>'required',
-			'category'=>'required|max:50'
+		$this->validate($r, [
+			'title' => 'required',
+			'content' => 'required',
+			'category' => 'required|max:50'
 		]);
 
 
@@ -70,8 +80,8 @@ class PostsController extends Controller
 
 		/*Date Time Published*/
 		$timePublish = $r->publish_time;
-		$datePublish = date_create($r->publish_date.$timePublish);
-		$publish = date_format($datePublish,"Y-m-d H:i");
+		$datePublish = date_create($r->publish_date . $timePublish);
+		$publish = date_format($datePublish, "Y-m-d H:i");
 
 		$posts = new Posts();
 
@@ -84,6 +94,7 @@ class PostsController extends Controller
 		$posts->id_user = $r->id_user;
 		$posts->slug = $count ? "{$slug}-{$count}" : $slug;
 		$posts->title = $r->title;
+		$posts->lang = $r->bahasa;
 		$posts->content = $r->content;
 		$posts->keyword = $r->keyword;
 		$posts->category = $r->category;
@@ -100,8 +111,7 @@ class PostsController extends Controller
 	public function detail($slug)
 	{
 		GlobalClass::Roleback(['Customer Service']);
-		try
-		{
+		try {
 			/*Get Posts*/
 			$data['post'] = GlobalClass::Posts()->where('slug', $slug)->firstOrFail();
 
@@ -130,9 +140,7 @@ class PostsController extends Controller
 				->get();
 			$data['parents'] = $parents;
 			return view('admin.posts.detail', $data);
-		}
-		catch(ModelNotFoundException $e)
-		{
+		} catch (ModelNotFoundException $e) {
 			return redirect()->route('posts');
 		}
 	}
@@ -172,12 +180,11 @@ class PostsController extends Controller
 	public function edit($id)
 	{
 		GlobalClass::Roleback(['Customer Service']);
-		try
-		{
+		try {
 			$posts = Posts::findOrFail($id);
-			$ext = explode('.',$posts->image);
+			$ext = explode('.', $posts->image);
 			if ($ext[1] == 'pdf') {
-				$data['size'] = GlobalClass::formatSizeUnits(filesize(public_path('uploaded/media/'.$posts->image)));
+				$data['size'] = GlobalClass::formatSizeUnits(filesize(public_path('uploaded/media/' . $posts->image)));
 			}
 			$data['posts'] = $posts;
 
@@ -185,22 +192,19 @@ class PostsController extends Controller
 			$data['categories'] = Category::get();
 
 			return view('admin.posts.edit', $data);
-		}
-		catch(ModelNotFoundException $e)
-		{
+		} catch (ModelNotFoundException $e) {
 			return redirect()->route('posts');
 		}
-
 	}
 
 	public function update($id, Request $r)
 	{
 		GlobalClass::Roleback(['Customer Service']);
 		/*Validation Update*/
-		$this->validate($r,[
-			'title'=>'required',
-			'content'=>'required',
-			'category'=>'required|max:50',
+		$this->validate($r, [
+			'title' => 'required',
+			'content' => 'required',
+			'category' => 'required|max:50',
 		]);
 
 		/*Make Slug*/
@@ -209,13 +213,13 @@ class PostsController extends Controller
 		/*check to see if any other slugs exist that are the same & count them*/
 		$count = DB::table('posts')->where('id', '!=', $id)->where('slug', $slug)->count();
 		if ($count > 0) {
-			$count = DB::table('posts')->where('id', '!=', $id)->where('slug', 'LIKE', $slug.'%')->count();
+			$count = DB::table('posts')->where('id', '!=', $id)->where('slug', 'LIKE', $slug . '%')->count();
 		}
 
 		/*Date Time Published*/
 		$timePublish = $r->publish_time;
-		$datePublish = date_create($r->publish_date.$timePublish);
-		$publish = date_format($datePublish,"Y-m-d H:i");
+		$datePublish = date_create($r->publish_date . $timePublish);
+		$publish = date_format($datePublish, "Y-m-d H:i");
 
 		$posts =  Posts::find($id);
 
@@ -226,7 +230,7 @@ class PostsController extends Controller
 		}
 
 		$posts->id_user = $r->id_user;
-		$posts->slug = $count > 0 ? $slug."-".$count : $slug;
+		$posts->slug = $count > 0 ? $slug . "-" . $count : $slug;
 		$posts->title = $r->title;
 		$posts->content = $r->content;
 		$posts->keyword = $r->keyword;
@@ -258,7 +262,6 @@ class PostsController extends Controller
 	public function preview(Request $r)
 	{
 		$theme = TemplateModule::activeTheme();
-		return view('front.'.$theme->path.'.blog.preview');
+		return view('front.' . $theme->path . '.blog.preview');
 	}
-
 }
