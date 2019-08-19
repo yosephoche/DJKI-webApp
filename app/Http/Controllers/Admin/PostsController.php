@@ -177,7 +177,7 @@ class PostsController extends Controller
 		return view('admin.posts.index', $data);
 	}
 
-	public function edit($id)
+	public function editID($id)
 	{
 		GlobalClass::Roleback(['Customer Service']);
 		try {
@@ -191,7 +191,27 @@ class PostsController extends Controller
 			/*Category*/
 			$data['categories'] = Category::get();
 
-			return view('admin.posts.edit', $data);
+			return view('admin.posts.editID', $data);
+		} catch (ModelNotFoundException $e) {
+			return redirect()->route('posts');
+		}
+	}
+
+	public function editEN($id)
+	{
+		GlobalClass::Roleback(['Customer Service']);
+		try {
+			$posts = Posts::findOrFail($id);
+			$ext = explode('.', $posts->image);
+			if ($ext[1] == 'pdf') {
+				$data['size'] = GlobalClass::formatSizeUnits(filesize(public_path('uploaded/media/' . $posts->image)));
+			}
+			$data['posts'] = $posts;
+
+			/*Category*/
+			$data['categories'] = Category::get();
+
+			return view('admin.posts.editEN', $data);
 		} catch (ModelNotFoundException $e) {
 			return redirect()->route('posts');
 		}
@@ -232,6 +252,7 @@ class PostsController extends Controller
 		$posts->id_user = $r->id_user;
 		$posts->slug = $count > 0 ? $slug . "-" . $count : $slug;
 		$posts->title = $r->title;
+		$posts->lang = $r->bahasa;
 		$posts->content = $r->content;
 		$posts->keyword = $r->keyword;
 		$posts->category = $r->category;
@@ -250,9 +271,9 @@ class PostsController extends Controller
 		GlobalClass::Roleback(['Customer Service']);
 
 		/*Delete Data*/
-		$old = Posts::where('id', $r->id)->first();
-
-		$old->delete();
+		// $old = Posts::where('id', $r->id)->first();
+		// $old->delete();
+		$old = Posts::destroy($r->id);
 
 		/*Success Message*/
 		$r->session()->flash('success', 'Posts Successfully Deleted');

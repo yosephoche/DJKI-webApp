@@ -36,7 +36,7 @@
 							{{ csrf_field() }}
 
                             <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
-							<input type="hidden" name="bahasa" value="ENG">
+							<input type="hidden" name="bahasa" value="EN">
 
 							<div class="row">
 								<div class="col-md-12">

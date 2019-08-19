@@ -214,9 +214,9 @@ Route::group(['namespace' => 'Admin'], function () {
 
         /* Froala */
         Route::group(['prefix' => 'froala'], function () {
-          Route::get('/','ImagesController@showImages')->name('list_image');
-          Route::post('/upload','ImagesController@uploadImages')->name('upload_image');
-          Route::get('/list-menus', 'MenusController@listMenu')->name('list_menu');
+            Route::get('/', 'ImagesController@showImages')->name('list_image');
+            Route::post('/upload', 'ImagesController@uploadImages')->name('upload_image');
+            Route::get('/list-menus', 'MenusController@listMenu')->name('list_menu');
         });
 
         /* Posts */
@@ -229,7 +229,8 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/{slug?}', 'PostsController@detail')->name('posts_detail');
             Route::post('/comment/store', 'PostsController@comment_store')->name('comment_store');
             Route::get('/category/{category?}', 'PostsController@view_category')->name('posts_view_category');
-            Route::get('/edit/{id?}', 'PostsController@edit')->name('posts_edit');
+            Route::get('/editID/{id?}', 'PostsController@editID')->name('posts_editID');
+            Route::get('/editEN/{id?}', 'PostsController@editEN')->name('posts_editEN');
             Route::put('/update/{id?}', 'PostsController@update')->name('posts_update');
             Route::post('/delete', 'PostsController@delete')->name('posts_delete');
         });
@@ -264,9 +265,9 @@ Route::group(['namespace' => 'Admin'], function () {
         });
 
         /* Screenshot */
-        Route::group(['prefix'=>''], function () {
+        Route::group(['prefix' => ''], function () {
             Route::get('/screenshot/templates/{path}/{img}', function ($path, $img) {
-                $path = resource_path('/views/front/'.$path.'/'.$img);
+                $path = resource_path('/views/front/' . $path . '/' . $img);
                 if (!File::exists($path)) {
                     return response()->json(['message' => 'Screenshot not found.'], 404);
                 }

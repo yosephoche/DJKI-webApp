@@ -30,7 +30,11 @@
 								<div class="panel panel-post">
 									<div class="action-post">
 										<div class="btn-group" role="group" aria-label="...">
-											<a href="{{ route('posts_edit', ['id' => $p->id]) }}" type="button" class="btn btn-default">Edit</a>
+											@if ($p->lang == "ID")
+												<a href="{{ route('posts_editID', ['id' => $p->id]) }}" type="button" class="btn btn-default">Edit</a>
+											@else
+												<a href="{{ route('posts_editEN', ['id' => $p->id]) }}" type="button" class="btn btn-default">Edit</a>
+											@endif
 											<a type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete" data-id="{{ $p->id }}">Delete</a>
 										</div>
 									</div>
@@ -131,7 +135,7 @@
 @endsection
 
 @section('modal')
-	<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	{{-- <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
 			<form action="{{ route('posts_delete') }}" method="post">
 
@@ -154,7 +158,7 @@
 				</div>
 			</form>
 		</div>
-	</div>
+	</div> --}}
 
 	<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
