@@ -34,10 +34,8 @@
 					<div class="panel-body">
 						<form id='formPost' action="{{ route('posts_store') }}" method="post" enctype="multipart/form-data">
 							{{ csrf_field() }}
-
 							<input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
 							<input type="hidden" name="bahasa" value="ID">
-
 							<div class="row">
 								<div class="col-md-12">
 									<div class="form-group">

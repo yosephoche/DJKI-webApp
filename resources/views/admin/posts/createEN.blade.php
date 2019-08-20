@@ -21,7 +21,6 @@
 				</ul>
 			</div>
 		@endif
-
 		<div class="row">
 			<div class="container">
 				<ul class="nav nav-tabs">
@@ -34,25 +33,20 @@
 					<div class="panel-body">
 						<form id='formPost' action="{{ route('posts_store') }}" method="post" enctype="multipart/form-data">
 							{{ csrf_field() }}
-
                             <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
 							<input type="hidden" name="bahasa" value="EN">
-
 							<div class="row">
 								<div class="col-md-12">
 									<div class="form-group">
 										<input type="text" name="title" class="form-control input-lg" placeholder="Post title" value="{!! old('title') !!}">
 									</div>
-
 									<div class="form-group">
 										<textarea name="content" class="editor">
 											{!! old('content') !!}
 										</textarea>
 									</div>
-
 								</div>
 							</div>
-
 							<div class="row">
 								<div class="col-md-4 col-sm-6">
 									<div class="form-group">

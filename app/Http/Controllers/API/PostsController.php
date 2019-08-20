@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Posts;
+use App\Comments;
 use App\Category;
 use DB;
 use Carbon;
@@ -51,6 +52,31 @@ class PostsController extends Controller
     ], 404);
   }
 
+  public function postComments(Request $r)
+  {
+    $postComment = Comments::create([
+      'id_user'   => $r->iduser,
+      'id_parent' => $r->idparent,
+      'id_posts'  => $r->idpost,
+      'comment'   => $r->comment,
+    ]);
+
+    if ($postComment == TRUE) {
+      return response([
+        'diagnostic' => [
+          'status' => 'OK',
+          'code' => 200
+        ]
+      ], 200);
+    } else {
+      return response([
+        'diagnostic' => [
+          'status' => 'NOT_FOUND',
+          'code' => 404
+        ]
+      ], 404);
+    }
+  }
   public function detailsPost($idPosts = null)
   {
     /* Data Master */
