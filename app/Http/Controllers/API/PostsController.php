@@ -59,6 +59,8 @@ class PostsController extends Controller
       'id_parent' => $r->idparent,
       'id_posts'  => $r->idpost,
       'comment'   => $r->comment,
+      'name'      => $r->name,
+      'email'     => $r->email,
     ]);
 
     if ($postComment == TRUE) {
@@ -77,6 +79,32 @@ class PostsController extends Controller
       ], 404);
     }
   }
+
+  public function getComments(Request $r)
+  {
+    $dataComments = Posts::find($r->id)->comments;
+    foreach ($dataComments as $key => $value) {
+      $posts['response'][] = [
+        'name' => $value->name,
+        'email' => $value->email,
+        'comment' => $value->comment,
+      ];
+    }
+    if (isset($posts['response'])) {
+      $posts['diagnostic'] = [
+        'code' => 200,
+        'status' => 'ok'
+      ];
+      return response($posts, 200);
+    }
+    return response([
+      'diagnostic' => [
+        'status' => 'NOT_FOUND',
+        'code' => 404
+      ]
+    ], 404);
+  }
+
   public function detailsPost($idPosts = null)
   {
     /* Data Master */
@@ -134,7 +162,7 @@ class PostsController extends Controller
     $object->per_page = $raw->perPage();
     $object->current_page = $raw->currentPage();
     $object->last_page = $raw->lastPage();
-    $object->from = $raw->firstItem();
+    $object->fromm = $raw->firstItem();
     $object->to = $raw->lastItem();
     return [
       'pagination' => $object

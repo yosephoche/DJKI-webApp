@@ -14,7 +14,7 @@ class AddRelasiToCommentsTable extends Migration
     public function up()
     {
         Schema::table('comments', function (Blueprint $table) {
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_posts')->references('id')->on('posts')->onDelete('cascade');
         });
     }

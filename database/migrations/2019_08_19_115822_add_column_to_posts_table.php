@@ -15,6 +15,7 @@ class AddColumnToPostsTable extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             $table->string('lang', 10);
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

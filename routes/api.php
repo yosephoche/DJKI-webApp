@@ -22,7 +22,8 @@ Route::group(['middleware' => ['apikey'], 'namespace' => 'API'], function () {
   Route::group(['prefix' => 'v2'], function () {
     Route::get('menus/{id?}', 'MenusController@getMenus');
     Route::get('posts', 'PostsController@getPosts');
-    Route::post('comments', 'PostsController@postComments');
+    Route::post('postcomments', 'PostsController@postComments');
+    Route::get('getcomments', 'PostsController@getComments');
     Route::get('directory/{id}/filter', 'ArchiveController@getArchive');
     Route::get('customizer', 'CustomizerController@get');
     Route::get('posts/detail/{id}', 'PostsController@detailsPost');
