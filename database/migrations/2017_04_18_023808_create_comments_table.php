@@ -16,7 +16,7 @@ class CreateCommentsTable extends Migration
 		Schema::create('comments', function (Blueprint $table) {
 			$table->increments('id');
 			$table->integer('id_user')->unsigned();
-			$table->integer('id_parent')->unsigned();
+			$table->integer('id_parent')->unsigned()->nullable();
 			$table->integer('id_posts')->unsigned();
 			$table->string('comment', 250);
 			$table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
