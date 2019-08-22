@@ -181,6 +181,8 @@ return [
          * Custom
          */
         App\Providers\GlobalClassServiceProvider::class,
+        App\Providers\ResponseServiceProvider::class,
+        App\Providers\GeneralServiceProvider::class,
         App\Providers\ImagesProvider::class,
         App\Providers\CustomizerProvider::class,
         App\Providers\TemplateProvider::class,
@@ -242,6 +244,8 @@ return [
         'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
         'TemplateModule' => App\Facades\TemplateModule::class,
         'Youtube' => Alaouy\Youtube\Facades\Youtube::class,
+        'Response' => App\Helpers\ResponseHelper::class,
+        'General' => App\Helpers\GeneralHelper::class,
         'Yaml' => 'Symfony\Component\Yaml\Yaml',
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade'
