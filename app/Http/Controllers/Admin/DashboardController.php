@@ -4,17 +4,25 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use \Statickidz\GoogleTranslate;
 use DB, GlobalClass;
+
 
 class DashboardController extends Controller
 {
-	public function __construct()
+  public function __construct()
   {
     $this->middleware('auth');
+    // $this->trans = new GoogleTranslate();
   }
 
   public function index(Request $r)
   {
+    /* translate */
+    // $source = 'id';
+    // $target = 'en';
+    // $text = $r->text;
+    // $data['result'] = $this->trans->translate($source, $target, $text);
     /* Visitor Graph */
     $data['visitors'] = DB::table('visitors')->select('date', DB::raw('count(*) as count'))->groupBy('date')->take(10)->orderBy('date', 'desc')->get();
 
@@ -28,21 +36,21 @@ class DashboardController extends Controller
     $data['users'] = DB::table('users')->where('deleted_at', null)->limit(5)->get();
 
     /* Get Data */
-		$params = $r->input();
-		if (isset($params['m']) == '' and isset($params['y']) == '') {
-			$data['visitor_filter'] = DB::table('visitors')->orderBy('date','DESC')->paginate(20);
-			$data['visitor_filter_total'] = DB::table('visitors')->orderBy('date','DESC')->count();
-		} else {
-			$data['visitor_filter'] = DB::table('visitors')->whereMonth('date', '=', $params['m'])
-			->whereYear('date', '=', $params['y'])
-			->orderBy('date','DESC')
-			->paginate(10);
-			$data['visitor_filter_total'] = DB::table('visitors')->whereMonth('date', '=', $params['m'])
-			->whereYear('date', '=', $params['y'])
-			->orderBy('date','DESC')
-			->count();
-		}
+    $params = $r->input();
+    if (isset($params['m']) == '' and isset($params['y']) == '') {
+      $data['visitor_filter'] = DB::table('visitors')->orderBy('date', 'DESC')->paginate(20);
+      $data['visitor_filter_total'] = DB::table('visitors')->orderBy('date', 'DESC')->count();
+    } else {
+      $data['visitor_filter'] = DB::table('visitors')->whereMonth('date', '=', $params['m'])
+        ->whereYear('date', '=', $params['y'])
+        ->orderBy('date', 'DESC')
+        ->paginate(10);
+      $data['visitor_filter_total'] = DB::table('visitors')->whereMonth('date', '=', $params['m'])
+        ->whereYear('date', '=', $params['y'])
+        ->orderBy('date', 'DESC')
+        ->count();
+    }
     $data['visitors_detail'] = DB::table('visitors')->select('ip_address', 'country', 'city', DB::raw('sum(hits) as sum'))->groupBy('ip_address', 'country', 'city')->where('date', date('Y-m-d'))->get();
-  	return view('admin.dashboard.index', $data);
+    return view('admin.dashboard.index', $data);
   }
 }

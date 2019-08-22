@@ -163,6 +163,21 @@
 						</div>
 					</div>
 				</div>
+				{{-- <div class="row">
+					<div class="col-md-6">
+						<form action="{{ route('dashboard') }}" method="get">
+							<div class="panel no-border">
+								<div class="panel-heading wrapper b-b b-light">
+									<h5 class="font-thin m-t-none m-b-none text-muted">Translate</h5>
+								</div>
+								<textarea class="form-control" rows="3" name="text">{{ $result }}</textarea>
+								<div class="panel-footer">
+									<button type="submit" class="btn btn-success">Translate</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div> --}}
 				<!-- / users -->
 			</div>
 		</div>

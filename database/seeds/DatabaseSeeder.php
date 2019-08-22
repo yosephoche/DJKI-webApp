@@ -4,20 +4,22 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        $this->call(UsersTableSeeder::class);
-        $this->call(AboutTableSeeder::class);
-        $this->call(SettingTableSeeder::class);
-    }
+	/**
+	 * Run the database seeds.
+	 *
+	 * @return void
+	 */
+	public function run()
+	{
+		DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+		$this->call(UsersTableSeeder::class);
+		$this->call(AboutTableSeeder::class);
+		$this->call(SettingTableSeeder::class);
+		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+	}
 }
 
-class UsersTableSeeder Extends Seeder
+class UsersTableSeeder extends Seeder
 {
 	public function run()
 	{
@@ -44,10 +46,9 @@ class UsersTableSeeder Extends Seeder
 
 		DB::table('users')->insert($data);
 	}
-
 }
 
-class AboutTableSeeder Extends Seeder
+class AboutTableSeeder extends Seeder
 {
 	public function run()
 	{
@@ -65,10 +66,9 @@ class AboutTableSeeder Extends Seeder
 
 		DB::table('pages_about')->insert($data);
 	}
-
 }
 
-class SettingTableSeeder Extends Seeder
+class SettingTableSeeder extends Seeder
 {
 	public function run()
 	{
@@ -98,5 +98,4 @@ class SettingTableSeeder Extends Seeder
 
 		DB::table('setting')->insert($data);
 	}
-
 }
