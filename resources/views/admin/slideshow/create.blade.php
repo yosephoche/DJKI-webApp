@@ -43,9 +43,23 @@
 						</div>
 					</div>
 
-					<div class="row">
+					{{-- <div class="row">
 						<div class="col-md-4 col-sm-6">
 							<div class="form-group">
+								<label>Select Pilhan Slide</label>
+								<div class="pilihan">
+									<select name="" id="pilihan" class="custom-select">
+											<option hidden>Choose</option>
+										<option value="1">Image</option>
+										<option value="2">Link Youtube</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div> --}}
+					<div class="row imagef">
+						<div class="col-md-4 col-sm-6">
+							<div class="form-group imaged">
 								<label>Featured image</label>
 								<div class="form-group">
 									<img id="previewImage_-" data-toggle="modal" data-target="#modal-galleries" src="{{ asset('uploaded/media/default.jpg') }}" width="100%">
@@ -56,10 +70,20 @@
 						</div>
 
 						<div class="col-md-4 col-sm-6">
-							<div class="form-group">
-								<label>Link</label>
-								<input type="text" name="link" class="form-control" placeholder="Link Slide" value="{!! old('portfolio') !!}">
-							</div>
+							<div class="form-group linked">
+									<label>Link</label>
+									<input type="text" name="link" list="pages" class="form-control" autocomplete="off">
+									<datalist id="pages">
+									@foreach ($pages as $item)
+									<option value="{{$item->slug}}">{{$item->title}}</option>	
+									@endforeach
+									</datalist>
+								</div>
+
+								<div class="form-group linked">
+										<label for="">Category</label>
+											<input type="text" name="category" class="form-control">
+										</div>
 						</div>
 					</div>
 

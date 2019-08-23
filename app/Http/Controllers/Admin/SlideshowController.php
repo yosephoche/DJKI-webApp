@@ -6,6 +6,7 @@ use App\Slideshow;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB, GlobalClass;
+use App\Pages;
 
 class SlideshowController extends Controller
 {
@@ -24,7 +25,8 @@ class SlideshowController extends Controller
     public function create()
     {
 			GlobalClass::Roleback(['Customer Service', 'Writer']);
-    	return view('admin.slideshow.create');
+			$pages = Pages::all();
+    	return view('admin.slideshow.create',compact('pages'));
     }
 
     public function store(Request $r)
@@ -35,7 +37,8 @@ class SlideshowController extends Controller
 			$this->validate($r,[
 				'title'=>'required',
 				'desc'=>'required|max:80',
-				'image'=>'required'
+				'image'=>'required',
+				'category'=>'required'
 			]);
 
 			$count = DB::table('pages_slide')->count();
@@ -51,6 +54,7 @@ class SlideshowController extends Controller
 			$slideshow->title = $r->title;
 			$slideshow->desc = $r->desc;
 			$slideshow->link = $r->link;
+			$slideshow->category = $r->category;
 			$slideshow->sort = $count > 0 ? $sort->sort + 1 : $sort + 1;
 			$slideshow->image = $r->image;
 			$slideshow->save();
@@ -63,11 +67,14 @@ class SlideshowController extends Controller
     public function edit($id)
     {
 			GlobalClass::Roleback(['Customer Service', 'Writer']);
+			
 			try
 			{
+				$pages = Pages::all();
 		    $slideshow = Slideshow::findOrFail($id);
 				$data['slideshow'] = $slideshow;
-				return view('admin.slideshow.edit', $data);
+				
+				return view('admin.slideshow.edit', $data,compact('pages'));
 			}
 			catch(ModelNotFoundException $e)
 			{
@@ -83,7 +90,8 @@ class SlideshowController extends Controller
 			$this->validate($r,[
 				'title'=>'required',
 				'desc'=>'required|max:80',
-				'image'=>'required'
+				'image'=>'required',
+				'category'=>'required'
 			]);
 
 			$count = DB::table('pages_slide')->count();
@@ -98,6 +106,7 @@ class SlideshowController extends Controller
 			$slideshow->title = $r->title;
 			$slideshow->desc = $r->desc;
 			$slideshow->link = $r->link;
+			$slideshow->category = $r->category;
 			$slideshow->sort = $sort->sort + 1;
 			$slideshow->save();
 
