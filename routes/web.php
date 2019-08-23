@@ -306,5 +306,20 @@ Route::group(['namespace' => 'Admin'], function () {
         Route::get('/help', function () {
             return view('admin.help.index');
         })->name('help');
+
+        // Maps 
+        Route::group(['prefix' => '/maps'], function () {
+            Route::get('/', 'MapsController@index')->name('maps-index');
+            Route::get('/create', 'MapsController@create')->name('maps-create');
+            Route::post('/store', 'MapsController@store')->name('maps-store');
+            Route::get('/edit/{id}', 'MapsController@edit')->name('maps-edit');
+            Route::put('/update/{id}', 'MapsController@update')->name('maps-update');
+            Route::post('/delete', 'MapsController@destroy')->name('maps-delete');
+
+
+
+
+
+        });
     });
 });
