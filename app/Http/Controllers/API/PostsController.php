@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Posts;
-use App\Comments;
 use App\Category;
 use DB;
 use Carbon;
@@ -35,59 +34,6 @@ class PostsController extends Controller
         'published' => Carbon\Carbon::parse($value->published)->format('d F Y'),
         'category' => $value->category == true ? Category::where('id', $value->category)->first()->name : '',
         'id_target' => $value->id
-      ];
-    }
-    if (isset($posts['response'])) {
-      $posts['diagnostic'] = [
-        'code' => 200,
-        'status' => 'ok'
-      ];
-      return response($posts, 200);
-    }
-    return response([
-      'diagnostic' => [
-        'status' => 'NOT_FOUND',
-        'code' => 404
-      ]
-    ], 404);
-  }
-
-  public function postComments(Request $r)
-  {
-    $postComment = Comments::create([
-      'id_user'   => $r->iduser,
-      'id_parent' => $r->idparent,
-      'id_posts'  => $r->idpost,
-      'comment'   => $r->comment,
-      'name'      => $r->name,
-      'email'     => $r->email,
-    ]);
-
-    if ($postComment == TRUE) {
-      return response([
-        'diagnostic' => [
-          'status' => 'OK',
-          'code' => 200
-        ]
-      ], 200);
-    } else {
-      return response([
-        'diagnostic' => [
-          'status' => 'NOT_FOUND',
-          'code' => 404
-        ]
-      ], 404);
-    }
-  }
-
-  public function getComments(Request $r)
-  {
-    $dataComments = Posts::find($r->id)->comments;
-    foreach ($dataComments as $key => $value) {
-      $posts['response'][] = [
-        'name' => $value->name,
-        'email' => $value->email,
-        'comment' => $value->comment,
       ];
     }
     if (isset($posts['response'])) {
