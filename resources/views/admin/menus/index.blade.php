@@ -34,7 +34,7 @@
 		@endif
 
 		<div class="row">
-			<div class="col-sm-6">
+			<div class="col-sm-12">
 				<h4 class="m-t-none m-b">Menus <small>(All of this menu will appear at the top of the page)</small></h4>
 				<div class="btn-group" role="group" aria-label="...">
 					<a href="{{route('menus',['option'=>'header'])}}" class="btn btn-default">Header</a>
@@ -43,7 +43,8 @@
 				<hr>
 
 				<!-- Action -->
-				<button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-new"><i class="fa fa-plus"></i>Add Menu {{Request::segment(3)}}</button>
+				<button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add Menu {{Request::segment(3)}} ID</button>
+				<button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newEN"><i class="fa fa-plus"></i>Add Menu {{Request::segment(3)}} EN</button>
 				<form action="{{ route('menus_drag') }}" method="post">
 					{{ csrf_field() }}
 					<input type="hidden" name="id_menus">
@@ -125,7 +126,7 @@
 @endsection
 
 @section('modal')
-	<div class="modal fade" id="modal-new" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="modal-newID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
 			<form action="{{ route('menus_store') }}" method="post" enctype="multipart/form-data">
 				{{ csrf_field() }}
@@ -133,12 +134,83 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">New Menu {{ Request::segment(3) }}</h4>
+						<h4 class="modal-title" id="myModalLabel">New Menu {{ Request::segment(3) }} Indonesia</h4>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
 							<label>Title</label>
 							<input type="text" name="menu_title" class="form-control" placeholder="Title for this menu">
+							<input type="hidden" name="lang" value="ID">
+						</div>
+
+						<div class="form-group">
+							<label>Link</label>
+							<input type="text" name="url" class="form-control" list="menu-header" autocomplete="off" placeholder="This menu link to ...">
+							<datalist id="menu-header" class="datalist">
+								<option value="#">Blank</option>
+								@foreach ($url_pages as $page)
+									<option value="/page/{{ $page->slug }}">{{ $page->title }}</option>
+								@endforeach
+								@foreach ($category as $cat)
+									<option value="/post/category/{{ $cat->slug }}/{{ $cat->id }}">{{ $cat->name }}</option>
+								@endforeach
+								@foreach ($archive as $arc)
+									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->title }}</option>
+								@endforeach
+								@foreach ($archive_item as $arc_item)
+									<option value="{{ asset('uploaded/download/'.$arc_item->file)}}">{{$arc_item->title}}</option>
+								@endforeach
+							</datalist>
+						</div>
+
+						<div class="form-group">
+							<label for="">Sub menu from:</label>
+							<select class="form-control" name="parent">
+								<option value="0">Not a sub menu</option>
+								@foreach ($menus as $key => $value)
+									<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
+								@endforeach
+								@foreach ($listUpdate as $menu)
+									@foreach ($menu as $key => $value)
+										<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
+									@endforeach
+								@endforeach
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label>Featured image</label>
+							<div class="form-group">
+								<img class="previewImage_" src="{{ asset('uploaded/media/default.jpg') }}" width="100%">
+								<input type="file" name="image" class="form-control" accept=".svg, .png">
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-primary">Save change</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modal-newEN" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<form action="{{ route('menus_store') }}" method="post" enctype="multipart/form-data">
+				{{ csrf_field() }}
+				<input type="hidden" name="option" value="{{ Request::segment(3) }}">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">New Menu {{ Request::segment(3) }} English</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Title</label>
+							<input type="text" name="menu_title" class="form-control" placeholder="Title for this menu">
+							<input type="hidden" name="lang" value="EN">
 						</div>
 
 						<div class="form-group">
@@ -211,6 +283,11 @@
 							<input type="text" name="menu_title" class="form-control" placeholder="Title for this menu">
 						</div>
 
+						<select class="form-control" name="lang">
+							<option value="ID">Indonesia</option>
+							<option value="EN">English</option>
+						</select>
+						<br>
 						<div id='textarea'></div>
 
 						<div class="form-group">

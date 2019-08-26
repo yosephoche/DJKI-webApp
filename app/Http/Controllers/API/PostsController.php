@@ -10,9 +10,18 @@ use App\Category;
 use DB;
 use Carbon;
 use GlobalClass;
+use General, Response;
+// use Response;
 
 class PostsController extends Controller
 {
+
+  public function __construct()
+  {
+    $this->helper = new General;
+    $this->response = new Response;
+  }
+
   public function getPosts(Request $r)
   {
     /* Data Master */
@@ -27,7 +36,7 @@ class PostsController extends Controller
 
     /* Data Posts */
     foreach ($dataPosts->items() as $key => $value) {
-      $posts['response'][] = [
+      $posts['data'][] = [
         'title' => $value->title,
         'content' => readMore(['text' => $value->content, 'limit' => 150]),
         'image' => GlobalClass::setImages($value->image) == 'default.jpg' ? '' : asset('uploaded/media/' . GlobalClass::setImages($value->image)),
@@ -36,19 +45,29 @@ class PostsController extends Controller
         'id_target' => $value->id
       ];
     }
-    if (isset($posts['response'])) {
-      $posts['diagnostic'] = [
-        'code' => 200,
-        'status' => 'ok'
-      ];
-      return response($posts, 200);
+
+    if ($dataPosts->isNotEmpty()) {
+      $response = $this->response->formatResponseWithPages("OK", $posts, $this->response->STAT_OK());
+      $headers = $this->response->HEADERS_REQUIRED('GET');
+      return response()->json($response, $this->response->STAT_OK());
+    } else {
+      $headers = $this->response->HEADERS_REQUIRED('GET');
+      $response = $this->response->formatResponseWithPages("POST NOT FOUND", [], $this->response->STAT_NOT_FOUND());
+      return response()->json($response, $this->response->STAT_NOT_FOUND());
     }
-    return response([
-      'diagnostic' => [
-        'status' => 'NOT_FOUND',
-        'code' => 404
-      ]
-    ], 404);
+    // if (isset($posts['response'])) {
+    //   $posts['diagnostic'] = [
+    //     'code' => 200,
+    //     'status' => 'ok'
+    //   ];
+    //   return response($posts, 200);
+    // }
+    // return response([
+    //   'diagnostic' => [
+    //     'status' => 'NOT_FOUND',
+    //     'code' => 404
+    //   ]
+    // ], 404);
   }
 
   public function detailsPost($idPosts = null)

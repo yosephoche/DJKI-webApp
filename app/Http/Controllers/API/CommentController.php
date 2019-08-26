@@ -46,7 +46,7 @@ class CommentController extends Controller
 
     public function getComments(Request $r)
     {
-        $dataComments = Comments::select('name', 'email', 'comment')->where('id_posts', $r->id)->paginate(5);
+        $dataComments = Comments::select('name', 'email', 'comment')->where('id_posts', $r->id_post)->paginate(5);
         if ($dataComments->isNotEmpty()) {
             $response = $this->response->formatResponseWithPages("OK", $dataComments, $this->response->STAT_OK());
             $headers = $this->response->HEADERS_REQUIRED('GET');
