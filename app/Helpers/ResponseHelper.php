@@ -101,21 +101,20 @@ class ResponseHelper
 
         switch ($code) {
             case 200:
-                switch ($page) {
-                    case null:
-                        $response = [
-                            'diagnostics' => $dgn,
-                            'response' => $data
-                        ];
-                        break;
-                    default:
-                        $response = [
-                            'diagnostics' => $dgn,
-                            'pagination' => $page,
-                            'response' => $data
-                        ];
-                        break;
+                if  ($page == null) {
+                    $response = [
+                        'diagnostics' => $dgn,
+                        'response' => $data
+                    ];
+
+                    return $response;
                 }
+
+                $response = [
+                    'diagnostics' => $dgn,
+                    'pagination' => $page,
+                    'response' => $data
+                ];
                 break;
             case 201:
                 $response = [
@@ -123,47 +122,20 @@ class ResponseHelper
                     'response' => $data
                 ];
                 break;
+
             case 422:
                 $response = [
                     'diagnostics' => $dgn,
                     'response' => $data
                 ];
                 break;
+            
             default:
                 $response = [
                     'diagnostics' => $dgn
                 ];
         }
 
-        // if ($code == 200) {
-        //     //success
-        //     if ($page == null) {
-        //         $response = [
-        //             'diagnostics' => $dgn,
-        //             'response' => $data
-        //         ];
-        //     } else {
-        //         $response = [
-        //             'diagnostics' => $dgn,
-        //             'pagination' => $page,
-        //             'response' => $data
-        //         ];
-        //     }
-        // } else if ($code == 201) {
-        //     $response = [
-        //         'diagnostics' => $dgn,
-        //         'response' => $data
-        //     ];
-        // } else if ($code == 422) {
-        //     $response = [
-        //         'diagnostics' => $dgn,
-        //         'response' => $data
-        //     ];
-        // } else {
-        //     $response = [
-        //         'diagnostics' => $dgn
-        //     ];
-        // }
         return $response;
     }
 }
