@@ -94,7 +94,7 @@ class ResponseHelper
             }
             $dgn = [
                 'code'  => $code,
-                'statuss' => $status,
+                'status' => $status,
                 // 'login' => $login
             ];
         }
