@@ -25,9 +25,9 @@
 				<table class="table table-striped m-b-none">
 					<thead>
 						<tr>
-							<th style="width: auto">Media Name</th>
-							<th style="width: auto">Album Created</th>
-							<th style="width: auto">Last Update</th>
+							<th style="width: auto">Longitude</th>
+							<th style="width: auto">Latitude</th>
+							<th style="width: auto">Action</th>
 							<th style="width: auto;"></th>
 						</tr>
 					</thead>
