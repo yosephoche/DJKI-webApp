@@ -14,30 +14,17 @@ class ResponseHelper
     }
 
     public $STAT_OK = 200;
-    
-
     public $STAT_REQUIRED = 201;
-
-
     public $STAT_BAD_REQUEST = 400;
-    
-
     public $STAT_UNAUTHORIZED = 401;
-
-
     public $STAT_UNPROCESSABLE_ENTITY = 422;
-    
-
     public $STAT_NOT_FOUND = 404;
-    
-
     public $STAT_REQUEST_TIMEOUT = 408;
-    
-
     public $STAT_SERVICE_UNAVAILABLE = 503;
-    
+
     //format_response
-    public function HEADERS_REQUIRED($metode) {
+    public function HEADERS_REQUIRED($metode)
+    {
         return [
             "Access-Control-Allow-Origin" => "*",
             "Access-Control-Allow-Methods" => $metode,
@@ -46,44 +33,52 @@ class ResponseHelper
         ];
     }
 
-    public function STAT_OK() {
+    public function STAT_OK()
+    {
         return $this->STAT_OK;
     }
 
-    public function STAT_REQUIRED() {
+    public function STAT_REQUIRED()
+    {
         return $this->STAT_REQUIRED;
     }
 
-    public function STAT_BAD_REQUEST() {
+    public function STAT_BAD_REQUEST()
+    {
         return $this->STAT_BAD_REQUEST;
     }
 
-    public function STAT_UNAUTHORIZED() {
-        return $this->STAT_UNAUTHORIZED; 
+    public function STAT_UNAUTHORIZED()
+    {
+        return $this->STAT_UNAUTHORIZED;
     }
 
-    public function STAT_UNPROCESSABLE_ENTITY() {
+    public function STAT_UNPROCESSABLE_ENTITY()
+    {
         return $this->STAT_UNPROCESSABLE_ENTITY;
     }
 
-    public function STAT_NOT_FOUND() {
+    public function STAT_NOT_FOUND()
+    {
         return $this->STAT_NOT_FOUND;
     }
 
-    public function STAT_REQUEST_TIMEOUT() {
+    public function STAT_REQUEST_TIMEOUT()
+    {
         return $this->STAT_REQUEST_TIMEOUT;
     }
 
-    public function STAT_SERVICE_UNAVAILABLE() {
+    public function STAT_SERVICE_UNAVAILABLE()
+    {
         return $this->STAT_SERVICE_UNAVAILABLE;
     }
 
-    public function formatResponseWithPages($status,$data,$code = 200, $page = null)
+    public function formatResponseWithPages($status, $data, $code = 200, $page = null)
     {
         //sesuaikan dengan aturan keluaran yang diinginkan, yang dibawah contoh makassar app
         $response = "";
-        
-        if ($this->request->is('eproc/api/*')){
+
+        if ($this->request->is('eproc/api/*')) {
             $dgn = [
                 'code'  => $code,
                 'status' => $status,
@@ -94,46 +89,81 @@ class ResponseHelper
             } else {
                 $login = true;
             }
-
-            if($this->request->headers->get("User-Id") != 0){
+            if ($this->request->headers->get("User-Id") != 0) {
                 $login = true;
             }
-
             $dgn = [
                 'code'  => $code,
                 'status' => $status,
                 'login' => $login
             ];
         }
-        if ($code == 200) {
-            //success
-            if ($page == null) {
+
+        switch ($code) {
+            case 200:
+                switch ($page) {
+                    case null:
+                        $response = [
+                            'diagnostics' => $dgn,
+                            'response' => $data
+                        ];
+                        break;
+                    default:
+                        $response = [
+                            'diagnostics' => $dgn,
+                            'pagination' => $page,
+                            'response' => $data
+                        ];
+                        break;
+                }
+                break;
+            case 201:
                 $response = [
                     'diagnostics' => $dgn,
                     'response' => $data
                 ];
-            } else {
+                break;
+            case 422:
                 $response = [
                     'diagnostics' => $dgn,
-                    'pagination' => $page,
                     'response' => $data
                 ];
-            }
-        } else if ($code == 201) {
-            $response = [
-                'diagnostics' => $dgn,
-                'response' => $data
-            ];
-        } else if ($code == 422) {
-            $response = [
-                'diagnostics' => $dgn,
-                'response' => $data
-            ];
-        } else {
-            $response = [
-                'diagnostics' => $dgn
-            ];
+                break;
+            default:
+                $response = [
+                    'diagnostics' => $dgn
+                ];
         }
+
+        // if ($code == 200) {
+        //     //success
+        //     if ($page == null) {
+        //         $response = [
+        //             'diagnostics' => $dgn,
+        //             'response' => $data
+        //         ];
+        //     } else {
+        //         $response = [
+        //             'diagnostics' => $dgn,
+        //             'pagination' => $page,
+        //             'response' => $data
+        //         ];
+        //     }
+        // } else if ($code == 201) {
+        //     $response = [
+        //         'diagnostics' => $dgn,
+        //         'response' => $data
+        //     ];
+        // } else if ($code == 422) {
+        //     $response = [
+        //         'diagnostics' => $dgn,
+        //         'response' => $data
+        //     ];
+        // } else {
+        //     $response = [
+        //         'diagnostics' => $dgn
+        //     ];
+        // }
         return $response;
     }
 }

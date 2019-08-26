@@ -91,6 +91,7 @@ class MenusController extends Controller
 		if (in_array($r->option, array('header', 'footer'))) {
 			/*Insert into table*/
 			$tabMenus->menu_title = $r->menu_title;
+			$tabMenus->lang = $r->lang;
 			$tabMenus->url = $r->url;
 			$tabMenus->parent = $r->parent;
 			$tabMenus->status = $r->option;
@@ -137,6 +138,7 @@ class MenusController extends Controller
 
 		/*Update data*/
 		$tabMenus->menu_title = $r->menu_title;
+		$tabMenus->lang = $r->lang;
 		$tabMenus->url = $r->url;
 		$tabMenus->parent = $r->parent;
 		$tabMenus->description = $r->description;
