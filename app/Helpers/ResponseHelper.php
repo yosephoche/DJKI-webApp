@@ -104,15 +104,15 @@ class ResponseHelper
                 switch ($page) {
                     case null:
                         $response = [
-                            'diagnostics' => $dgn,
-                            'response' => $data
+                            'response' => $data,
+                            'diagnostics' => $dgn
                         ];
                         break;
                     default:
                         $response = [
-                            'diagnostics' => $dgn,
                             'pagination' => $page,
-                            'response' => $data
+                            'response' => $data,
+                            'diagnostics' => $dgn
                         ];
                         break;
                 }

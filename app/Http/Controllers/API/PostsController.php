@@ -32,11 +32,11 @@ class PostsController extends Controller
       ->orderBy('published', 'DESC')
       ->paginate(20);
     /* Paginate  */
-    $posts = $this->paging($dataPosts);
+    $pagination = $this->paging($dataPosts);
 
     /* Data Posts */
     foreach ($dataPosts->items() as $key => $value) {
-      $posts['data'][] = [
+      $posts[] = [
         'title' => $value->title,
         'content' => readMore(['text' => $value->content, 'limit' => 150]),
         'image' => GlobalClass::setImages($value->image) == 'default.jpg' ? '' : asset('uploaded/media/' . GlobalClass::setImages($value->image)),
@@ -47,7 +47,7 @@ class PostsController extends Controller
     }
 
     if ($dataPosts->isNotEmpty()) {
-      $response = $this->response->formatResponseWithPages("OK", $posts, $this->response->STAT_OK());
+      $response = $this->response->formatResponseWithPages("OK", $posts, $this->response->STAT_OK(), $pagination);
       $headers = $this->response->HEADERS_REQUIRED('GET');
       return response()->json($response, $this->response->STAT_OK());
     } else {
@@ -129,8 +129,6 @@ class PostsController extends Controller
     $object->last_page = $raw->lastPage();
     $object->fromm = $raw->firstItem();
     $object->to = $raw->lastItem();
-    return [
-      'pagination' => $object
-    ];
+    return $object;
   }
 }

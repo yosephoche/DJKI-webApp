@@ -47,8 +47,20 @@ class CommentController extends Controller
     public function getComments(Request $r)
     {
         $dataComments = Comments::select('name', 'email', 'comment')->where('id_posts', $r->id_post)->paginate(5);
+        /* Paginate  */
+        $pagination = $this->paging($dataComments);
+
+        /* Data Posts */
+        foreach ($dataComments->items() as $key => $value) {
+            $comment[] = [
+                'name' => $value->name,
+                'email' => $value->email,
+                'comment' => $value->comment
+            ];
+        }
+
         if ($dataComments->isNotEmpty()) {
-            $response = $this->response->formatResponseWithPages("OK", $dataComments, $this->response->STAT_OK());
+            $response = $this->response->formatResponseWithPages("OK", $comment, $this->response->STAT_OK(), $pagination);
             $headers = $this->response->HEADERS_REQUIRED('GET');
             return response()->json($response, $this->response->STAT_OK());
         } else {
@@ -56,5 +68,17 @@ class CommentController extends Controller
             $response = $this->response->formatResponseWithPages("COMMENTS NOT FOUND", [], $this->response->STAT_NOT_FOUND());
             return response()->json($response, $this->response->STAT_NOT_FOUND());
         }
+    }
+
+    public function paging($raw)
+    {
+        $object = new \stdClass;
+        $object->total = $raw->total();
+        $object->per_page = $raw->perPage();
+        $object->current_page = $raw->currentPage();
+        $object->last_page = $raw->lastPage();
+        $object->fromm = $raw->firstItem();
+        $object->to = $raw->lastItem();
+        return $object;
     }
 }
