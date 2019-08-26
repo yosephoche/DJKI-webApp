@@ -10,8 +10,8 @@ use App\Category;
 use DB;
 use Carbon;
 use GlobalClass;
-use General;
-use Response;
+use General, Response;
+// use Response;
 
 class PostsController extends Controller
 {

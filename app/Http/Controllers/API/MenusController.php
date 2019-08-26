@@ -6,15 +6,23 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Pages;
 use App\Http\Controllers\Controller;
+use General, Response;
 
 class MenusController extends Controller
 {
+
+  public function __construct()
+  {
+    $this->helper = new General;
+    $this->response = new Response;
+  }
+
   public function getMenus(Request $r, $idMenu = null)
   {
     if ($idMenu) {
       /* Kondisi ketika idMenu bernilai true, maka target query adalah submenu dan subsmenu */
-      $countSubMenu = nav(['position' => 'header'])->where('parent', $idMenu);
-      foreach ($countSubMenu as $key => $parent) {
+      $menu = nav(['position' => 'header'])->where('parent', $idMenu)->where('lang', $r->lang);
+      foreach ($menu as $key => $parent) {
         $action = $this->getAction($parent->url, $parent->id);
         $menus['response'][] = [
           'id_parent' => $parent->id,
@@ -25,8 +33,9 @@ class MenusController extends Controller
         ];
       }
     } else {
+      $menu = nav(['position' => 'header'])->where('parent', '0')->where('lang', $r->lang);
       /* Kondisi ketika idMenu bernilai false, maka target query adalah parent */
-      foreach (nav(['position' => 'header'])->where('parent', '0')->where('lang', $r->lang) as $key => $parent) {
+      foreach ($menu as $key => $parent) {
         $action = $this->getAction($parent->url, $parent->id);
         $slugs = str_replace(' ', '_', strtolower($parent->menu_title));
         $menus['response'][] = [
@@ -40,22 +49,31 @@ class MenusController extends Controller
       }
     }
 
-    if (isset($menus) > 0) {
-      $menus['diagnostic'] = [
-        'code' => 200,
-        'status' => 'ok'
-      ];
-      return response($menus, 200);
+    if ($menu->isNotEmpty()) {
+      $response = $this->response->formatResponseWithPages("OK", $menus, $this->response->STAT_OK());
+      $headers = $this->response->HEADERS_REQUIRED('GET');
+      return response()->json($response, $this->response->STAT_OK());
+    } else {
+      $headers = $this->response->HEADERS_REQUIRED('GET');
+      $response = $this->response->formatResponseWithPages("POST NOT FOUND", [], $this->response->STAT_NOT_FOUND());
+      return response()->json($response, $this->response->STAT_NOT_FOUND());
     }
-    return response(
-      [
-        'diagnostic' => [
-          'status' => 'NOT_FOUND',
-          'code' => 404
-        ]
-      ],
-      404
-    );
+    // if (isset($menus) > 0) {
+    //   $menus['diagnostic'] = [
+    //     'code' => 200,
+    //     'status' => 'ok'
+    //   ];
+    //   return response($menus, 200);
+    // }
+    // return response(
+    //   [
+    //     'diagnostic' => [
+    //       'status' => 'NOT_FOUND',
+    //       'code' => 404
+    //     ]
+    //   ],
+    //   404
+    // );
   }
 
   public function getAction($url, $parentID)
