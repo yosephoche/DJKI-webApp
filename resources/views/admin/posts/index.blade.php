@@ -63,7 +63,7 @@
 					</div>
 					<div class="text-center m-t-lg m-b-lg">
 						<ul class="pagination pagination-md">
-							{{ $posts->render() }}
+							{{ $posts->appends(request()->except('page'))->links() }}
 						</ul>
 					</div>
 				</div>
@@ -84,7 +84,7 @@
 					<h5 class="font-bold">Categories</h5>
 					<form  action="{{route('posts')}}" method="get">
 						<div class="form-group">
-							<input type="type" class="form-control input-lg" name="key">
+							<input type="type" class="form-control input-lg" name="key" placeholder="Pencarian">
 						</div>
 					</form>
 
@@ -126,7 +126,7 @@
 			@else
 				<div class="col-sm-12 text-center">
 					<br><br>
-					<h2>Anda belum memiliki sebuah post</h2>
+					<h2>Anda belum memiliki sebuah post, <a href='{{route('posts')}}'>Kembali ?</a></h2>
 					<br><br>
 				</div>
 			@endif

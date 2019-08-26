@@ -28,5 +28,12 @@ Route::group(['middleware' => ['apikey'], 'namespace' => 'API'], function () {
     Route::get('customizer', 'CustomizerController@get');
     Route::get('posts/detail/{id}', 'PostsController@detailsPost');
     Route::get('pages/{id}', 'PagesController@getPages');
+    
+
+    // slide
+    Route::get('slideshow', 'SlideController@GetSlide');
+    Route::get('maps', 'MapsController@getMaps');
+
+
   });
 });

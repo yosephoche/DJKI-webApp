@@ -54,11 +54,24 @@
 						</div>
 
 						<div class="col-md-4 col-sm-6">
-							<div class="form-group">
-								<label>Link</label>
-								<input type="text" name="link" class="form-control" placeholder="Link Slide" value="{{ $slideshow->link }}">
-							</div>
+								<div class="form-group linked">
+										<label>Link</label>
+								<input type="text" name="link" list="pages" class="form-control" value="{{$slideshow->link}}">
+										<datalist id="pages">
+												@foreach ($pages as $item)
+												<option value="{{$item->slug}}">{{$item->title}}</option>	
+												@endforeach
+										</datalist>
+									</div>
+		
+								{{-- category --}}
+						<div class="form-group linked">
+								<label for="">Category</label>
+						<input type="text" name="category" class="form-control" value="{{$slideshow->category}}">
+								</div>
 						</div>
+
+					
 					</div>
 
 					<hr>

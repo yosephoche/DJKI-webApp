@@ -16,10 +16,16 @@ class ArchiveController extends Controller
 
     /* List All Function Group */
 
-    public function index()
+    public function index(Request $r)
     {
       GlobalClass::Roleback(['Customer Service']);
-      $data['archive'] = ArchiveGroup::paginate(20);
+      if ($r->has('key')) {
+  			$key = $r->key;
+  		} else {
+  			$key = '';
+  		}
+
+      $data['archive'] = ArchiveGroup::where('name','like','%'.$key.'%')->paginate(20);
       return view('admin.archivegroup.index', $data);
     }
 
@@ -113,12 +119,19 @@ class ArchiveController extends Controller
 
     /* List All Function items */
 
-    public function itemArchive($groupID)
+    public function itemArchive(Request $r,$groupID)
     {
     	GlobalClass::Roleback(['Customer Service']);
+      if ($r->has('key')) {
+  			$key = $r->key;
+  		} else {
+  			$key = '';
+  		}
       $count = ArchiveGroup::find($groupID);
       if ($count) {
-        $data['archive'] = Archive::where('id_group',$groupID)->paginate(20);
+        $data['archive'] = Archive::where('id_group',$groupID)
+        ->where('title','like','%'.$key.'%')
+        ->paginate(20);
       	return view('admin.archive.index', $data);
       }
       return redirect(route('archive'));

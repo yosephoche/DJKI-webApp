@@ -1,12 +1,12 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Directory')
+@section('title', 'Maps')
 
 @section('contents')
-	<a href="{{ route('archive_group_create') }}" class="new-btn" title="New Directory"><i class="glyphicon glyphicon-pencil"></i></a>
+	<a href="{{ route('maps-create') }}" class="new-btn" title="New Gallery"><i class="glyphicon glyphicon-pencil"></i></a>
 
 	<div class="bg-light lter b-b wrapper-md">
-		<h1 class="m-n font-thin h3">Directory</h1>
+		<h1 class="m-n font-thin h3">Maps</h1>
 	</div>
 	<div class="wrapper-md">
 
@@ -20,46 +20,36 @@
 			</div>
 		@endif
 
-		<form  action="{{route('archive')}}" method="get">
-			<div class="form-group">
-				<input type="type" class="form-control input-lg" name="key" placeholder="Pencarian">
-			</div>
-		</form>
 		<div class="panel">
 			<div class="table-responsive">
 				<table class="table table-striped m-b-none">
 					<thead>
 						<tr>
-							<th style="width: auto">Directory Name</th>
-							<th style="width: auto">Directory Created</th>
-							<th style="width: auto">Last Update</th>
+							<th style="width: auto">Longitude</th>
+							<th style="width: auto">Latitude</th>
+							<th style="width: auto">Action</th>
 							<th style="width: auto;"></th>
 						</tr>
 					</thead>
 					<tbody>
-						@forelse ($archive as $g)
+						@foreach ($maps as $item)
 							<tr>
-								<td>{{ $g->name }}</td>
-								<td>{{ $g->created_at }}</td>
-								<td>{{ $g->updated_at }}</td>
+							<td>{{$item->longitude}}</td>
+							<td>{{$item->latitude}}</td>
 								<td>
-									<a href="{{ route('item_archive',['id'=>$g->id]) }}" class="btn btn-default btn-xs">Open</a>
-									<a href="{{ route('archive_group_edit',['id'=>$g->id]) }}" class="btn btn-default btn-xs">Edit</a>
-									<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal-delete" data-id="{{ $g->id }}">Delete</button>
+									
+								<a href="{{route('maps-edit',$item->id)}}" class="btn btn-default btn-xs">Edit</a>
+									<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal-delete" data-id="{{$item->id}}">Delete</button>
 								</td>
 							</tr>
-						@empty
-							<tr>
-								<td colspan="6" align="center">No Directory <a href='{{route('archive')}}'>Back</a></td>
-							</tr>
-						@endforelse
+							@endforeach					
 					</tbody>
 				</table>
 			</div>
 		</div>
 		<div class="text-center m-t-lg m-b-lg">
 			<ul class="pagination pagination-md">
-				{{ $archive->appends(request()->except('page'))->links() }}
+			
 			</ul>
 		</div>
 	</div>
@@ -68,18 +58,18 @@
 @section('modal')
 	<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
-			<form action="{{ route('archive_group_delete') }}" method="post">
+			<form action="{{ route('maps-delete') }}" method="post">
 
 				{{ csrf_field() }}
 
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">Delete Directory</h4>
+						<h4 class="modal-title" id="myModalLabel">Delete Gallery</h4>
 					</div>
 					<div class="modal-body">
 						<input type="hidden" name="id">
-						Are you sure you want to delete this group?
+						Are you sure you want to delete this photo?
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
@@ -90,11 +80,12 @@
 		</div>
 	</div>
 @endsection
+
 @section('registerscript')
-	<script>
+	{{-- <script>
 		$('#modal-delete').on('show.bs.modal', function (e) {
 			var id = $(e.relatedTarget).data('id');
 			$(this).find('input[name="id"]').val(id);
 		});
-	</script>
+	</script> --}}
 @endsection

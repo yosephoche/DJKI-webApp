@@ -14,10 +14,15 @@ class PagesController extends Controller
 		$this->middleware('auth');
 	}
 
-	public function index()
+	public function index(Request $r)
 	{
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
-		$data['pages'] = DB::table('pages')->where('deleted_at', null)->paginate(10);
+		if ($r->has('key')) {
+			$key = $r->key;
+		} else {
+			$key = '';
+		}
+		$data['pages'] = DB::table('pages')->where('title','like','%'.$key.'%')->where('deleted_at', null)->paginate(10);
 		return view('admin.pages.index', $data);
 	}
 
