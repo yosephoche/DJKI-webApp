@@ -101,52 +101,35 @@ class ResponseHelper
 
         switch ($code) {
             case 200:
-<<<<<<< HEAD
-                switch ($page) {
-                    case null:
-                        $response = [
-                            'response' => $data,
-                            'diagnostics' => $dgn
-                        ];
-                        break;
-                    default:
-                        $response = [
-                            'pagination' => $page,
-                            'response' => $data,
-                            'diagnostics' => $dgn
-                        ];
-                        break;
-=======
                 if  ($page == null) {
                     $response = [
-                        'diagnostics' => $dgn,
-                        'response' => $data
+                        'response' => $data,
+                        'diagnostics' => $dgn
                     ];
 
                     return $response;
->>>>>>> master
                 }
 
                 $response = [
-                    'diagnostics' => $dgn,
                     'pagination' => $page,
-                    'response' => $data
+                    'response' => $data,
+                    'diagnostics' => $dgn,
                 ];
                 break;
             case 201:
                 $response = [
-                    'diagnostics' => $dgn,
-                    'response' => $data
+                    'response' => $data,
+                    'diagnostics' => $dgn
                 ];
                 break;
 
             case 422:
                 $response = [
-                    'diagnostics' => $dgn,
-                    'response' => $data
+                    'response' => $data,
+                    'diagnostics' => $dgn
                 ];
                 break;
-            
+
             default:
                 $response = [
                     'diagnostics' => $dgn
