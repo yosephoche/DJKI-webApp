@@ -24,7 +24,7 @@ class MenusController extends Controller
       $menu = nav(['position' => 'header'])->where('parent', $idMenu)->where('lang', $r->lang);
       foreach ($menu as $key => $parent) {
         $action = $this->getAction($parent->url, $parent->id);
-        $menus['response'][] = [
+        $menus['data'][] = [
           'id_parent' => $parent->id,
           'title' => $parent->menu_title,
           'action_type' => $action['type'],
@@ -38,7 +38,7 @@ class MenusController extends Controller
       foreach ($menu as $key => $parent) {
         $action = $this->getAction($parent->url, $parent->id);
         $slugs = str_replace(' ', '_', strtolower($parent->menu_title));
-        $menus['response'][] = [
+        $menus['data'][] = [
           'id_menu' => $parent->id,
           'description' => isset($parent->description) == false ? '' : $parent->description,
           'title' => $parent->menu_title,
