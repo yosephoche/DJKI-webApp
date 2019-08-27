@@ -21,9 +21,6 @@ services:
         limits:
           cpus: '0.50'
           memory: 50M
-        reservations:
-          cpus: '0.25'
-          memory: 20M
 
     webserver:
       image: nginx:alpine
