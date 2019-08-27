@@ -17,10 +17,7 @@ services:
         - MYSQL_PASSWORD=djki21`21`
       ports:
         - "2015:3306"
-      deploy:
-        limits:
-          cpus: '0.50'
-          memory: 50M
+      mem_limit: 1000000000
 
     webserver:
       image: nginx:alpine
