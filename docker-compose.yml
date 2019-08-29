@@ -6,7 +6,7 @@ services:
 
     mysql:
       image: mysql:5.6
-      container_name: djki
+      container_name: djki-mysql
       working_dir: /application
       volumes:
         - .:/application
