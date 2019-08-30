@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Pages;
+use App\Partnership;
 use App\Slideshow;
 use TemplateModule;
 use DB;
@@ -15,74 +16,76 @@ use Exception;
 
 class PagesController extends MenusController
 {
-    public function getPages($idPages = null) {
-        $menuIfExist = (!empty($_GET['menu'])) ? (int)$_GET['menu'] : 0;
+    public function getPages($idPages = null)
+    {
+        $menuIfExist = (!empty($_GET['menu'])) ? (int) $_GET['menu'] : 0;
         try {
             $dataPages = Pages::where('id', $idPages);
             if ($dataPages->count() > 0) {
                 /* Filter gambar */
                 $data = $dataPages->first();
                 $images = json_decode($data->image);
-                for ($i=0; $i < count($images) ; $i++) {
+                for ($i = 0; $i < count($images); $i++) {
                     switch ($images[$i]) {
                         case 'default.jpg':
                             $arrImages = [];
                             break;
                         default:
-                            $arrImages[] = asset('uploaded/media/'.$images[$i]);
+                            $arrImages[] = asset('uploaded/media/' . $images[$i]);
                             break;
                     }
                 }
                 /* Initial pages combine */
                 if ($menuIfExist != 0) {
                     $pages['response'] = [
-                        'id'=>$data->id,
-                        'title'=>$data->title,
-                        'content_uri'=>route('front_pages',['id'=>$data->id,'slug'=>$data->slug]),
-                        'data'=> [
-                            'slideshow'=>$this->Slideshow(),
-                            'banner'=>$this->customizer('direktur'),
+                        'id' => $data->id,
+                        'title' => $data->title,
+                        'content_uri' => route('front_pages', ['id' => $data->id, 'slug' => $data->slug]),
+                        'data' => [
+                            'slideshow' => $this->Slideshow(),
+                            'partner' => $this->partner(),
                             'menu' => $this->menu($menuIfExist)
                         ],
-                        'image'=>$arrImages
+
                     ];
                 } else {
                     $pages['response'] = [
-                        'id'=>$data->id,
-                        'title'=>$data->title,
-                        'content_uri'=>route('front_pages',['id'=>$data->id,'slug'=>$data->slug]),
-                        'data'=> [
+                        'id' => $data->id,
+                        'title' => $data->title,
+                        'content_uri' => route('front_pages', ['id' => $data->id, 'slug' => $data->slug]),
+                        'data' => [
                             'slideshow' => [],
                             'banner' => $this->customizer(''),
                             'menu' => []
                         ],
-                        'image'=>$arrImages
+                        'image' => $arrImages
                     ];
                 }
                 $pages['diagnostic'] = [
-                    'code'=>200,
-                    'status'=>'ok'
+                    'code' => 200,
+                    'status' => 'ok'
                 ];
                 return response($pages, 200);
             } else {
                 return response([
                     'diagnostic' => [
-                        'status'=>'NOT_FOUND',
-                        'code'=>404
+                        'status' => 'NOT_FOUND',
+                        'code' => 404
                     ]
                 ], 404);
             }
         } catch (Exception $exceptione) {
             return response([
                 'diagnostic' => [
-                    'status'=>'NOT_FOUND',
-                    'code'=>404
+                    'status' => 'NOT_FOUND',
+                    'code' => 404
                 ]
             ], 404);
         }
     }
 
-    public function customizer($id) {
+    public function customizer($id)
+    {
         if ($id == "") {
             $banner = [
                 'content' => "",
@@ -97,7 +100,7 @@ class PagesController extends MenusController
                     $banner = [
                         'content' => $value->text,
                         'link' => $value->link,
-                        'image' => asset('uploaded/media/'.$value->image),
+                        'image' => asset('uploaded/media/' . $value->image),
                     ];
                 }
                 return $banner;
@@ -112,16 +115,17 @@ class PagesController extends MenusController
         }
     }
 
-    public function Slideshow() {
+    public function Slideshow()
+    {
         try {
-            $slider = Slideshow::orderBy('sort','DESC');
+            $slider = Slideshow::orderBy('sort', 'DESC')->where('category', 'Tentang Kami');
             $data = array();
             foreach ($slider->get() as $key => $value) {
                 $data[] = [
-                    'title'=>$value->title,
-                    'desc'=>$value->desc,
-                    'image'=>asset('uploaded/media/'.$value->image),
-                    'link'=>$value->link
+                    'title' => $value->title,
+                    'desc' => $value->desc,
+                    'image' => asset('uploaded/media/' . $value->image),
+                    'link' => $value->link
                 ];
             }
             return $data;
@@ -130,21 +134,22 @@ class PagesController extends MenusController
         }
     }
 
-    public function menu($idMenu) {
+    public function menu($idMenu)
+    {
         if ($idMenu == 0) {
             return [];
         } else {
             try {
                 $menus = array();
-                $countSubMenu = nav(['position'=>'header'])->where('parent', $idMenu);
+                $countSubMenu = nav(['position' => 'header'])->where('parent', $idMenu);
                 foreach ($countSubMenu as $key => $parent) {
                     $action = $this->getAction($parent->url, $parent->id); // Extend From MenusController.php
                     $dataMenu = [
                         'id_parent' => $parent->id,
                         'title' => $parent->menu_title,
-                        'action_type'=>$action['type'],
-                        'id_target'=>$action['id'],
-                        'image'=>$parent->image=='default.jpg'?'':asset("uploaded/menus/".$parent->image)
+                        'action_type' => $action['type'],
+                        'id_target' => $action['id'],
+                        'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)
                     ];
                     array_push($menus, $dataMenu);
                 }
@@ -155,4 +160,19 @@ class PagesController extends MenusController
         }
     }
 
+    function partner()
+    {
+        $datas = Partnership::all();
+        $data = array();
+        foreach ($datas as  $value) {
+            # code..
+            $data[] = [
+                'id' => $value->id,
+                'title' => $value->title,
+                'image' => asset('uploaded/partner/' . $value->image),
+                'link' => $value->link
+            ];
+        }
+        return $data;
+    }
 }

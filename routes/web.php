@@ -315,11 +315,16 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/edit/{id}', 'MapsController@edit')->name('maps-edit');
             Route::put('/update/{id}', 'MapsController@update')->name('maps-update');
             Route::post('/delete', 'MapsController@destroy')->name('maps-delete');
+        });
 
-
-
-
-
+        // Partnership
+        Route::group(['prefix' => '/partnership'], function () {
+            Route::get('/', 'PartnershipController@index')->name('partnership-index');
+            Route::get('/create', 'PartnershipController@create')->name('partnership-create');
+            Route::post('/store', 'PartnershipController@store')->name('partnership-store');
+            Route::get('/edit/{id}', 'PartnershipController@edit')->name('partnership-edit');
+            Route::put('/update/{id}', 'PartnershipController@update')->name('partnership-update');
+            Route::post('/delete', 'PartnershipController@destroy')->name('partnership-delete');
         });
     });
 });
