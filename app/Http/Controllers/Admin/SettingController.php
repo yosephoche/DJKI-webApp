@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
+use App\Category;
 use App\Settings;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Posts;
 use DB, Session, GlobalClass;
 
 class SettingController extends Controller
@@ -17,6 +20,9 @@ class SettingController extends Controller
 	{
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 		$data['setting'] = Settings::first();
+		$liputan_humas = Category::where('name', 'Liputan Humas')->first();
+		$info_terbaru = Category::where('name', 'Info terbaru')->first();
+		$data['url_posts'] = Posts::where('category', $liputan_humas->id)->orWhere('category', $info_terbaru->id)->get();
 		return view('admin.setting.index', $data);
 	}
 
@@ -32,6 +38,7 @@ class SettingController extends Controller
 			'timezone' 			=> 'required',
 			'email' 			=> 'required|email',
 			'phone' 			=> 'required',
+			'link' 				=> 'required',
 		]);
 
 		/*Maintenance Status*/
@@ -43,7 +50,7 @@ class SettingController extends Controller
 		}
 
 		/*Update DB*/
-		DB::update('update setting set meta_title = ?, meta_description = ?, meta_keyword = ?, timezone = ?, maintenance = ?, email = ?, phone = ?, facebook = ?, twitter = ?, google = ?, linkedin = ?, address = ?, youtube = ?, instagram = ?', [
+		DB::update('update setting set meta_title = ?, meta_description = ?, meta_keyword = ?, timezone = ?, maintenance = ?, email = ?, phone = ?, facebook = ?, twitter = ?, google = ?, linkedin = ?, address = ?, youtube = ?, instagram = ?, running_text = ?, link = ?', [
 			$r->meta_title,
 			$r->meta_description,
 			$r->meta_keyword,
@@ -57,26 +64,28 @@ class SettingController extends Controller
 			$r->linkedin,
 			$r->address,
 			$r->youtube,
-			$r->instagram
+			$r->instagram,
+			$r->running_text,
+			$r->link,
 		]);
 
 		/*OG Image*/
-		if ( $r->hasFile('og_image') ) {
+		if ($r->hasFile('og_image')) {
 			/*Remove Old Image*/
 			$old = DB::table('setting')->first();
 			GlobalClass::removeFile([
 				array(
-					'path'=>'uploaded/setting',
-					'files'=>$old->og_image
+					'path' => 'uploaded/setting',
+					'files' => $old->og_image
 				),
 			]);
 
 			/*Upload Images*/
-	    $file_name = GlobalClass::UploadImage([
-	      'file'=> $r->file('og_image'), //file required
-	      'path'=> 'uploaded/setting', //path required
-	      'width'=>500 //width optional
-	    ]);
+			$file_name = GlobalClass::UploadImage([
+				'file' => $r->file('og_image'), //file required
+				'path' => 'uploaded/setting', //path required
+				'width' => 500 //width optional
+			]);
 
 			/*Save DB*/
 			DB::update('update setting set og_image = ?', [$file_name]);
@@ -84,46 +93,46 @@ class SettingController extends Controller
 
 		/*Favicon*/
 		$favicon = '';
-		if ( $r->hasFile('favicon') ) {
+		if ($r->hasFile('favicon')) {
 
 			/*Remove Old Image*/
 			$old = DB::table('setting')->first();
 			GlobalClass::removeFile([
 				array(
-					'path'=>'uploaded/setting',
-					'files'=>$old->favicon
+					'path' => 'uploaded/setting',
+					'files' => $old->favicon
 				),
 			]);
 
 			/*Upload Images*/
-	    $file_name = GlobalClass::UploadImage([
-	      'file'=> $r->file('favicon'), //file required
-	      'path'=> 'uploaded/setting', //path required
-	      'width'=>16 //width optional
-	    ]);
+			$file_name = GlobalClass::UploadImage([
+				'file' => $r->file('favicon'), //file required
+				'path' => 'uploaded/setting', //path required
+				'width' => 16 //width optional
+			]);
 
 			/*Save DB*/
 			DB::update('update setting set favicon = ?', [$file_name]);
 		}
 
 		/*Logo*/
-		if ( $r->hasFile('logo') ) {
+		if ($r->hasFile('logo')) {
 
 			/*Remove Old Image*/
 			$old = DB::table('setting')->first();
 			GlobalClass::removeFile([
 				array(
-					'path'=>'uploaded/setting',
-					'files'=>$old->logo
+					'path' => 'uploaded/setting',
+					'files' => $old->logo
 				),
 			]);
 
 			/*Upload Images*/
-	    $file_name = GlobalClass::UploadImage([
-	      'file'=> $r->file('logo'), //file required
-	      'path'=> 'uploaded/setting', //path required
-	      'width'=>5 //width optional
-	    ]);
+			$file_name = GlobalClass::UploadImage([
+				'file' => $r->file('logo'), //file required
+				'path' => 'uploaded/setting', //path required
+				'width' => 5 //width optional
+			]);
 
 			/*Save DB*/
 			DB::update('update setting set logo = ?', [$file_name]);
@@ -134,7 +143,8 @@ class SettingController extends Controller
 		return redirect()->back();
 	}
 
-	public function keytoken() {
+	public function keytoken()
+	{
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 		$token = bin2hex(openssl_random_pseudo_bytes(20));
 		DB::update('update setting set key_token = ?', [$token]);

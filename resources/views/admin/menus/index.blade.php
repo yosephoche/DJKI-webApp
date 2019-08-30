@@ -65,7 +65,7 @@
 								data-link="{{ $menu->url }}"
 								data-submenu="{{ $menu->parent }}"
 								data-preview="{{ $menu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$menu->image) }}">
-								<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">{{ $menu->menu_title }}
+								<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{ $menu->menu_title }}
 									<div class="pull-right sortable-action">
 										<a href="#" data-toggle="modal" data-target="#modal-edit-menus"><i class="glyphicon glyphicon-pencil"></i></a>
 										&nbsp;&nbsp;
@@ -82,7 +82,7 @@
 												data-link="{{ $submenu->url }}"
 												data-submenu="{{ $submenu->parent }}"
 												data-preview="{{ $submenu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$submenu->image) }}">
-												<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">{{ $submenu->menu_title }}
+												<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{ $submenu->menu_title }}
 													<div class="pull-right sortable-action">
 														<a href="#" data-toggle="modal" data-target="#modal-edit-menus"><i class="glyphicon glyphicon-pencil"></i></a>
 														&nbsp;&nbsp;

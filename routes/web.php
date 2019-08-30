@@ -65,17 +65,17 @@ Route::group(['namespace' => 'Admin'], function () {
         });
 
         /* Messages */
-        Route::group(['prefix' => '/mail'], function () {
-            Route::get('/', 'MessagesController@index')->name('messages');
-            Route::get('/compose', 'MessagesController@compose')->name('messages_create');
-            Route::post('/send', 'MessagesController@send')->name('messages_send');
-            Route::get('/detail/{id?}', 'MessagesController@detail')->name('messages_detail');
-            Route::get('/detail/sent/{id?}', 'MessagesController@detail_sent')->name('messages_detail_sent');
-            Route::post('/reply', 'MessagesController@reply')->name('messages_reply');
-            Route::post('/delete', 'MessagesController@delete')->name('messages_delete');
-            Route::get('/sent', 'MessagesController@sent')->name('messages_sent');
-            Route::get('/trash', 'MessagesController@trash')->name('messages_trash');
-        });
+        // Route::group(['prefix' => '/mail'], function () {
+        //     Route::get('/', 'MessagesController@index')->name('messages');
+        //     Route::get('/compose', 'MessagesController@compose')->name('messages_create');
+        //     Route::post('/send', 'MessagesController@send')->name('messages_send');
+        //     Route::get('/detail/{id?}', 'MessagesController@detail')->name('messages_detail');
+        //     Route::get('/detail/sent/{id?}', 'MessagesController@detail_sent')->name('messages_detail_sent');
+        //     Route::post('/reply', 'MessagesController@reply')->name('messages_reply');
+        //     Route::post('/delete', 'MessagesController@delete')->name('messages_delete');
+        //     Route::get('/sent', 'MessagesController@sent')->name('messages_sent');
+        //     Route::get('/trash', 'MessagesController@trash')->name('messages_trash');
+        // });
 
         /* Messages */
         Route::group(['prefix' => '/subscribers'], function () {
@@ -307,7 +307,7 @@ Route::group(['namespace' => 'Admin'], function () {
             return view('admin.help.index');
         })->name('help');
 
-        // Maps 
+        // Maps
         Route::group(['prefix' => '/maps'], function () {
             Route::get('/', 'MapsController@index')->name('maps-index');
             Route::get('/create', 'MapsController@create')->name('maps-create');
