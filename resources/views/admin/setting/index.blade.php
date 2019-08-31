@@ -60,7 +60,8 @@
 								<datalist id="menu-header" class="datalist">
 									<option value="#">Blank</option>
 									@foreach ($url_posts as $posts)
-										<option value="/posts/{{ $posts->slug }}">{{ $posts->title }}<input type="hidden" name="running_text" value="{{ $posts->title }}"></option>
+										{{-- <option value="{{ $posts->id }}">/posts/{{ $posts->slug }}</option> --}}
+										<option value="{{ $posts->slug }}">{{ $posts->title }}</option>
 									@endforeach
 								</datalist>
 							</div>

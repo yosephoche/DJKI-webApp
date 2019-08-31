@@ -41,6 +41,8 @@ class SettingController extends Controller
 			'link' 				=> 'required',
 		]);
 
+		$running_text = Posts::where('slug', $r->link)->first();
+		// dd($running_text);
 		/*Maintenance Status*/
 		$maintenance = '0';
 		if ($r->maintenance == 'on') {
@@ -48,6 +50,8 @@ class SettingController extends Controller
 		} else {
 			$maintenance = '0';
 		}
+
+		// $foo = Posts::find($r->link);
 
 		/*Update DB*/
 		DB::update('update setting set meta_title = ?, meta_description = ?, meta_keyword = ?, timezone = ?, maintenance = ?, email = ?, phone = ?, facebook = ?, twitter = ?, google = ?, linkedin = ?, address = ?, youtube = ?, instagram = ?, running_text = ?, link = ?', [
@@ -65,8 +69,8 @@ class SettingController extends Controller
 			$r->address,
 			$r->youtube,
 			$r->instagram,
-			$r->running_text,
-			$r->link,
+			$running_text->title,
+			"posts/" . $running_text->slug,
 		]);
 
 		/*OG Image*/
