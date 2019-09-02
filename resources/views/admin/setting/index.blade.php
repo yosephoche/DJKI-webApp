@@ -128,8 +128,7 @@
   height="450"
   frameborder="0" style="border:0"
   id="maps"
-  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA3UW2dr_crtKOty2Mizn-z3XrcUsVOljI
-    &q=Indonesia" allowfullscreen>
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA3UW2dr_crtKOty2Mizn-z3XrcUsVOljI&q={{$setting->address}}" allowfullscreen>
 </iframe>
 				
 									<div class="col-md-12">
@@ -257,7 +256,7 @@ $("#addr").on("change", function () {
 	let additional = $(this).val().replace("\\s","+",);
 	let baseUrl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyA3UW2dr_crtKOty2Mizn-z3XrcUsVOljI&q="+additional;
 	$("#maps").attr("src", baseUrl);
-	$('#maps').contentWindow.location.reload(true);
+	$('#maps').contentWindow.location.reload(true);	}
 });
 </script>
 @endsection
