@@ -196,6 +196,17 @@
 					</li>
 					@endif
 
+					{{-- Parnertship --}}
+
+					@if ($status == 'Super Admin' OR $status == 'Admin')
+					<li {{ Request::is('admin/partnership*') ? 'class=active' : '' }}>
+						<a href="{{ route('partnership-index') }}">
+							<i class="fa fa-handshake"></i>
+							<span>Partnership</span>
+						</a>
+					</li>
+					@endif
+
 
 
 					{{-- End Maps --}}
