@@ -129,7 +129,7 @@
   frameborder="0" style="border:0"
   id="maps"
   src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA3UW2dr_crtKOty2Mizn-z3XrcUsVOljI
-    &q=Indonesia+Makassar" allowfullscreen>
+    &q=Indonesia" allowfullscreen>
 </iframe>
 				
 									<div class="col-md-12">
