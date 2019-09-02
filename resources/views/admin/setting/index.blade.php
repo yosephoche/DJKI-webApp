@@ -66,7 +66,7 @@
 										<option value="pages/{{ $pages->slug }}">{{ $pages->title }}</option>
 									@endforeach
 									@foreach ($url_directory as $directory)
-										<option value="uploaded/download/{{ $directory->file }}">{{ $directory->title }}</option>
+										<option value="{{ $directory->file }}">{{ $directory->title }}</option>
 									@endforeach
 								</datalist>
 							</div>

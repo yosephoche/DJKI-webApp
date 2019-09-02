@@ -45,7 +45,9 @@ class SettingController extends Controller
 			'link' 				=> 'required',
 		]);
 
-		// $running_text = Posts::where('slug', $r->link)->first();
+		$post = Posts::where('slug', $r->link)->first();
+		$post = Pages::where('slug', $r->link)->first();
+		$post = Archive::where('file', $r->link)->first();
 		// dd($running_text);
 		/*Maintenance Status*/
 		$maintenance = '0';

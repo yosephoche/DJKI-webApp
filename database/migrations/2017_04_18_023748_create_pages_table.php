@@ -22,7 +22,7 @@ class CreatePagesTable extends Migration
 			$table->string('keyword', 250)->nullable();
 			$table->text('image')->nullable();
 			$table->string('category', 10);
-			$table->text('type',100)->nullable();
+			$table->text('type', 100)->nullable();
 			$table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
 			$table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 			$table->softDeletes();
@@ -36,6 +36,6 @@ class CreatePagesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('pages');
+		Schema::dropIfExists('pages');
 	}
 }

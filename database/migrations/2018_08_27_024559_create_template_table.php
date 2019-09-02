@@ -10,14 +10,14 @@ class CreateTemplateTable extends Migration
   {
     Schema::create('templates', function (Blueprint $table) {
       $table->increments('id');
-      $table->string('path',100);
+      $table->string('path', 100);
       $table->text('setup');
-      $table->string('status',10);
+      $table->string('status', 10);
     });
   }
 
   public function down()
   {
-    Schema::drop('templates');
+    Schema::dropIfExists('templates');
   }
 }

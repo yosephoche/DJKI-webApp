@@ -33,6 +33,6 @@ class CreateArchiveTable extends Migration
      */
     public function down()
     {
-        Schema::drop('archive');
+        Schema::dropIfExists('archive');
     }
 }

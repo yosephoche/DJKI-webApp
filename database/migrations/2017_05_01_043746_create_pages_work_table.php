@@ -36,6 +36,6 @@ class CreatePagesWorkTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('pages_work');
+		Schema::dropIfExists('pages_work');
 	}
 }

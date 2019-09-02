@@ -36,6 +36,6 @@ class CreateVisitorsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('visitors');
+        Schema::dropIfExists('visitors');
     }
 }

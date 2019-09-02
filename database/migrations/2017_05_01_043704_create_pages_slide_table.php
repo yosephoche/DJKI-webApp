@@ -32,6 +32,6 @@ class CreatePagesSlideTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('pages_slide');
+		Schema::dropIfExists('pages_slide');
 	}
 }

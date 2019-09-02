@@ -31,6 +31,6 @@ class CreatePagesAboutTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('pages_about');
+		Schema::dropIfExists('pages_about');
 	}
 }
