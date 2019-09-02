@@ -58,3 +58,8 @@ hr {
   color: #333;
   text-decoration: none;
 }
+
+.app-content-body.bg-light h1 {
+  background: red;
+  font-size: 500px;
+}
