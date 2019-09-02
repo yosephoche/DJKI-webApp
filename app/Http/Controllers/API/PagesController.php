@@ -46,7 +46,6 @@ class PagesController extends MenusController
                             'partner' => $this->partner(),
                             'menu' => $this->menu($menuIfExist)
                         ],
-
                     ];
                 } else {
                     $pages['response'] = [
@@ -55,7 +54,7 @@ class PagesController extends MenusController
                         'content_uri' => route('front_pages', ['id' => $data->id, 'slug' => $data->slug]),
                         'data' => [
                             'slideshow' => [],
-                            'banner' => $this->customizer(''),
+                            'partner' => $this->partner(),
                             'menu' => []
                         ],
                         'image' => $arrImages
@@ -164,7 +163,7 @@ class PagesController extends MenusController
     {
         $datas = Partnership::all();
         $data = array();
-        foreach ($datas as  $value) {
+        foreach ($datas as $value) {
             # code..
             $data[] = [
                 'id' => $value->id,
