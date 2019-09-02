@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
-use App\Category;
-use App\Settings;
-use Illuminate\Http\Request;
+// use App\Category;
 use App\Http\Controllers\Controller;
-use App\Posts;
 use DB, Session, GlobalClass;
+use Illuminate\Http\Request;
+use App\Settings;
+use App\Archive;
+use App\Posts;
+use App\Pages;
 
 class SettingController extends Controller
 {
@@ -20,9 +21,12 @@ class SettingController extends Controller
 	{
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 		$data['setting'] = Settings::first();
-		$liputan_humas = Category::where('name', 'Liputan Humas')->first();
-		$info_terbaru = Category::where('name', 'Info terbaru')->first();
-		$data['url_posts'] = Posts::where('category', $liputan_humas->id)->orWhere('category', $info_terbaru->id)->get();
+		// $liputan_humas = Category::where('name', 'Liputan Humas')->first();
+		// $info_terbaru = Category::where('name', 'Info terbaru')->first();
+		// $data['url_posts'] = Posts::where('category', $liputan_humas->id)->orWhere('category', $info_terbaru->id)->get();
+		$data['url_posts'] = Posts::all();
+		$data['url_pages'] = Pages::all();
+		$data['url_directory'] = Archive::all();
 		return view('admin.setting.index', $data);
 	}
 
@@ -41,7 +45,7 @@ class SettingController extends Controller
 			'link' 				=> 'required',
 		]);
 
-		$running_text = Posts::where('slug', $r->link)->first();
+		// $running_text = Posts::where('slug', $r->link)->first();
 		// dd($running_text);
 		/*Maintenance Status*/
 		$maintenance = '0';
@@ -69,8 +73,10 @@ class SettingController extends Controller
 			$r->address,
 			$r->youtube,
 			$r->instagram,
-			$running_text->title,
-			"posts/" . $running_text->slug,
+			$r->running_text,
+			$r->link,
+			// $running_text->title,
+			// "posts/" . $running_text->slug,
 		]);
 
 		/*OG Image*/

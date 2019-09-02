@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnToSettingTable extends Migration
+class AddColumnToMenusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddColumnToSettingTable extends Migration
      */
     public function up()
     {
-        Schema::table('setting', function (Blueprint $table) {
-            $table->string('running_text');
-            $table->string('link');
+        Schema::table('menus', function (Blueprint $table) {
+            $table->string('lang', 3);
         });
     }
 
@@ -26,9 +25,8 @@ class AddColumnToSettingTable extends Migration
      */
     public function down()
     {
-        Schema::table('setting', function (Blueprint $table) {
-            $table->dropColumn('running_text');
-            $table->dropColumn('link');
+        Schema::table('menus', function (Blueprint $table) {
+            $table->dropColumn('lang');
         });
     }
 }

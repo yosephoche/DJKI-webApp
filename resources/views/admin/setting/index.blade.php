@@ -60,10 +60,23 @@
 								<datalist id="menu-header" class="datalist">
 									<option value="#">Blank</option>
 									@foreach ($url_posts as $posts)
-										{{-- <option value="{{ $posts->id }}">/posts/{{ $posts->slug }}</option> --}}
-										<option value="{{ $posts->slug }}">{{ $posts->title }}</option>
+										<option value="posts/{{ $posts->slug }}">{{ $posts->title }}</option>
+									@endforeach
+									@foreach ($url_pages as $pages)
+										<option value="pages/{{ $pages->slug }}">{{ $pages->title }}</option>
+									@endforeach
+									@foreach ($url_directory as $directory)
+										<option value="uploaded/download/{{ $directory->file }}">{{ $directory->title }}</option>
 									@endforeach
 								</datalist>
+							</div>
+							<div class="form-group">
+								<label>Display Text</label>
+								<input type="text" class="form-control" placeholder="Running Text" name="running_text">
+							</div>
+							<div class="form-group">
+								<label>link</label>
+								<input type="text" class="form-control" placeholder="Link" name="link" disabled>
 							</div>
 						</div>
 					</div>
