@@ -101,10 +101,10 @@ class ResponseHelper
 
         switch ($code) {
             case 200:
-                if  ($page == null) {
+                if ($page == null) {
                     $response = [
                         'response' => $data,
-                        'diagnostics' => $dgn
+                        'diagnostic' => $dgn
                     ];
 
                     return $response;
@@ -113,26 +113,26 @@ class ResponseHelper
                 $response = [
                     'pagination' => $page,
                     'response' => $data,
-                    'diagnostics' => $dgn,
+                    'diagnostic' => $dgn,
                 ];
                 break;
             case 201:
                 $response = [
                     'response' => $data,
-                    'diagnostics' => $dgn
+                    'diagnostic' => $dgn
                 ];
                 break;
 
             case 422:
                 $response = [
                     'response' => $data,
-                    'diagnostics' => $dgn
+                    'diagnostic' => $dgn
                 ];
                 break;
 
             default:
                 $response = [
-                    'diagnostics' => $dgn
+                    'diagnostic' => $dgn
                 ];
         }
 

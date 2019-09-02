@@ -53,6 +53,18 @@
 								<label>Keyword for SEO</label><br>
 								<input ui-jq="tagsinput" ui-options="" name="meta_keyword" class="form-control input-lg" value="{{ $setting->meta_keyword }}" required/>
 							</div>
+
+							<div class="form-group">
+								<label>Running Text</label>
+								<input type="text" name="link" class="form-control" list="menu-header" autocomplete="off" placeholder="This menu link to ...">
+								<datalist id="menu-header" class="datalist">
+									<option value="#">Blank</option>
+									@foreach ($url_posts as $posts)
+										{{-- <option value="{{ $posts->id }}">/posts/{{ $posts->slug }}</option> --}}
+										<option value="{{ $posts->slug }}">{{ $posts->title }}</option>
+									@endforeach
+								</datalist>
+							</div>
 						</div>
 					</div>
 
