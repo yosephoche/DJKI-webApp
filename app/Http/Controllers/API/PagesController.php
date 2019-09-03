@@ -118,15 +118,13 @@ class PagesController extends MenusController
     {
         try {
 
-            $slide1 = Slideshow::orderBy('sort', 'DESC')->where('category', 'Tentang Kami')->orwhere('category', 'Home');
+            $slide1 = Slideshow::orderBy('sort', 'DESC')->where('category', 'Tentang Kami');
             $data = array();
             foreach ($slide1->get() as $key => $value) {
                 $data[] = [
                     'title' => $value->title,
-                    'desc' => $value->desc,
                     'image' => asset('uploaded/media/' . $value->image),
-                    'link' => $value->link,
-                    'category' => $value->category
+                    'link' => $value->link
                 ];
             }
 
