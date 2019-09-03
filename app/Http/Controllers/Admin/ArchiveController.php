@@ -155,8 +155,8 @@ class ArchiveController extends Controller
       $this->validate($r, [
         'title' => 'required|max:100',
         'attachments' => 'required|mimes:jpeg,png,pdf,xls,xlsx,doc,docx',
-        'publish_date'=>'required',
-        'desc'=>''
+        'publish_date' => 'required',
+        'desc' => ''
       ]);
 
 
