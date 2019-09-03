@@ -28,7 +28,7 @@ class SlideshowController extends Controller
 	{
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 		$pages = Pages::all();
-		return view('admin.slideshow.create', compact('pages', 'post_category'));
+		return view('admin.slideshow.create', compact('pages'));
 	}
 
 	public function store(Request $r)
@@ -73,7 +73,7 @@ class SlideshowController extends Controller
 			$slideshow = Slideshow::findOrFail($id);
 			$data['slideshow'] = $slideshow;
 
-			return view('admin.slideshow.edit', $data, compact('pages', 'post_category'));
+			return view('admin.slideshow.edit', $data, compact('pages'));
 		} catch (ModelNotFoundException $e) {
 			return redirect()->route('slideshow');
 		}
