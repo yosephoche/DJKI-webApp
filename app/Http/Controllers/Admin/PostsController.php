@@ -71,9 +71,9 @@ class PostsController extends Controller
 			'category' => 'required|max:50'
 		]);
 
-
+		// $tt = "posts/" . $r->title;
 		/*Make Slug*/
-		$slug = str_slug($r->title, "-");
+		$slug = "posts/" . str_slug($r->title, "-");
 
 		/*check to see if any other slugs exist that are the same & count them*/
 		$count = DB::table('posts')->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();

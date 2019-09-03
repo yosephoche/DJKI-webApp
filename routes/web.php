@@ -293,6 +293,7 @@ Route::group(['namespace' => 'Admin'], function () {
         /* Setting */
         Route::group(['prefix' => '/setting'], function () {
             Route::get('/', 'SettingController@index')->name('setting');
+            Route::get('/runningtext/{id}', 'SettingController@setText');
             Route::post('/generate/keytoken', 'SettingController@keytoken')->name('key_token');
             Route::post('/update', 'SettingController@update')->name('setting_update');
         });

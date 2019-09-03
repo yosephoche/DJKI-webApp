@@ -56,14 +56,14 @@
 
 							<div class="form-group">
 								<label>Running Text</label>
-								<input type="text" name="link" class="form-control" list="menu-header" autocomplete="off" placeholder="This menu link to ...">
+								<input type="text" name="link" class="form-control" id="pinned" list="menu-header" autocomplete="off" placeholder="This menu link to ...">
 								<datalist id="menu-header" class="datalist">
 									<option value="#">Blank</option>
 									@foreach ($url_posts as $posts)
-										<option value="posts/{{ $posts->slug }}">{{ $posts->title }}</option>
+										<option value="{{ $posts->slug }}">{{ $posts->title }}</option>
 									@endforeach
 									@foreach ($url_pages as $pages)
-										<option value="pages/{{ $pages->slug }}">{{ $pages->title }}</option>
+										<option value="{{ $pages->slug }}">{{ $pages->title }}</option>
 									@endforeach
 									@foreach ($url_directory as $directory)
 										<option value="{{ $directory->file }}">{{ $directory->title }}</option>
@@ -72,11 +72,11 @@
 							</div>
 							<div class="form-group">
 								<label>Display Text</label>
-								<input type="text" class="form-control" placeholder="Running Text" name="running_text">
+								<input type="text" class="form-control" placeholder="Running Text" id="running" name="running_text">
 							</div>
 							<div class="form-group">
 								<label>link</label>
-								<input type="text" class="form-control" placeholder="Link" name="link" disabled>
+								<input type="text" class="form-control" placeholder="Link" name="alamat" id="linkk" readonly>
 							</div>
 						</div>
 					</div>
