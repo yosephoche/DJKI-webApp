@@ -34,12 +34,6 @@
 							<div class="form-group">
 								<input type="text" name="title" class="form-control input-lg" placeholder="Slideshow title" value="{!! old('title') !!}">
 							</div>
-
-							<div class="form-group">
-								<textarea name="desc" class="form-control" rows="5">
-									{!! old('desc') !!}
-								</textarea>
-							</div>
 						</div>
 					</div>
 
@@ -79,11 +73,17 @@
 									@endforeach
 									</datalist>
 								</div>
-
+								
 								<div class="form-group linked">
-										<label for="">Category</label>
-											<input type="text" name="category" class="form-control">
-										</div>
+									<label for="">Category</label>
+										<input type="text" name="category" list="post_category" class="form-control" autocomplete="off">
+											<datalist id="post_category" >
+												<select >
+													<option value="Home">Home</option>
+													<option value="Tentang Kami">Tentang Kami</option>	
+												</select>
+											</datalist>
+								</div>
 						</div>
 					</div>
 

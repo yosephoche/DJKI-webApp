@@ -21,8 +21,8 @@ class CreateMessagesTable extends Migration
 			$table->string('company', 100)->nullable();
 			$table->string('subject')->nullable();
 			$table->longText('message');
-			$table->enum('read_status', ['0','1']);
-			$table->enum('type', ['inbox','sent']);
+			$table->enum('read_status', ['0', '1']);
+			$table->enum('type', ['inbox', 'sent']);
 			$table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
 			$table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 			$table->softDeletes();
@@ -36,6 +36,6 @@ class CreateMessagesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('messages');
+		Schema::dropIfExists('messages');
 	}
 }

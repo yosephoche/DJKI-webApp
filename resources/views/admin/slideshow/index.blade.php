@@ -26,6 +26,7 @@
 					<thead>
 						<tr>
 							<th style="width: 40%">Slideshow Title</th>
+							<th>Category</th>
 							<th>Page Created</th>
 							<th>Last Update</th>
 							<th style="width:120px;"></th>
@@ -38,6 +39,7 @@
 								<td>
 									<a href="#">{{ $s->title }}</a>
 								</td>
+								<td>{{ $s->category}}</td>
 								<td>{{ $s->created_at }}</td>
 								<td>{{ $s->updated_at }}</td>
 								<td>

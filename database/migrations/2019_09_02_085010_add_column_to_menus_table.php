@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnToPostsTable extends Migration
+class AddColumnToMenusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddColumnToPostsTable extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->string('lang', 10);
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+        Schema::table('menus', function (Blueprint $table) {
+            $table->string('lang', 3);
         });
     }
 
@@ -26,9 +25,8 @@ class AddColumnToPostsTable extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('menus', function (Blueprint $table) {
             $table->dropColumn('lang');
-            $table->dropForeign(['id_user']);
         });
     }
 }

@@ -28,6 +28,6 @@ class CreateSubscribersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('subscribers');
+        Schema::dropIfExists('subscribers');
     }
 }

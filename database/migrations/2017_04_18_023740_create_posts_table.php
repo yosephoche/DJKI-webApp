@@ -21,7 +21,7 @@ class CreatePostsTable extends Migration
 			$table->longText('content');
 			$table->string('keyword', 250)->nullable();
 			$table->text('image')->nullable();
-			$table->string('category', 10);
+			$table->integer('category')->unsigned();
 			$table->enum('comment', ['0', '1']);
 			$table->enum('status', ['publish', 'schedule', 'draft', 'hidden']);
 			$table->dateTime('published');
@@ -38,6 +38,6 @@ class CreatePostsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('posts');
+		Schema::dropIfExists('posts');
 	}
 }

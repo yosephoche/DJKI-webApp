@@ -22,4 +22,9 @@ class Posts extends Model
     {
         return $this->hasMany('App\Comments', 'id_posts');
     }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category', 'category');
+    }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Pages;
 use App\Http\Controllers\Controller;
+use App\Settings;
 use General, Response;
 
 class MenusController extends Controller
@@ -17,11 +18,11 @@ class MenusController extends Controller
     $this->response = new Response;
   }
 
-  public function getMenus(Request $r, $idMenu = null)
+  public function getMenus(Request $r)
   {
-    if ($idMenu) {
+    if ($r->id_menu) {
       /* Kondisi ketika idMenu bernilai true, maka target query adalah submenu dan subsmenu */
-      $menu = nav(['position' => 'header'])->where('parent', $idMenu)->where('lang', $r->lang);
+      $menu = nav(['position' => 'header'])->where('parent', $r->id_menu)->where('lang', $r->lang);
       foreach ($menu as $key => $parent) {
         $action = $this->getAction($parent->url, $parent->id);
         $menus[] = [
@@ -34,11 +35,17 @@ class MenusController extends Controller
       }
     } else {
       $menu = nav(['position' => 'header'])->where('parent', '0')->where('lang', $r->lang);
+      $running_text = Settings::whereNotNull('running_text')->first();
+      // dd($running_text->link);
       /* Kondisi ketika idMenu bernilai false, maka target query adalah parent */
+      $menus['pinned'] = [
+        'running_text' => $running_text->running_text,
+        'link' => $running_text->link
+      ];
       foreach ($menu as $key => $parent) {
         $action = $this->getAction($parent->url, $parent->id);
         $slugs = str_replace(' ', '_', strtolower($parent->menu_title));
-        $menus[] = [
+        $menus['data'][] = [
           'id_menu' => $parent->id,
           'description' => isset($parent->description) == false ? '' : $parent->description,
           'title' => $parent->menu_title,

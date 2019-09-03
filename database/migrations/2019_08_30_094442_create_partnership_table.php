@@ -30,6 +30,6 @@ class CreatePartnershipTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('partnership');
     }
 }

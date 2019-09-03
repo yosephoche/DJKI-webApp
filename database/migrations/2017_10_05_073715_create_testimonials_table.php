@@ -13,7 +13,7 @@ class CreateTestimonialsTable extends Migration
      */
     public function up()
     {
-         Schema::create('testimonials', function (Blueprint $table) {
+        Schema::create('testimonials', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 150);
             $table->string('position', 200)->nullable();
@@ -31,6 +31,6 @@ class CreateTestimonialsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('testimonials');
+        Schema::dropIfExists('testimonials');
     }
 }
