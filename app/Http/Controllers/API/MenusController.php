@@ -8,6 +8,7 @@ use App\Pages;
 use App\Http\Controllers\Controller;
 use App\Settings;
 use App\Slideshow;
+use App\MenuHorizontal;
 use General, Response;
 
 class MenusController extends Controller
@@ -37,7 +38,9 @@ class MenusController extends Controller
     } else {
       $menu = nav(['position' => 'header'])->where('parent', '0')->where('lang', $r->lang);
       $running_text = Settings::whereNotNull('running_text')->first();
-      $slide = Slideshow::all();
+      $slide1 = Slideshow::orderBy('sort', 'DESC')->where('category', 'Home');
+      $horizontal = MenuHorizontal::all();
+      // $slide1 = Slideshow::orderBy('sort', 'DESC')->where('category', 'Home');
       // dd($running_text->link);
       /* Kondisi ketika idMenu bernilai false, maka target query adalah parent */
       $menus['pinned'] = [
@@ -50,6 +53,26 @@ class MenusController extends Controller
         'youtube' => $running_text->youtube,
         'instagram' => $running_text->instagram,
       ];
+
+      foreach ($slide1->get() as $key => $value) {
+        $menus['slideshow'][] = [
+          'id_slide' => $value->id,
+          'title' => $value->title,
+          'image' => asset('uploaded/media/' . $value->image),
+          'link' => $value->link
+        ];
+      }
+
+      foreach ($horizontal as $key => $n) {
+        $menus['menu_horizontal'][] = [
+          'id_menu' => $n->id,
+          'menu_title_id' => $n->menu_title_id,
+          'menu_title_en' => $n->menu_title_en,
+          'url'   => $n->url,
+          'image' => $n->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $n->image)
+        ];
+      }
+
       foreach ($menu as $key => $parent) {
         $action = $this->getAction($parent->url, $parent->id);
         $slugs = str_replace(' ', '_', strtolower($parent->menu_title));
@@ -60,17 +83,6 @@ class MenusController extends Controller
           'action_type' => $action['type'],
           'id_target' => $action['id'],
           'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)
-        ];
-      }
-      foreach ($slide as $key => $value) {
-        $menus['slideshow'][] = [
-          'id_slide' => $value->id,
-          'sort' => $value->sort,
-          'title' => $value->title,
-          'description' => $value->desc,
-          'image' => $value->image,
-          'link' => $value->link,
-          'category' => $value->category
         ];
       }
     }
