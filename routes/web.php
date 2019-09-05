@@ -330,12 +330,12 @@ Route::group(['namespace' => 'Admin'], function () {
 
         // Menu Horizontal
         Route::group(['prefix' => '/horizontal'], function () {
-            Route::get('/', 'MenuhorizontalController@index')->name('horizontal-index');
-            Route::get('/create', 'MenuHorizontalController@create')->name('horizontal-create');
-            Route::post('/store', 'MenuHorizontalController@store')->name('horizontal-store');
-            Route::get('/edit/{id}', 'MenuHorizontalController@edit')->name('horizontal-edit');
-            Route::put('/update/{id}', 'MenuHorizontalController@update')->name('horizontal-update');
-            Route::post('/delete', 'MenuHorizontalController@destroy')->name('horizontal-delete');
+            Route::get('/', 'MenuhorizontalController@index')->name('menuhorizontal');
+            Route::get('/{option?}', 'MenuhorizontalController@index')->name('menuhorizontal');
+            Route::post('/store', 'MenuhorizontalController@store')->name('menuhorizontal_store');
+            Route::post('/update', 'MenuhorizontalController@update')->name('menuhorizontal_update');
+            Route::post('/delete', 'MenuhorizontalController@delete')->name('menuhorizontal_delete');
+            Route::post('/drag', 'MenuhorizontalController@drag')->name('menuhorizontal_drag');
         });
     });
 });
