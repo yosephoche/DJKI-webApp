@@ -29,6 +29,7 @@
 					{{ csrf_field() }}
 					<input type="hidden" name="_method" value="PUT">
 
+					@if($slideshow->id_inputan==1)
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
@@ -59,21 +60,56 @@
 									</div>
 		
 								{{-- category --}}
-							<div class="form-group linked">
-									<label for="">Category</label>
-										<input type="text" name="category" list="post_category" class="form-control" value="{{$slideshow->category}}" autocomplete="off">
-											<datalist id="post_category" >
-												<select>
+							<div class="form-group">
+									<label>Category</label>
+										<select class="form-control" name="category">
+											@if ($slideshow->category=='Home')
+													<option value="{{$slideshow->category}}">{{$slideshow->category}}</option>
+													<option value="Tentang Kami">Tentang Kami</option>
+													@else
+													<option value="{{$slideshow->category}}">{{$slideshow->category}}</option>
 													<option value="Home">Home</option>
-													<option value="Tentang Kami">Tentang Kami</option>	
-												</select>
-											</datalist>
-								</div>
-					
+												@endif	
+										</select>
+							</div>
 					</div>
 
 					<hr>
+					@else
+					@if(isset($slideshow->link))
+						<iframe id="youvid" width="560" height="315" 
+						src="{{$slideshow->link}}" frameborder="1" 
+						allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+						</iframe>
+					@endif
 
+
+					<div class="col-md-5 col-sm-6">
+								{{-- link video --}}
+								<div class="form-group linked" id="linkvid" >
+									<label>Link Video</label>
+								<input type="text" name="linkvid" value="{{$slideshow->link}}" id="addr" class="form-control" autocomplete="off">
+								</div>
+		
+								{{-- category --}}
+							<div class="form-group">
+									<label>Category</label>
+										<select class="form-control" name="category">
+											@if ($slideshow->category=='Home')
+													<option value="{{$slideshow->category}}">{{$slideshow->category}}</option>
+													<option value="Tentang Kami">Tentang Kami</option>
+													@else
+													<option value="{{$slideshow->category}}">{{$slideshow->category}}</option>
+													<option value="Home">Home</option>
+												@endif	
+										</select>
+							</div>
+					</div>
+					<hr>
+					@endif
+					
+					
+					
 					<div class="row">
 						<div class="col-md-12 text-right">
 							<div class="col-md-12 text-right">
@@ -118,3 +154,15 @@
 		</div>
 	</div>
 @endsection
+
+@section('registerscript')
+<script type="text/javascript">
+$("#addr").on("change", function () {
+	let additional = $(this).val().replace("\\s","+",);
+	let baseUrl = additional;
+	$("#youvid").attr("src", baseUrl);
+	$('#youvid').contentWindow.location.reload(true);
+});
+</script>
+@endsection
+

@@ -1,8 +1,8 @@
-$(document).on("change", ".checkbox", function() {
+$(document).on("change", ".checkbox", function () {
   var listArr = [];
   var inner = "";
   var html = $(".boxImg");
-  $(".checkbox:checked").each(function() {
+  $(".checkbox:checked").each(function () {
     listArr.push($(this).data());
     var data = $(this).data();
     inner +=
@@ -12,14 +12,36 @@ $(document).on("change", ".checkbox", function() {
   });
   html.html(inner);
 });
+// slide
+document.querySelector('#pilihan').addEventListener('change', function () {
+  var select = document.querySelector('#pilihan')
+  if (select.value != '2') {
+    document.querySelector('#title').style.display = 'block';
+    document.querySelector('#image').style.display = 'block';
+    document.querySelector('#category').style.display = 'block';
+    document.querySelector('#link').style.display = 'block';
+    document.querySelector('#linkvid').style.display = 'none';
+    document.querySelector('#video').style.display = 'none';
+  } else {
+    document.querySelector('#title').style.display = 'none';
+    document.querySelector('#image').style.display = 'none';
+    document.querySelector('#category').style.display = 'block';
+    document.querySelector('#link').style.display = 'none';
+    document.querySelector('#linkvid').style.display = 'block';
+    document.querySelector('#video').style.display = 'block';
+  }
 
-$(document).ready(function() {
+})
+//endslide
 
-  $(".checkbox").change(function() {
+
+$(document).ready(function () {
+
+  $(".checkbox").change(function () {
     var listArr = [];
     var inner = "";
     var html = $(".boxImg");
-    $(".checkbox:checked").each(function() {
+    $(".checkbox:checked").each(function () {
       var data = $(this).data();
       inner +=
         '<div class="avatar thumb-xs m-r-xs" style="background: url(' +
@@ -30,7 +52,7 @@ $(document).ready(function() {
   });
 
   /*Modal delete*/
-  $("#modal-delete").on("show.bs.modal", function(e) {
+  $("#modal-delete").on("show.bs.modal", function (e) {
     var id = $(e.relatedTarget).data("id");
     $(this)
       .find('input[name="id"]')
@@ -43,7 +65,7 @@ $(document).ready(function() {
       group: 1,
       maxDepth: 3
     })
-    .on("change", function(e) {
+    .on("change", function (e) {
       $(".change").show();
       $('button[data-action="collapse"]')
         .parent()
@@ -56,12 +78,12 @@ $(document).ready(function() {
       var parents = [];
       $("#nestable")
         .find("li")
-        .each(function() {
+        .each(function () {
           IDs.push(this.id);
           parents.push(
             $(this)
-              .parent()
-              .data("parent")
+            .parent()
+            .data("parent")
           );
         });
       $('input[name="id_menus"]').val(IDs);
@@ -77,21 +99,21 @@ $(document).ready(function() {
       var parent = data.subsubmenu;
     }
     var status = data.status;
-    $(this).find('select[name="parent"]').prop('selectedIndex',0);
+    $(this).find('select[name="parent"]').prop('selectedIndex', 0);
     $(this).find('input[name="id"]').val(data.id);
     $(this).find('input[name="menu_title"]').val(data.title);
     $(this).find('input[name="url"]').val(data.link);
     $(this).find('select[name="parent"] option[value="' + parent + '"]').prop("selected", true);
-    $(this).find('.previewImage_').attr('src',data.preview);
+    $(this).find('.previewImage_').attr('src', data.preview);
     if (status == true) {
-      $('#textarea').html('<div class="form-group"><label>Description</label><div class="form-group"><textarea class="form-control" name="description">'+data.description+'</textarea></div></div>');
+      $('#textarea').html('<div class="form-group"><label>Description</label><div class="form-group"><textarea class="form-control" name="description">' + data.description + '</textarea></div></div>');
     } else {
       $('#textarea').html('');
     }
   });
 
   /*Preview post*/
-  $("#preview").click(function(e) {
+  $("#preview").click(function (e) {
     var data = $("#formPost").serializeArray();
     var iframe = $("#iframePreview").contents();
     var img = $("#previewImage_-").attr("src");
@@ -107,7 +129,7 @@ $(document).ready(function() {
   });
 
   /*Filter media*/
-  var $btns = $(".btnFilter").click(function() {
+  var $btns = $(".btnFilter").click(function () {
     if (this.id == "all") {
       $(".item").fadeIn(450);
     } else {
@@ -128,7 +150,7 @@ $(document).ready(function() {
   });
 
   /* Add new field */
-  $(".addField").click(function(e) {
+  $(".addField").click(function (e) {
     e.preventDefault();
     var obj = $(this)
       .parent()
@@ -205,7 +227,7 @@ $(document).ready(function() {
   });
 
   /* Remove Repeater List */
-  $(document).on("click", ".remove_field", function(e) {
+  $(document).on("click", ".remove_field", function (e) {
     e.preventDefault();
     $(this)
       .parent("div")
@@ -213,9 +235,9 @@ $(document).ready(function() {
   });
 
   /* Open Media */
-  $(document).on("click", ".open_media", function() {
+  $(document).on("click", ".open_media", function () {
     idTarget = $(this).attr("id");
-    $(".selectCustomizer").click(function(event) {
+    $(".selectCustomizer").click(function (event) {
       var valueImg = $(this).data("value");
       $("#" + idTarget).val(valueImg);
       $("#myModal").modal("toggle");
@@ -227,7 +249,7 @@ $(document).ready(function() {
   $(".ColorPicker").colorpicker();
 
   /* Accordion */
-  $("#accordion").on("show.bs.collapse", function() {
+  $("#accordion").on("show.bs.collapse", function () {
     $("#accordion .in").collapse("hide");
   });
 });
@@ -235,12 +257,12 @@ $(document).ready(function() {
 /* Slider */
 $(".carousel").carousel();
 
-$(".direktori .btn-link").click(function() {
+$(".direktori .btn-link").click(function () {
   $(".direktori .media-upload").removeClass("show");
   $(".direktori .text-link").addClass("show");
 });
 
-$(".direktori .btn-upload").click(function() {
+$(".direktori .btn-upload").click(function () {
   $(".direktori .text-link").removeClass("show");
   $(".direktori .media-upload").addClass("show");
 });
