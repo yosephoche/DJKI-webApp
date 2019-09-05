@@ -29,36 +29,39 @@
 
 					{{ csrf_field() }}
 
-					<div class="row">
+				<div class="row">
+					<div class="col-md-4">
+					<div class="form-group">
+						<label><b>Select Inputan</b></label>
+						<select class="form-control" name="inputan" id="pilihan">
+							<option >Choose...</option>
+							<option value="1"><b>Picture</b></option>
+							<option value="2"><b>Video</b></option>	
+						</select>
+					</div>
+				</div>
+				</div>
+					
+					<div class="row" id="title" style="display:none">
 						<div class="col-md-12">
 							<div class="form-group">
-								<input type="text" name="title" class="form-control input-lg" placeholder="Slideshow title" value="{!! old('title') !!}">
-							</div>
-
-							<div class="form-group">
-								<textarea name="desc" class="form-control" rows="5">
-									{!! old('desc') !!}
-								</textarea>
+								<input type="text" name="title"  class="form-control input-lg" placeholder="Slideshow title" value="{!! old('title') !!}">
 							</div>
 						</div>
 					</div>
 
-					{{-- <div class="row">
-						<div class="col-md-4 col-sm-6">
-							<div class="form-group">
-								<label>Select Pilhan Slide</label>
-								<div class="pilihan">
-									<select name="" id="pilihan" class="custom-select">
-											<option hidden>Choose</option>
-										<option value="1">Image</option>
-										<option value="2">Link Youtube</option>
-									</select>
+					<div class="row imagef">
+						{{-- video --}}
+						{{-- <div class="col-md-4 col-sm-6" id="video" style="display:none">
+							<div class="form-group imaged">
+								<label>Featured Video</label>
+								<div class="form-group">
+									<iframe width="100%" src="" frameborder="1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 								</div>
 							</div>
-						</div>
-					</div> --}}
-					<div class="row imagef">
-						<div class="col-md-4 col-sm-6">
+						</div> --}}
+						{{-- image --}}
+						<div class="col-md-4 col-sm-6" id="image" style="display:none">
 							<div class="form-group imaged">
 								<label>Featured image</label>
 								<div class="form-group">
@@ -70,7 +73,8 @@
 						</div>
 
 						<div class="col-md-4 col-sm-6">
-							<div class="form-group linked">
+								{{-- link picture --}}
+								<div class="form-group linked" id="link" style="display:none">
 									<label>Link</label>
 									<input type="text" name="link" list="pages" class="form-control" autocomplete="off">
 									<datalist id="pages">
@@ -79,14 +83,22 @@
 									@endforeach
 									</datalist>
 								</div>
+								{{-- link video --}}
+								<div class="form-group linked" id="linkvid" style="display:none">
+									<label>Link Video</label>
+								<input type="text" name="linkvid" class="form-control" value="https://www.youtube.com/embed/" autocomplete="off">
+								</div>
 
-								<div class="form-group linked">
-										<label for="">Category</label>
-											<input type="text" name="category" class="form-control">
-										</div>
+								<div class="form-group" id="category" style="display:none">
+									<label>Category</label>
+									<select class="form-control" name="category">
+										<option value="">Uncategorized</option>
+										<option value="Home">Home</option>
+										<option value="Tentang Kami">Tentang Kami</option>	
+									</select>
+								</div>
 						</div>
 					</div>
-
 					<hr>
 
 					<div class="row">

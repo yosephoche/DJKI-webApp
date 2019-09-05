@@ -105,7 +105,7 @@
 																data-link="{{ $subsubmenu->url }}"
 																data-subsubmenu="{{ $subsubmenu->parent }}"
 																data-preview="{{ $subsubmenu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$subsubmenu->image) }}">
-																<div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">{{ $subsubmenu->menu_title }}
+																<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{ $subsubmenu->menu_title }}
 																	<div class="pull-right sortable-action">
 																		<a href="#" data-toggle="modal" data-target="#modal-edit-menus"><i class="glyphicon glyphicon-pencil"></i></a>
 																		&nbsp;&nbsp;

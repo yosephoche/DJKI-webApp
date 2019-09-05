@@ -12,7 +12,26 @@ $(document).on("change", ".checkbox", function () {
   });
   html.html(inner);
 });
-
+// slide
+$("#pilihan").on('change', function () {
+  var select = document.querySelector('#pilihan')
+  if (select.value != '2') {
+    document.querySelector('#title').style.display = 'block';
+    document.querySelector('#image').style.display = 'block';
+    document.querySelector('#category').style.display = 'block';
+    document.querySelector('#link').style.display = 'block';
+    document.querySelector('#linkvid').style.display = 'none';
+    document.querySelector('#video').style.display = 'none';
+  } else {
+    document.querySelector('#title').style.display = 'none';
+    document.querySelector('#image').style.display = 'none';
+    document.querySelector('#category').style.display = 'block';
+    document.querySelector('#link').style.display = 'none';
+    document.querySelector('#linkvid').style.display = 'block';
+    document.querySelector('#video').style.display = 'block';
+  }
+});
+//
 $(document).ready(function () {
 
   $(".checkbox").change(function () {
@@ -71,13 +90,14 @@ $(document).ready(function () {
   /*Modal edit menus*/
   $('#modal-edit-menus').on('show.bs.modal', function (e) {
     var data = $(e.relatedTarget).parents('li').data();
+    console.log(data);
+
     if (data.submenu) {
       var parent = data.submenu;
     } else if (data.subsubmenu) {
       var parent = data.subsubmenu;
     }
     var status = data.status;
-
     $(this).find('select[name="parent"]').prop('selectedIndex', 0);
     $(this).find('input[name="id"]').val(data.id);
     $(this).find('input[name="menu_title"]').val(data.title);

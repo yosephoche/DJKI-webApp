@@ -4,7 +4,6 @@
 
 @section('contents')
 	<a href="{{ route('slideshow_create') }}" class="new-btn" title="New Slideshow"><i class="glyphicon glyphicon-pencil"></i></a>
-
 	<div class="bg-light lter b-b wrapper-md">
 		<h1 class="m-n font-thin h3">Slideshow</h1>
 	</div>
@@ -25,7 +24,8 @@
 				<table class="table table-striped m-b-none">
 					<thead>
 						<tr>
-							<th style="width: 40%">Slideshow Title</th>
+							<th style="width: 25%">Slideshow Title</th>
+							<th>Category</th>
 							<th>Page Created</th>
 							<th>Last Update</th>
 							<th style="width:120px;"></th>
@@ -38,6 +38,7 @@
 								<td>
 									<a href="#">{{ $s->title }}</a>
 								</td>
+								<td>{{ $s->category}}</td>
 								<td>{{ $s->created_at }}</td>
 								<td>{{ $s->updated_at }}</td>
 								<td>

@@ -117,16 +117,17 @@ class PagesController extends MenusController
     public function Slideshow()
     {
         try {
-            $slider = Slideshow::orderBy('sort', 'DESC')->where('category', 'Tentang Kami');
+
+            $slide1 = Slideshow::orderBy('sort', 'DESC')->where('category', 'Tentang Kami');
             $data = array();
-            foreach ($slider->get() as $key => $value) {
+            foreach ($slide1->get() as $key => $value) {
                 $data[] = [
                     'title' => $value->title,
-                    'desc' => $value->desc,
                     'image' => asset('uploaded/media/' . $value->image),
                     'link' => $value->link
                 ];
             }
+
             return $data;
         } catch (Exception $exception) {
             return [];
