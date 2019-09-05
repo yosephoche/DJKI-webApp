@@ -23,12 +23,12 @@ class MenusController extends Controller
   {
     if ($r->id_menu) {
       /* Kondisi ketika idMenu bernilai true, maka target query adalah submenu dan subsmenu */
-      $menu = nav(['position' => 'header'])->where('parent', $r->id_menu)->where('lang', $r->lang);
+      $menu = nav(['position' => 'header'])->where('parent', $r->id_menu);
       foreach ($menu as $key => $parent) {
         $action = $this->getAction($parent->url, $parent->id);
         $menus[] = [
           'id_parent' => $parent->id,
-          'title' => $parent->menu_title,
+          'title ID' => $parent->menu_title,
           'action_type' => $action['type'],
           'id_target' => $action['id'],
           'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)
@@ -37,7 +37,7 @@ class MenusController extends Controller
     } else {
       $menu = nav(['position' => 'header'])->where('parent', '0')->where('lang', $r->lang);
       $running_text = Settings::whereNotNull('running_text')->first();
-      $slide = Slideshow::all();
+      $slide = Slideshow::where('category', 'Home')->orderBy('updated_at', 'desc')->get();
       // dd($running_text->link);
       /* Kondisi ketika idMenu bernilai false, maka target query adalah parent */
       $menus['pinned'] = [
@@ -53,10 +53,12 @@ class MenusController extends Controller
       foreach ($menu as $key => $parent) {
         $action = $this->getAction($parent->url, $parent->id);
         $slugs = str_replace(' ', '_', strtolower($parent->menu_title));
-        $menus['menu'][] = [
+        $menus['menus'][] = [
           'id_menu' => $parent->id,
-          'description' => isset($parent->description) == false ? '' : $parent->description,
-          'title' => $parent->menu_title,
+          'description_ID' => isset($parent->description) == false ? '' : $parent->description,
+          'description_EN' => isset($parent->description_EN) == false ? '' : $parent->description_EN,
+          'title_ID' => $parent->menu_title,
+          'title_EN' => $parent->menu_title_EN,
           'action_type' => $action['type'],
           'id_target' => $action['id'],
           'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)

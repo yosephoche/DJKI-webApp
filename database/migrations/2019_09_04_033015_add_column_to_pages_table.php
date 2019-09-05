@@ -14,8 +14,8 @@ class AddColumnToPagesTable extends Migration
     public function up()
     {
         Schema::table('pages', function (Blueprint $table) {
-            $table->text('title_EN');
-            $table->longText('content_EN');
+            $table->text('title_en');
+            $table->longText('content_en');
         });
     }
 
@@ -27,8 +27,8 @@ class AddColumnToPagesTable extends Migration
     public function down()
     {
         Schema::table('pages', function (Blueprint $table) {
-            $table->dropColumn('title_EN');
-            $table->dropColumn('content_EN');
+            $table->dropColumn('title_en');
+            $table->dropColumn('content_en');
         });
     }
 }

@@ -14,8 +14,8 @@ class AddColumnToGroupArchiveTable extends Migration
     public function up()
     {
         Schema::table('group_archive', function (Blueprint $table) {
-            $table->string('name_EN');
-            $table->string('desc_EN');
+            $table->string('name_en');
+            $table->string('desc_en');
         });
     }
 
@@ -27,8 +27,8 @@ class AddColumnToGroupArchiveTable extends Migration
     public function down()
     {
         Schema::table('group_archive', function (Blueprint $table) {
-            $table->dropColumn('name_EN');
-            $table->dropColumn('desc_EN');
+            $table->dropColumn('name_en');
+            $table->dropColumn('desc_en');
         });
     }
 }

@@ -14,8 +14,8 @@ class AddColumnToMenusTable extends Migration
     public function up()
     {
         Schema::table('menus', function (Blueprint $table) {
-            $table->string('menu_title_EN', 50);
-            $table->longText('description_EN');
+            $table->string('menu_title_en', 50);
+            $table->longText('description_en');
         });
     }
 
@@ -27,8 +27,8 @@ class AddColumnToMenusTable extends Migration
     public function down()
     {
         Schema::table('menus', function (Blueprint $table) {
-            $table->dropColumn('menu_title_EN');
-            $table->dropColumn('description_EN');
+            $table->dropColumn('menu_title_en');
+            $table->dropColumn('description_en');
         });
     }
 }
