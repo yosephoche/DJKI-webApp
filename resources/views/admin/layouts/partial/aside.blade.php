@@ -187,14 +187,14 @@
 
 					{{-- Maps Aside --}}
 
-					@if ($status == 'Super Admin' OR $status == 'Admin')
+					{{-- @if ($status == 'Super Admin' OR $status == 'Admin')
 					<li {{ Request::is('admin/maps*') ? 'class=active' : '' }}>
 						<a href="{{ route('maps-index') }}">
 							<i class="fa fa-map-marker"></i>
 							<span>Maps</span>
 						</a>
 					</li>
-					@endif
+					@endif --}}
 
 					{{-- Parnertship --}}
 
