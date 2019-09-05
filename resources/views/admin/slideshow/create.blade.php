@@ -34,7 +34,7 @@
 					<div class="form-group">
 						<label><b>Select Inputan</b></label>
 						<select class="form-control" name="inputan" id="pilihan">
-							<option >Choose...</option>
+							<option value="">Choose...</option>
 							<option value="1"><b>Picture</b></option>
 							<option value="2"><b>Video</b></option>	
 						</select>
@@ -72,7 +72,7 @@
 							</div>
 						</div>
 
-						<div class="col-md-4 col-sm-6">
+						<div class="col-md-5 col-sm-6">
 								{{-- link picture --}}
 								<div class="form-group linked" id="link" style="display:none">
 									<label>Link</label>
@@ -86,7 +86,7 @@
 								{{-- link video --}}
 								<div class="form-group linked" id="linkvid" style="display:none">
 									<label>Link Video</label>
-								<input type="text" name="linkvid" class="form-control" value="https://www.youtube.com/embed/" autocomplete="off">
+								<input type="text" name="linkvid" class="form-control" autocomplete="off">
 								</div>
 
 								<div class="form-group" id="category" style="display:none">

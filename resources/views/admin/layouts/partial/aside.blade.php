@@ -159,6 +159,15 @@
 					@endif
 
 					@if ($status == 'Super Admin' OR $status == 'Admin')
+					<li {{ Request::is('admin/horizontal*') ? 'class=active' : '' }}>
+						<a href="{{ route('menuhorizontal',['option'=>'header']) }}">
+							<i class="fa fa-bars"></i>
+							<span>Menus Horizontal</span>
+						</a>
+					</li>
+					@endif
+
+					@if ($status == 'Super Admin' OR $status == 'Admin')
 					<li {{ Request::is('admin/slideshow*') ? 'class=active' : '' }}>
 						<a href="{{ route('slideshow') }}">
 							<i class="icon-control-play"></i>
