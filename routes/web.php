@@ -326,5 +326,15 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::put('/update/{id}', 'PartnershipController@update')->name('partnership-update');
             Route::post('/delete', 'PartnershipController@destroy')->name('partnership-delete');
         });
+
+        // Menu Horizontal
+        Route::group(['prefix' => '/horizontal'], function () {
+            Route::get('/', 'MenuhorizontalController@index')->name('horizontal-index');
+            Route::get('/create', 'MenuHorizontalController@create')->name('horizontal-create');
+            Route::post('/store', 'MenuHorizontalController@store')->name('horizontal-store');
+            Route::get('/edit/{id}', 'MenuHorizontalController@edit')->name('horizontal-edit');
+            Route::put('/update/{id}', 'MenuHorizontalController@update')->name('horizontal-update');
+            Route::post('/delete', 'MenuHorizontalController@destroy')->name('horizontal-delete');
+        });
     });
 });
