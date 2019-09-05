@@ -31,7 +31,12 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<input type="text" name="name" class="form-control input-lg" placeholder="Name Category" value="{!! old('name') !!}">
+								<label for="">INDONESIA</label>
+								<input type="text" name="name" class="form-control input-lg" placeholder="Name Category ID" value="{!! old('name') !!}">
+							</div>
+							<div class="form-group">
+								<label for="">ENGLISH</label>
+								<input type="text" name="nameEN" class="form-control input-lg" placeholder="Name Category EN" value="{!! old('name') !!}">
 							</div>
 						</div>
 					</div>

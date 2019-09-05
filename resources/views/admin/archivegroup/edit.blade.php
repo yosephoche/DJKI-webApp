@@ -27,11 +27,21 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
+								<label for="">Title ID</label>
 								<input type="text" name="name" class="form-control input-lg" value="{{ $archive->name }}" placeholder="Album Name">
 							</div>
 							<div class="form-group">
-								<label>Description</label>
+								<label>Description ID</label>
 								<textarea name="desc" class="editor">{{ $archive->desc }}</textarea>
+							</div>
+
+							<div class="form-group">
+								<label for="">Title EN</label>
+								<input type="text" name="nameEN" class="form-control input-lg" placeholder="Directory Name" value="{{ $archive->name_EN }}">
+							</div>
+							<div class="form-group">
+								<label>Description EN</label>
+								<textarea name="descEN" class="editor">{{ $archive->desc_EN }}</textarea>
 							</div>
 						</div>
 					</div>

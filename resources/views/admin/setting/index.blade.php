@@ -56,14 +56,14 @@
 
 							<div class="form-group">
 								<label>Running Text</label>
-								<input type="text" name="link" class="form-control" list="menu-header" autocomplete="off" placeholder="This menu link to ...">
+								<input type="text" name="link" class="form-control" id="pinned" list="menu-header" autocomplete="off" placeholder="This menu link to ...">
 								<datalist id="menu-header" class="datalist">
 									<option value="#">Blank</option>
 									@foreach ($url_posts as $posts)
-										<option value="posts/{{ $posts->slug }}">{{ $posts->title }}</option>
+										<option value="{{ $posts->slug }}">{{ $posts->title }}</option>
 									@endforeach
 									@foreach ($url_pages as $pages)
-										<option value="pages/{{ $pages->slug }}">{{ $pages->title }}</option>
+										<option value="{{ $pages->slug }}">{{ $pages->title }}</option>
 									@endforeach
 									@foreach ($url_directory as $directory)
 										<option value="{{ $directory->file }}">{{ $directory->title }}</option>
@@ -72,11 +72,11 @@
 							</div>
 							<div class="form-group">
 								<label>Display Text</label>
-								<input type="text" class="form-control" placeholder="Running Text" name="running_text">
+								<input type="text" class="form-control" placeholder="Running Text" id="running" name="running_text">
 							</div>
 							<div class="form-group">
 								<label>link</label>
-								<input type="text" class="form-control" placeholder="Link" name="link" disabled>
+								<input type="text" class="form-control" placeholder="Link" name="alamat" id="linkk" readonly>
 							</div>
 						</div>
 					</div>
@@ -147,12 +147,29 @@
 								</label>
 							</div>
 						</div>
+@if(isset($setting->address))
+<iframe
+  width="1000"
+  height="450"
+  frameborder="0" style="border:0"
+  id="maps"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA3UW2dr_crtKOty2Mizn-z3XrcUsVOljI&q={{$setting->address}}" allowfullscreen>
+</iframe>
+@else
+<iframe
+  width="1000"
+  height="450"
+  frameborder="0" style="border:0"
+  id="maps"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA3UW2dr_crtKOty2Mizn-z3XrcUsVOljI&q=Indonesia" allowfullscreen>
+</iframe>
+@endif
 
-						<div class="col-md-12">
-							<hr>
-							<h4>Contact</h4>
-						</div>
-
+									<div class="col-md-12">
+											<hr>
+											<h4>Contact</h4>
+										</div>
+							<div class="col-6">
 						<div class="col-md-4 col-sm-6">
 							<div class="form-group">
 								<label>Email</label>
@@ -170,9 +187,13 @@
 						<div class="col-md-4 col-sm-6">
 							<div class="form-group">
 								<label>Address</label>
-								<input type="text" name="address" class="form-control" value="{{ $setting->address }}" required>
+								<input type="text" name="address" class="form-control" value="{{ $setting->address }}" id="addr" required>
 							</div>
 						</div>
+
+
+					</div>
+
 
 						<div class="col-md-12">
 							<hr>
@@ -258,4 +279,18 @@
 			</div>
 		</div>
 	</div>
+@endsection
+
+@section('registerscript')
+{{-- <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
+	<script src="/js/mapInput.js"></script> --}}
+
+<script type="text/javascript">
+$("#addr").on("change", function () {
+	let additional = $(this).val().replace("\\s","+",);
+	let baseUrl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyA3UW2dr_crtKOty2Mizn-z3XrcUsVOljI&q="+additional;
+	$("#maps").attr("src", baseUrl);
+	$('#maps').contentWindow.location.reload(true);
+});
+</script>
 @endsection

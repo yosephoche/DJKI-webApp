@@ -12,7 +12,6 @@ $(document).on("change", ".checkbox", function () {
   });
   html.html(inner);
 });
-
 $(document).ready(function () {
 
   $(".checkbox").change(function () {
@@ -71,6 +70,8 @@ $(document).ready(function () {
   /*Modal edit menus*/
   $('#modal-edit-menus').on('show.bs.modal', function (e) {
     var data = $(e.relatedTarget).parents('li').data();
+    console.log(data);
+
     if (data.submenu) {
       var parent = data.submenu;
     } else if (data.subsubmenu) {
@@ -80,14 +81,33 @@ $(document).ready(function () {
     $(this).find('select[name="parent"]').prop('selectedIndex', 0);
     $(this).find('input[name="id"]').val(data.id);
     $(this).find('input[name="menu_title"]').val(data.title);
+    $(this).find('input[name="menu_titleEN"]').val(data.title_eng);
     $(this).find('input[name="url"]').val(data.link);
     $(this).find('select[name="parent"] option[value="' + parent + '"]').prop("selected", true);
     $(this).find('.previewImage_').attr('src', data.preview);
     if (status == true) {
       $('#textarea').html('<div class="form-group"><label>Description</label><div class="form-group"><textarea class="form-control" name="description">' + data.description + '</textarea></div></div>');
+      $('#textareaEN').html('<div class="form-group"><label>Description EN</label><div class="form-group"><textarea class="form-control" name="descriptionEN">' + data.description_en + '</textarea></div></div>');
     } else {
       $('#textarea').html('');
+      $('#textareaEN').html('');
     }
+  });
+
+  $("#pinned").change(function () {
+    $.ajax({
+      url: 'setting/runningtext/' + $(this).val(),
+      type: 'get',
+      data: {},
+      success: function (data) {
+        $("#running").val(data.data.title);
+        if (data.data.file) {
+          $("#linkk").val("uploaded/download/" + data.data.file);
+        } else {
+          $("#linkk").val(data.data.slug);
+        }
+      }
+    })
   });
 
   /*Preview post*/

@@ -54,8 +54,20 @@ class ArchiveController extends Controller
       $count = DB::table('group_archive')->where('slug', 'LIKE', $slug . '%')->count();
     }
 
-    $archiveGroup->desc = $r->desc;
     $archiveGroup->name = $r->name;
+    if (strlen($r->nameEN) > 0) {
+      $archiveGroup->name_EN = $r->nameEN;
+    } else {
+      $archiveGroup->name_EN = $r->name;
+    }
+
+    $archiveGroup->desc = $r->desc;
+    if (strlen($r->descEN) > 0) {
+      $archiveGroup->desc_EN = $r->descEN;
+    } else {
+      $archiveGroup->desc_EN = $r->desc;
+    }
+
     $archiveGroup->slug = $count ? "{$slug}-{$count}" : $slug;
 
     $archiveGroup->save();
@@ -89,7 +101,18 @@ class ArchiveController extends Controller
     /* Save DB */
     $archiveGroup = ArchiveGroup::find($id);
     $archiveGroup->name = $r->name;
+    if (strlen($r->nameEN) > 0) {
+      $archiveGroup->name_EN = $r->nameEN;
+    } else {
+      $archiveGroup->name_EN = $r->name;
+    }
+
     $archiveGroup->desc = $r->desc;
+    if (strlen($r->descEN) > 0) {
+      $archiveGroup->desc_EN = $r->descEN;
+    } else {
+      $archiveGroup->desc_EN = $r->desc;
+    }
     $archiveGroup->save();
 
     /*Success Message*/
@@ -155,8 +178,9 @@ class ArchiveController extends Controller
       $this->validate($r, [
         'title' => 'required|max:100',
         'attachments' => 'required|mimes:jpeg,png,pdf,xls,xlsx,doc,docx',
-        'publish_date'=>'required',
-        'desc'=>''
+        // 'attachmentsEN' => 'mimes:jpeg,png,pdf,xls,xlsx,doc,docx',
+        'publish_date' => 'required',
+        'desc' => ''
       ]);
 
 
@@ -165,6 +189,10 @@ class ArchiveController extends Controller
         'path' => 'uploaded/download',
         'files' => $r->file('attachments')
       ]);
+      // $filenameEN = GlobalClass::UploadFile([
+      //   'path' => 'uploaded/download',
+      //   'files' => $r->file('attachmentsEN')
+      // ]);
 
       /* Save DB */
       $images = new Images();
@@ -173,17 +201,33 @@ class ArchiveController extends Controller
       $images->dir = 'download';
       $images->save();
 
-      $data = array(
-        'title' => $r->title,
-        'id_group' => $r->idgroup,
-        'desc' => $r->desc == '' ? '' : $r->desc,
-        'tag' => $r->tags == '' ? '-' : $r->tags,
-        'file' => $filename,
-        'published' => $r->publish_date
-      );
       $archive = new Archive();
-      $archive->insert($data);
-
+      $archive->id_group = $r->idgroup;
+      $archive->title = $r->title;
+      if (strlen($r->titleEN) > 0) {
+        $archive->title_EN = $r->titleEN;
+      } else {
+        $archive->title_EN = $r->title;
+      }
+      $archive->tag = $r->tags == '' ? '-' : $r->tags;
+      $archive->file = $filename;
+      // if ($r->hasFile('attachmentsEN')) {
+      //   $archive->file_EN = $filenameEN;
+      // } else {
+      //   $archive->file_EN = $filename;
+      // }
+      $archive->desc = $r->desc == '' ? '' : $r->desc;
+      $archive->published = $r->publish_date;
+      // $data = array(
+      //   'title' => $r->title,
+      //   'id_group' => $r->idgroup,
+      //   'desc' => $r->desc == '' ? '' : $r->desc,
+      //   'tag' => $r->tags == '' ? '-' : $r->tags,
+      //   'file' => $filename,
+      //   'published' => $r->publish_date
+      // );
+      // $archive->insert($data);
+      $archive->save();
       /*Success Message*/
       $r->session()->flash('success', 'Attachments Successfully Added');
       return redirect(route('item_archive', ['id' => $r->idgroup]));
@@ -213,6 +257,7 @@ class ArchiveController extends Controller
         'title' => 'required|max:100',
         'tags' => 'max:50',
         'attachments.*' => 'required|mimes:jpeg,png,pdf,xls,xlsx,doc,docx',
+        // 'attachmentsEN.*' => 'mimes:jpeg,png,pdf,xls,xlsx,doc,docx',
         'publish_date' => 'required'
       ]);
 
@@ -243,6 +288,11 @@ class ArchiveController extends Controller
     }
 
     $archive->title = $r->title;
+    if (strlen($r->titleEN) > 0) {
+      $archive->title_EN = $r->titleEN;
+    } else {
+      $archive->title_EN = $r->title;
+    }
     $archive->desc = $r->desc == '' ? '' : $r->desc;
     $archive->tag = $r->tags == '' ? '-' : $r->tags;
     $archive->published = $r->publish_date;
@@ -258,7 +308,7 @@ class ArchiveController extends Controller
     GlobalClass::Roleback(['Customer Service']);
 
     /*Delete Data*/
-    Archive::where('id', $r->id)->delete();
+    Archive::destroy($r->id);
 
     /*Success Message*/
     $r->session()->flash('success', 'Attachments Successfully Deleted');

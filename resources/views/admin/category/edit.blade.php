@@ -32,7 +32,12 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<input type="text" name="name" class="form-control input-lg" placeholder="Name" value="{{ $category->name }}">
+								<label for="">INDONESIA</label>
+								<input type="text" name="name" class="form-control input-lg" placeholder="Name Category ID" value="{!! $category->name !!}">
+							</div>
+							<div class="form-group">
+								<label for="">ENGLISH</label>
+								<input type="text" name="nameEN" class="form-control input-lg" placeholder="Name Category EN" value="{!! $category->name_EN !!}">
 							</div>
 						</div>
 					</div>

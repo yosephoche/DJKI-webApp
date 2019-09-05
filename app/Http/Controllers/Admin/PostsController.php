@@ -40,7 +40,7 @@ class PostsController extends Controller
 		return view('admin.posts.index', $data);
 	}
 
-	public function createID()
+	public function create()
 	{
 		GlobalClass::Roleback(['Customer Service']);
 
@@ -49,14 +49,14 @@ class PostsController extends Controller
 		return view('admin.posts.createID', $data);
 	}
 
-	public function createEN()
-	{
-		GlobalClass::Roleback(['Customer Service']);
+	// public function createEN()
+	// {
+	// 	GlobalClass::Roleback(['Customer Service']);
 
-		/*Category*/
-		$data['categories'] = Category::get();
-		return view('admin.posts.createEN', $data);
-	}
+	// 	/*Category*/
+	// 	$data['categories'] = Category::get();
+	// 	return view('admin.posts.createEN', $data);
+	// }
 
 	public function store(Request $r)
 	{
@@ -66,14 +66,14 @@ class PostsController extends Controller
 
 		/*Validation Store*/
 		$this->validate($r, [
-			'title' => 'required',
-			'content' => 'required',
+			'titleID' => 'required',
+			'contentID' => 'required',
 			'category' => 'required|max:50'
 		]);
 
-
+		// $tt = "posts/" . $r->title;
 		/*Make Slug*/
-		$slug = str_slug($r->title, "-");
+		$slug = str_slug($r->titleID, "-");
 
 		/*check to see if any other slugs exist that are the same & count them*/
 		$count = DB::table('posts')->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
@@ -93,9 +93,21 @@ class PostsController extends Controller
 
 		$posts->id_user = $r->id_user;
 		$posts->slug = $count ? "{$slug}-{$count}" : $slug;
-		$posts->title = $r->title;
-		$posts->lang = $r->bahasa;
-		$posts->content = $r->content;
+		$posts->title = $r->titleID;
+
+		if (strlen($r->titleEN) > 0) {
+			$posts->title_EN = $r->titleEN;
+		} else {
+			$posts->title_EN = $r->titleID;
+		}
+
+		$posts->content = $r->contentID;
+		if (strlen($r->contentEN) > 0) {
+			$posts->content_EN = $r->contentEN;
+		} else {
+			$posts->content_EN = $r->contentID;
+		}
+
 		$posts->keyword = $r->keyword;
 		$posts->category = $r->category;
 		$posts->comment = 1;
@@ -177,7 +189,7 @@ class PostsController extends Controller
 		return view('admin.posts.index', $data);
 	}
 
-	public function editID($id)
+	public function edit($id)
 	{
 		GlobalClass::Roleback(['Customer Service']);
 		try {
@@ -197,41 +209,42 @@ class PostsController extends Controller
 		}
 	}
 
-	public function editEN($id)
-	{
-		GlobalClass::Roleback(['Customer Service']);
-		try {
-			$posts = Posts::findOrFail($id);
-			$ext = explode('.', $posts->image);
-			if ($ext[1] == 'pdf') {
-				$data['size'] = GlobalClass::formatSizeUnits(filesize(public_path('uploaded/media/' . $posts->image)));
-			}
-			$data['posts'] = $posts;
+	// public function editEN($id)
+	// {
+	// 	GlobalClass::Roleback(['Customer Service']);
+	// 	try {
+	// 		$posts = Posts::findOrFail($id);
+	// 		$ext = explode('.', $posts->image);
+	// 		if ($ext[1] == 'pdf') {
+	// 			$data['size'] = GlobalClass::formatSizeUnits(filesize(public_path('uploaded/media/' . $posts->image)));
+	// 		}
+	// 		$data['posts'] = $posts;
 
-			/*Category*/
-			$data['categories'] = Category::get();
+	// 		/*Category*/
+	// 		$data['categories'] = Category::get();
 
-			return view('admin.posts.editEN', $data);
-		} catch (ModelNotFoundException $e) {
-			return redirect()->route('posts');
-		}
-	}
+	// 		return view('admin.posts.editEN', $data);
+	// 	} catch (ModelNotFoundException $e) {
+	// 		return redirect()->route('posts');
+	// 	}
+	// }
 
 	public function update($id, Request $r)
 	{
 		GlobalClass::Roleback(['Customer Service']);
 		/*Validation Update*/
 		$this->validate($r, [
-			'title' => 'required',
-			'content' => 'required',
-			'category' => 'required|max:50',
+			'titleID' => 'required',
+			'contentID' => 'required',
+			'category' => 'required|max:50'
 		]);
 
 		/*Make Slug*/
-		$slug = str_slug($r->title, "-");
+		$slug = str_slug($r->titleID, "-");
 
 		/*check to see if any other slugs exist that are the same & count them*/
 		$count = DB::table('posts')->where('id', '!=', $id)->where('slug', $slug)->count();
+		// dd($count);
 		if ($count > 0) {
 			$count = DB::table('posts')->where('id', '!=', $id)->where('slug', 'LIKE', $slug . '%')->count();
 		}
@@ -251,9 +264,21 @@ class PostsController extends Controller
 
 		$posts->id_user = $r->id_user;
 		$posts->slug = $count > 0 ? $slug . "-" . $count : $slug;
-		$posts->title = $r->title;
-		$posts->lang = $r->bahasa;
-		$posts->content = $r->content;
+		$posts->title = $r->titleID;
+
+		if (strlen($r->titleEN) > 0) {
+			$posts->title_EN = $r->titleEN;
+		} else {
+			$posts->title_EN = $r->titleID;
+		}
+
+		$posts->content = $r->contentID;
+		if (strlen($r->contentEN) > 0) {
+			$posts->content_EN = $r->contentEN;
+		} else {
+			$posts->content_EN = $r->contentID;
+		}
+
 		$posts->keyword = $r->keyword;
 		$posts->category = $r->category;
 		$posts->comment = 0;

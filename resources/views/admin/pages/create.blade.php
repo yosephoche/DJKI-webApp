@@ -32,11 +32,21 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<input type="text" name="title" class="form-control input-lg" placeholder="Page title" value="{!! old('title') !!}">
+								<label for="">INDONESIA</label>
+								<input type="text" name="title" class="form-control input-lg" placeholder="Page title ID" value="{!! old('title') !!}">
 							</div>
 
 							<div class="form-group">
 								<textarea name="content" class="editor">{!! old('content') !!}</textarea>
+							</div>
+
+							<div class="form-group">
+								<label for="">ENGLISH</label>
+								<input type="text" name="titleEN" class="form-control input-lg" placeholder="Page title EN" value="{!! old('titleEN') !!}">
+							</div>
+
+							<div class="form-group">
+								<textarea name="contentEN" class="editor">{!! old('contentEN') !!}</textarea>
 							</div>
 						</div>
 

@@ -24,12 +24,12 @@
 		@endif
 
 		<div class="row">
-			<div class="container">
+			{{-- <div class="container">
 				<ul class="nav nav-tabs">
 					<li role="presentation" class="active"><a href="{{ route('posts_editID', $posts->id) }}">Indonesia</a></li>
 					<li role="presentation"><a href="{{ route('posts_editEN', $posts->id) }}">English</a></li>
 				</ul>
-			</div>
+			</div> --}}
 			<div class="col-md-12">
 				<div class="panel">
 					<div class="panel-body">
@@ -44,12 +44,24 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="form-group">
-										<input type="text" name="title" class="form-control input-lg" placeholder="Post title" value="{{ $posts->title }}">
+										<label for="">INDONESIA :</label>
+										<input type="text" name="titleID" class="form-control input-lg" placeholder="Post title indonesia" value="{{ $posts->title }}">
 									</div>
 
 									<div class="form-group">
-										<textarea name="content" class="editor">
+										<textarea name="contentID" class="editor">
 											{{ $posts->content }}
+										</textarea>
+									</div>
+
+									<div class="form-group">
+										<label for="">ENGLISH :</label>
+										<input type="text" name="titleEN" class="form-control input-lg" placeholder="Post title english" value="{{ $posts->title_EN }}">
+									</div>
+
+									<div class="form-group">
+										<textarea name="contentEN" class="editor">
+											{{ $posts->content_EN }}
 										</textarea>
 									</div>
 

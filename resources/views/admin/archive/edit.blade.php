@@ -28,7 +28,12 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
+								<label for="">Title ID</label>
 								<input type="text" name="title" class="form-control input-lg" placeholder="Directory title" value="{{ $archive->title }}">
+							</div>
+							<div class="form-group">
+								<label for="">Title EN</label>
+								<input type="text" name="titleEN" class="form-control input-lg" placeholder="Directory title" value="{{ $archive->title_EN }}">
 							</div>
 						</div>
 					</div>

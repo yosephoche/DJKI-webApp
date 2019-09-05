@@ -23,31 +23,41 @@
 		@endif
 
 		<div class="row">
-			<div class="container">
+			{{-- <div class="container">
 				<ul class="nav nav-tabs">
 					<li role="presentation" class="active"><a href="{{ route('posts_createID') }}">Indonesia</a></li>
 					<li role="presentation"><a href="{{ route('posts_createEN') }}">English</a></li>
 				</ul>
-			</div>
+			</div> --}}
 			<div class="col-md-12">
 				<div class="panel">
 					<div class="panel-body">
 						<form id='formPost' action="{{ route('posts_store') }}" method="post" enctype="multipart/form-data">
 							{{ csrf_field() }}
 							<input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
-							<input type="hidden" name="bahasa" value="ID">
 							<div class="row">
 								<div class="col-md-12">
 									<div class="form-group">
-										<input type="text" name="title" class="form-control input-lg" placeholder="Post title" value="{!! old('title') !!}">
+										<label for="">INDONESIA :</label>
+										<input type="text" name="titleID" class="form-control input-lg" placeholder="Post title ID" value="{!! old('title') !!}">
 									</div>
 
 									<div class="form-group">
-										<textarea name="content" class="editor">
+										<textarea name="contentID" class="editor">
 											{!! old('content') !!}
 										</textarea>
 									</div>
 
+									<div class="form-group">
+										<label for="">ENGLISH :</label>
+										<input type="text" name="titleEN" class="form-control input-lg" placeholder="Post title EN" value="{!! old('title_EN') !!}">
+									</div>
+
+									<div class="form-group">
+										<textarea name="contentEN" class="editor">
+											{!! old('content_EN') !!}
+										</textarea>
+									</div>
 								</div>
 							</div>
 

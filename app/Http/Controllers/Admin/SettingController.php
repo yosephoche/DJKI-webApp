@@ -30,6 +30,24 @@ class SettingController extends Controller
 		return view('admin.setting.index', $data);
 	}
 
+	public function setText($id)
+	{
+		$post = Posts::where('slug', $id)->first();
+		// $post = Posts::find($id);
+		if (!isset($post)) {
+			$pages = Pages::where('slug', $id)->first();
+			// $pages = Pages::find($id);
+			if (!isset($pages)) {
+				$data = Archive::where('file', $id)->first();
+			} else {
+				$data = $pages;
+			}
+		} else {
+			$data = $post;
+		}
+		return response()->json(['success' => true, 'data' => $data]);
+	}
+
 	public function update(Request $r)
 	{
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
@@ -45,10 +63,10 @@ class SettingController extends Controller
 			'link' 				=> 'required',
 		]);
 
-		$post = Posts::where('slug', $r->link)->first();
-		$post = Pages::where('slug', $r->link)->first();
-		$post = Archive::where('file', $r->link)->first();
-		// dd($running_text);
+		// $post = Posts::where('slug', $r->link)->first();
+		// $post = Pages::where('slug', $r->link)->first();
+		// $post = Archive::where('file', $r->link)->first();
+		// dd($r->alamat);
 		/*Maintenance Status*/
 		$maintenance = '0';
 		if ($r->maintenance == 'on') {
@@ -76,7 +94,7 @@ class SettingController extends Controller
 			$r->youtube,
 			$r->instagram,
 			$r->running_text,
-			$r->link,
+			$r->alamat,
 			// $running_text->title,
 			// "posts/" . $running_text->slug,
 		]);

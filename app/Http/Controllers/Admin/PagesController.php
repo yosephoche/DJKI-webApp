@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Pages, App\User, App\Images, App\Category;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class PagesController extends Controller
 		} else {
 			$key = '';
 		}
-		$data['pages'] = DB::table('pages')->where('title','like','%'.$key.'%')->where('deleted_at', null)->paginate(10);
+		$data['pages'] = DB::table('pages')->where('title', 'like', '%' . $key . '%')->where('deleted_at', null)->paginate(10);
 		return view('admin.pages.index', $data);
 	}
 
@@ -34,21 +35,21 @@ class PagesController extends Controller
 		/*Category*/
 		$data['categories'] = Category::get();
 
-		return view('admin.pages.create',$data);
+		return view('admin.pages.create', $data);
 	}
 
 	public function store(Request $r)
 	{
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 
-		$r->session()->flash('listImages',$r->image);
+		$r->session()->flash('listImages', $r->image);
 
 		/*Validation Store*/
-		$this->validate($r,[
-			'title'=>'required',
-			'content'=>'required',
-			'type'=>'max:100',
-			'category'=>'max:10'
+		$this->validate($r, [
+			'title' => 'required',
+			'content' => 'required',
+			'type' => 'max:100',
+			'category' => 'max:10'
 		]);
 
 		/*Make Slug*/
@@ -68,7 +69,17 @@ class PagesController extends Controller
 		$pages->id_user = $r->id_user;
 		$pages->slug = $count ? "{$slug}-{$count}" : $slug;
 		$pages->title = $r->title;
+		if (strlen($r->titleEN) > 0) {
+			$pages->title_EN = $r->titleEN;
+		} else {
+			$pages->title_EN = $r->title;
+		}
 		$pages->content = $r->content;
+		if (strlen($r->contentEN) > 0) {
+			$pages->content_EN = $r->contentEN;
+		} else {
+			$pages->content_EN = $r->content;
+		}
 		$pages->keyword = $r->keyword;
 		$pages->type = $r->type;
 		$pages->category = 'default';
@@ -82,12 +93,11 @@ class PagesController extends Controller
 	public function edit($id)
 	{
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
-		try
-		{
-	    $pages = Pages::findOrFail($id);
-			$ext = explode('.',$pages->image);
+		try {
+			$pages = Pages::findOrFail($id);
+			$ext = explode('.', $pages->image);
 			if ($ext[1] == 'pdf') {
-				$data['size'] = GlobalClass::formatSizeUnits(filesize(public_path('uploaded/media/'.$pages->image)));
+				$data['size'] = GlobalClass::formatSizeUnits(filesize(public_path('uploaded/media/' . $pages->image)));
 			}
 			$data['pages'] = $pages;
 
@@ -98,10 +108,8 @@ class PagesController extends Controller
 			$data['categories'] = Category::get();
 
 			return view('admin.pages.edit', $data);
-		}
-		catch(ModelNotFoundException $e)
-		{
-	    return redirect()->route('pages');
+		} catch (ModelNotFoundException $e) {
+			return redirect()->route('pages');
 		}
 	}
 
@@ -110,11 +118,11 @@ class PagesController extends Controller
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 
 		/*Validation Update*/
-		$this->validate($r,[
-			'title'=>'required',
-			'content'=>'required',
-			'type'=>'max:100',
-			'category'=>'max:10'
+		$this->validate($r, [
+			'title' => 'required',
+			'content' => 'required',
+			'type' => 'max:100',
+			'category' => 'max:10'
 		]);
 
 		/*Make Slug*/
@@ -123,7 +131,7 @@ class PagesController extends Controller
 		/*check to see if any other slugs exist that are the same & count them*/
 		$count = DB::table('pages')->where('id', '!=', $id)->where('slug', $slug)->count();
 		if ($count > 0) {
-			$count = DB::table('pages')->where('id', '!=', $id)->where('slug', 'LIKE', $slug.'%')->count();
+			$count = DB::table('pages')->where('id', '!=', $id)->where('slug', 'LIKE', $slug . '%')->count();
 		}
 
 		$pages = Pages::find($id);
@@ -136,9 +144,19 @@ class PagesController extends Controller
 
 		/*Save DB*/
 		$pages->id_user = $r->id_user;
-		$pages->slug = $count > 0 ? $slug."-".$count : $slug;
+		$pages->slug = $count > 0 ? $slug . "-" . $count : $slug;
 		$pages->title = $r->title;
+		if (strlen($r->titleEN) > 0) {
+			$pages->title_EN = $r->titleEN;
+		} else {
+			$pages->title_EN = $r->title;
+		}
 		$pages->content = $r->content;
+		if (strlen($r->contentEN) > 0) {
+			$pages->content_EN = $r->contentEN;
+		} else {
+			$pages->content_EN = $r->content;
+		}
 		$pages->keyword = $r->keyword;
 		$pages->type = $r->type;
 		$pages->category = 'default';
@@ -152,8 +170,7 @@ class PagesController extends Controller
 	public function detail($slug)
 	{
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
-		try
-		{
+		try {
 			/*Relation Pages with Users*/
 			$pages = Pages::join('users', 'pages.id_user', '=', 'users.id')
 				->select('pages.*', 'users.fullname')
@@ -166,10 +183,8 @@ class PagesController extends Controller
 			$recent = DB::table('pages')->where('deleted_at', null)->get();
 			$data['recent'] = $recent;
 			return view('admin.pages.detail', $data);
-		}
-		catch(ModelNotFoundException $e)
-		{
-	    return redirect()->route('pages');
+		} catch (ModelNotFoundException $e) {
+			return redirect()->route('pages');
 		}
 	}
 
@@ -185,5 +200,4 @@ class PagesController extends Controller
 		$r->session()->flash('success', 'Pages Successfully Deleted');
 		return redirect(route('pages'));
 	}
-
 }

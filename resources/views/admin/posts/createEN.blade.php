@@ -22,12 +22,12 @@
 			</div>
 		@endif
 		<div class="row">
-			<div class="container">
+			{{-- <div class="container">
 				<ul class="nav nav-tabs">
 					<li role="presentation"><a href="{{ route('posts_createID') }}">Indonesia</a></li>
 					<li role="presentation" class="active"><a href="{{ route('posts_createEN') }}">English</a></li>
 				</ul>
-			</div>
+			</div> --}}
 			<div class="col-md-12">
 				<div class="panel">
 					<div class="panel-body">
