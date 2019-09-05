@@ -53,7 +53,7 @@ class PagesController extends Controller
 		]);
 
 		/*Make Slug*/
-		$slug = "pages/" . str_slug($r->title, "-");
+		$slug = str_slug($r->title, "-");
 
 		/*check to see if any other slugs exist that are the same & count them*/
 		$count = DB::table('pages')->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
@@ -69,7 +69,17 @@ class PagesController extends Controller
 		$pages->id_user = $r->id_user;
 		$pages->slug = $count ? "{$slug}-{$count}" : $slug;
 		$pages->title = $r->title;
+		if (strlen($r->titleEN) > 0) {
+			$pages->title_EN = $r->titleEN;
+		} else {
+			$pages->title_EN = $r->title;
+		}
 		$pages->content = $r->content;
+		if (strlen($r->contentEN) > 0) {
+			$pages->content_EN = $r->contentEN;
+		} else {
+			$pages->content_EN = $r->content;
+		}
 		$pages->keyword = $r->keyword;
 		$pages->type = $r->type;
 		$pages->category = 'default';
@@ -136,7 +146,17 @@ class PagesController extends Controller
 		$pages->id_user = $r->id_user;
 		$pages->slug = $count > 0 ? $slug . "-" . $count : $slug;
 		$pages->title = $r->title;
+		if (strlen($r->titleEN) > 0) {
+			$pages->title_EN = $r->titleEN;
+		} else {
+			$pages->title_EN = $r->title;
+		}
 		$pages->content = $r->content;
+		if (strlen($r->contentEN) > 0) {
+			$pages->content_EN = $r->contentEN;
+		} else {
+			$pages->content_EN = $r->content;
+		}
 		$pages->keyword = $r->keyword;
 		$pages->type = $r->type;
 		$pages->category = 'default';

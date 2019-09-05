@@ -3,7 +3,7 @@
 @section('contents')
 	<div class="bg-light lter b-b wrapper-md">
 		<h1 class="m-n font-thin h3">New Directory</h1>
-		<small class="text-muted">With directory, users will feel closer to your business.</small>
+		<small class="text-muted">With directory, users will feel closer to your businesss.</small>
 	</div>
 	<div class="wrapper-md">
 		@if (count($errors) > 0)
@@ -26,19 +26,32 @@
 					<input type="hidden" name="idgroup" value="{{Request::segment(5)}}">
 					<div class="row">
 						<div class="col-md-12">
-						<div class="form-group">
+							<div class="form-group">
+								<label for="">Title ID</label>
 								<input type="text" name="title" class="form-control input-lg" placeholder="Directory title" value="{!! old('title') !!}">
 							</div>
+							<div class="form-group">
+								<label for="">Title EN</label>
+								<input type="text" name="titleEN" class="form-control input-lg" placeholder="Directory title" value="{!! old('title') !!}">
+							</div>
+							<div class="form-group">
+								<label>File Attachments ID</label>
+								<input type="file" name="attachments" class="form-control">
+							</div>
+							{{-- <div class="form-group">
+								<label>File Attachments EN</label>
+								<input type="file" name="attachmentsEN" class="form-control">
+							</div> --}}
 						</div>
 					</div>
-					<div class="row">
+					{{-- <div class="row">
 						<div class="col-md-12 col-sm-12">
 							<div class="form-group">
-								<label>File Attachments</label>
+								<label>File Attachments ID</label>
 								<input type="file" name="attachments" class="form-control">
 							</div>
 						</div>
-					</div>
+					</div> --}}
 					<hr>
 					<div class="row">
 						<div class="col-md-12 text-right">

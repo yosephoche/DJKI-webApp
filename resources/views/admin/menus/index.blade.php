@@ -43,8 +43,7 @@
 				<hr>
 
 				<!-- Action -->
-				<button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add Menu {{Request::segment(3)}} ID</button>
-				<button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newEN"><i class="fa fa-plus"></i>Add Menu {{Request::segment(3)}} EN</button>
+				<button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add Menu {{Request::segment(3)}}</button>
 				<form action="{{ route('menus_drag') }}" method="post">
 					{{ csrf_field() }}
 					<input type="hidden" name="id_menus">
@@ -60,8 +59,10 @@
 							<li class="dd-item dd3-item" id="{{ $menu->id }}"
 								data-status="true"
 								data-description="{{$menu->description}}"
+								data-description_en="{{$menu->description_EN}}"
 								data-id="{{ $menu->id }}"
-								data-title="{{ $menu->menu_title }}"
+								data-title="{{$menu->menu_title }}"
+								data-title_eng="{{ $menu->menu_title_EN }}"
 								data-link="{{ $menu->url }}"
 								data-submenu="{{ $menu->parent }}"
 								data-preview="{{ $menu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$menu->image) }}">
@@ -77,8 +78,12 @@
 									<ol class="dd-list" data-parent="submenu">
 										@foreach ($submenus as $submenu)
 											<li class="dd-item dd3-item" id="{{ $submenu->id }}"
+												data-status="true"
 												data-id="{{ $submenu->id }}"
+												data-description="{{$submenu->description}}"
+												data-description_en="{{$submenu->description_EN}}"
 												data-title="{{ $submenu->menu_title }}"
+												data-title_eng="{{ $submenu->menu_title_EN }}"
 												data-link="{{ $submenu->url }}"
 												data-submenu="{{ $submenu->parent }}"
 												data-preview="{{ $submenu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$submenu->image) }}">
@@ -94,6 +99,7 @@
 													<ol class="dd-list" data-parent="subsubmenu">
 														@foreach ($subsubmenus as $subsubmenu)
 															<li class="dd-item dd3-item" id="{{ $subsubmenu->id }}"
+																data-status="true"
 																data-id="{{ $subsubmenu->id }}"
 																data-title="{{ $subsubmenu->menu_title }}"
 																data-link="{{ $subsubmenu->url }}"
@@ -134,13 +140,17 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">New Menu {{ Request::segment(3) }} Indonesia</h4>
+						<h4 class="modal-title" id="myModalLabel">New Menu {{ Request::segment(3) }}</h4>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Title</label>
-							<input type="text" name="menu_title" class="form-control" placeholder="Title for this menu">
-							<input type="hidden" name="lang" value="ID">
+							<label>Title ID</label>
+							<input type="text" name="menu_title" class="form-control" placeholder="Title for this menu ID">
+						</div>
+
+						<div class="form-group">
+							<label>Title EN</label>
+							<input type="text" name="menu_titleEN" class="form-control" placeholder="Title for this menu ENG">
 						</div>
 
 						<div class="form-group">
@@ -196,7 +206,7 @@
 		</div>
 	</div>
 
-	<div class="modal fade" id="modal-newEN" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	{{-- <div class="modal fade" id="modal-newEN" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
 			<form action="{{ route('menus_store') }}" method="post" enctype="multipart/form-data">
 				{{ csrf_field() }}
@@ -264,7 +274,7 @@
 				</div>
 			</form>
 		</div>
-	</div>
+	</div> --}}
 
 	<div class="modal fade" id="modal-edit-menus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
@@ -279,16 +289,21 @@
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Title</label>
-							<input type="text" name="menu_title" class="form-control" placeholder="Title for this menu">
+							<label>Title ID</label>
+							<input type="text" name="menu_title" class="form-control" placeholder="Title for this menu ID">
 						</div>
 
-						<select class="form-control" name="lang">
+						<div id='textarea'></div>
+
+						<div class="form-group">
+							<label>Title EN</label>
+							<input type="text" name="menu_titleEN" class="form-control" placeholder="Title for this menu ENG">
+						</div>
+						{{-- <select class="form-control" name="lang">
 							<option value="ID">Indonesia</option>
 							<option value="EN">English</option>
-						</select>
-						<br>
-						<div id='textarea'></div>
+						</select> --}}
+						<div id='textareaEN'></div>
 
 						<div class="form-group">
 							<label>Link</label>

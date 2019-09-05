@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnToMenusTable extends Migration
+class AddColumnToPagesSlideTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddColumnToMenusTable extends Migration
      */
     public function up()
     {
-        Schema::table('menus', function (Blueprint $table) {
-            $table->string('menu_title_EN', 50);
-            $table->longText('description_EN');
+        Schema::table('pages_slide', function (Blueprint $table) {
+            $table->string('id_inputan', 1);
         });
     }
 
@@ -26,9 +25,8 @@ class AddColumnToMenusTable extends Migration
      */
     public function down()
     {
-        Schema::table('menus', function (Blueprint $table) {
-            $table->dropColumn('menu_title_EN');
-            $table->dropColumn('description_EN');
+        Schema::table('pages_slide', function (Blueprint $table) {
+            $table->dropColumn('id_inputan');
         });
     }
 }

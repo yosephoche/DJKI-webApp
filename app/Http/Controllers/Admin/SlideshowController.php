@@ -36,11 +36,20 @@ class SlideshowController extends Controller
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 
 		/*Validation Store*/
-		$this->validate($r, [
-			'title' => 'required',
-			'image' => 'required',
-			'category' => 'required'
-		]);
+		if ($r->inputan == 1) {
+			$this->validate($r, [
+				'title' => 'required',
+				'image' => 'required',
+				'category' => 'required',
+				'link'	=> 'required'
+
+			]);
+		} else {
+			$this->validate($r, [
+				'category' => 'required',
+				'linkvid'	=> 'required'
+			]);
+		}
 
 		$count = DB::table('pages_slide')->count();
 		if ($count > 0) {
@@ -52,8 +61,14 @@ class SlideshowController extends Controller
 		$slideshow = new Slideshow();
 
 		/*Save DB*/
-		$slideshow->title = $r->title;
-		$slideshow->link = $r->link;
+		if ($r->link == true) {
+			$slideshow->title = $r->title;
+			$slideshow->link = $r->link;
+		} else {
+			$slideshow->title = $r->linkvid;
+			$slideshow->link = $r->linkvid;
+		}
+		$slideshow->id_inputan = $r->inputan;
 		$slideshow->category = $r->category;
 		$slideshow->sort = $count > 0 ? $sort->sort + 1 : $sort + 1;
 		$slideshow->image = $r->image;
@@ -84,11 +99,20 @@ class SlideshowController extends Controller
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 
 		/*Validation Update*/
-		$this->validate($r, [
-			'title' => 'required',
-			'image' => 'required',
-			'category' => 'required'
-		]);
+		if ($r->inputan == 1) {
+			$this->validate($r, [
+				'title' => 'required',
+				'image' => 'required',
+				'category' => 'required',
+				'link'	=> 'required'
+
+			]);
+		} else {
+			$this->validate($r, [
+				'category' => 'required',
+				'linkvid'	=> 'required'
+			]);
+		}
 
 		$count = DB::table('pages_slide')->count();
 		if ($count > 0) {
@@ -98,11 +122,16 @@ class SlideshowController extends Controller
 		$slideshow = Slideshow::find($id);
 
 		/*Save to DB*/
-		$slideshow->image = $r->image;
-		$slideshow->title = $r->title;
-		$slideshow->link = $r->link;
+		if ($r->link == true) {
+			$slideshow->title = $r->title;
+			$slideshow->link = $r->link;
+		} else {
+			$slideshow->title = $r->linkvid;
+			$slideshow->link = $r->linkvid;
+		}
 		$slideshow->category = $r->category;
 		$slideshow->sort = $sort->sort + 1;
+		$slideshow->image = $r->image;
 		$slideshow->save();
 
 		/*Success Message*/
