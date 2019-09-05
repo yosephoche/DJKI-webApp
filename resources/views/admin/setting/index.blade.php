@@ -164,7 +164,7 @@
   src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA3UW2dr_crtKOty2Mizn-z3XrcUsVOljI&q=Indonesia" allowfullscreen>
 </iframe>
 @endif
-				
+
 									<div class="col-md-12">
 											<hr>
 											<h4>Contact</h4>
@@ -190,11 +190,11 @@
 								<input type="text" name="address" class="form-control" value="{{ $setting->address }}" id="addr" required>
 							</div>
 						</div>
-						
-						
+
+
 					</div>
-					
-				
+
+
 						<div class="col-md-12">
 							<hr>
 							<h4>Link Social Media</h4>

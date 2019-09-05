@@ -222,15 +222,15 @@ Route::group(['namespace' => 'Admin'], function () {
         /* Posts */
         Route::group(['prefix' => '/posts'], function () {
             Route::get('/', 'PostsController@index')->name('posts');
-            Route::get('/createID', 'PostsController@createID')->name('posts_createID');
-            Route::get('/createEN', 'PostsController@createEN')->name('posts_createEN');
+            Route::get('/create', 'PostsController@create')->name('posts_create');
+            // Route::get('/createEN', 'PostsController@createEN')->name('posts_createEN');
             Route::get('/preview', 'PostsController@preview')->name('posts_preview');
             Route::post('/store', 'PostsController@store')->name('posts_store');
             Route::get('/{slug?}', 'PostsController@detail')->name('posts_detail');
             Route::post('/comment/store', 'PostsController@comment_store')->name('comment_store');
             Route::get('/category/{category?}', 'PostsController@view_category')->name('posts_view_category');
-            Route::get('/editID/{id?}', 'PostsController@editID')->name('posts_editID');
-            Route::get('/editEN/{id?}', 'PostsController@editEN')->name('posts_editEN');
+            Route::get('/edit/{id?}', 'PostsController@edit')->name('posts_edit');
+            // Route::get('/editEN/{id?}', 'PostsController@editEN')->name('posts_editEN');
             Route::put('/update/{id?}', 'PostsController@update')->name('posts_update');
             Route::post('/delete', 'PostsController@delete')->name('posts_delete');
         });

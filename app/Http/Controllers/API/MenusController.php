@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Pages;
 use App\Http\Controllers\Controller;
 use App\Settings;
+use App\Slideshow;
 use General, Response;
 
 class MenusController extends Controller
@@ -36,22 +37,40 @@ class MenusController extends Controller
     } else {
       $menu = nav(['position' => 'header'])->where('parent', '0')->where('lang', $r->lang);
       $running_text = Settings::whereNotNull('running_text')->first();
+      $slide = Slideshow::all();
       // dd($running_text->link);
       /* Kondisi ketika idMenu bernilai false, maka target query adalah parent */
       $menus['pinned'] = [
         'running_text' => $running_text->running_text,
-        'link' => $running_text->link
+        'link' => $running_text->link,
+        'facebook' => $running_text->facebook,
+        'twitter' => $running_text->twitter,
+        'google' => $running_text->google,
+        'linkedlin' => $running_text->linkedin,
+        'youtube' => $running_text->youtube,
+        'instagram' => $running_text->instagram,
       ];
       foreach ($menu as $key => $parent) {
         $action = $this->getAction($parent->url, $parent->id);
         $slugs = str_replace(' ', '_', strtolower($parent->menu_title));
-        $menus['data'][] = [
+        $menus['menu'][] = [
           'id_menu' => $parent->id,
           'description' => isset($parent->description) == false ? '' : $parent->description,
           'title' => $parent->menu_title,
           'action_type' => $action['type'],
           'id_target' => $action['id'],
           'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)
+        ];
+      }
+      foreach ($slide as $key => $value) {
+        $menus['slideshow'][] = [
+          'id_slide' => $value->id,
+          'sort' => $value->sort,
+          'title' => $value->title,
+          'description' => $value->desc,
+          'image' => $value->image,
+          'link' => $value->link,
+          'category' => $value->category
         ];
       }
     }

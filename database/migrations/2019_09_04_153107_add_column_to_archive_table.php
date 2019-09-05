@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnToMenusTable extends Migration
+class AddColumnToArchiveTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddColumnToMenusTable extends Migration
      */
     public function up()
     {
-        Schema::table('menus', function (Blueprint $table) {
-            $table->string('menu_title_EN', 50);
-            $table->longText('description_EN');
+        Schema::table('archive', function (Blueprint $table) {
+            $table->string('title_EN');
+            $table->text('file_EN');
         });
     }
 
@@ -26,9 +26,9 @@ class AddColumnToMenusTable extends Migration
      */
     public function down()
     {
-        Schema::table('menus', function (Blueprint $table) {
-            $table->dropColumn('menu_title_EN');
-            $table->dropColumn('description_EN');
+        Schema::table('archive', function (Blueprint $table) {
+            $table->dropColumn('title_EN');
+            $table->dropColumn('file_EN');
         });
     }
 }

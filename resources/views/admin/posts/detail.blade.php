@@ -3,7 +3,7 @@
 @section('title', 'Posts')
 
 @section('contents')
-<a href="{{ route('posts_createID') }}" class="new-btn" title="New post"><i class="glyphicon glyphicon-pencil"></i></a>
+<a href="{{ route('posts_create') }}" class="new-btn" title="New post"><i class="glyphicon glyphicon-pencil"></i></a>
 
 <div class="bg-light lter b-b wrapper-md">
 	<h1 class="m-n font-thin h3">Post</h1>
@@ -16,12 +16,12 @@
 				<div class="panel panel-post">
 					<div class="action-post">
 						<div class="btn-group" role="group" aria-label="...">
-							@if ($post->lang == "ID")
+							{{-- @if ($post->lang == "ID")
 								<a href="{{ route('posts_editID', ['id' => $post->id]) }}" type="button" class="btn btn-default">Edit</a>
 							@else
 								<a href="{{ route('posts_editEN', ['id' => $post->id]) }}" type="button" class="btn btn-default">Edit</a>
-							@endif
-							{{-- <a href="{{ route('posts_edit', ['id' => $post->id]) }}" type="button" class="btn btn-default">Edit</a> --}}
+							@endif --}}
+							<a href="{{ route('posts_edit', ['id' => $post->id]) }}" type="button" class="btn btn-default">Edit</a>
 							<a type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete" data-id="{{ $post->id }}">Delete</a>
 						</div>
 					</div>

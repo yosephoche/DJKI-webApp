@@ -27,11 +27,20 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group">
-							<input type="text" name="title" value="{{ $pages->title }}" class="form-control input-lg" placeholder="Page title">
+							<input type="text" name="title" value="{{ $pages->title }}" class="form-control input-lg" placeholder="Page title ID">
 						</div>
 						<div class="form-group">
 							<textarea name="content" class="editor">
 								{{ $pages->content }}
+							</textarea>
+						</div>
+
+						<div class="form-group">
+							<input type="text" name="titleEN" value="{{ $pages->title_EN }}" class="form-control input-lg" placeholder="Page title ID">
+						</div>
+						<div class="form-group">
+							<textarea name="contentEN" class="editor">
+								{{ $pages->content_EN }}
 							</textarea>
 						</div>
 					</div>

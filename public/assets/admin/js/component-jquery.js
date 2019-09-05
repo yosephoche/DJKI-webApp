@@ -77,16 +77,20 @@ $(document).ready(function () {
       var parent = data.subsubmenu;
     }
     var status = data.status;
+
     $(this).find('select[name="parent"]').prop('selectedIndex', 0);
     $(this).find('input[name="id"]').val(data.id);
     $(this).find('input[name="menu_title"]').val(data.title);
+    $(this).find('input[name="menu_titleEN"]').val(data.title_eng);
     $(this).find('input[name="url"]').val(data.link);
     $(this).find('select[name="parent"] option[value="' + parent + '"]').prop("selected", true);
     $(this).find('.previewImage_').attr('src', data.preview);
     if (status == true) {
       $('#textarea').html('<div class="form-group"><label>Description</label><div class="form-group"><textarea class="form-control" name="description">' + data.description + '</textarea></div></div>');
+      $('#textareaEN').html('<div class="form-group"><label>Description EN</label><div class="form-group"><textarea class="form-control" name="descriptionEN">' + data.description_en + '</textarea></div></div>');
     } else {
       $('#textarea').html('');
+      $('#textareaEN').html('');
     }
   });
 
