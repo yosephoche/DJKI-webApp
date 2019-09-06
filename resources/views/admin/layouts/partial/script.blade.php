@@ -49,7 +49,7 @@
 
 
 <script type="text/javascript">
-unction initialize() {
+function initialize() {
 
 $('form').on('keyup keypress', function(e) {
     var keyCode = e.keyCode || e.which;
