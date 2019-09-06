@@ -49,7 +49,6 @@
 
 
 <script type="text/javascript">
-// maps
 unction initialize() {
 
 $('form').on('keyup keypress', function(e) {
@@ -144,12 +143,11 @@ map: map,
 position: {lat: latitude, lng: longitude},
 });
 
-// 
 const autocomplete = new google.maps.places.Autocomplete(input);
 autocomplete.key = fieldKey;
 autocompletes.push({input: input, map: map, marker: marker, autocomplete: autocomplete});
 
-// 
+ 
 eocoder.geocode({'placeId': place.place_id}, function (results, status) {
     if (status === google.maps.GeocoderStatus.OK) {
 
@@ -159,7 +157,6 @@ eocoder.geocode({'placeId': place.place_id}, function (results, status) {
         setLocationCoordinates(autocomplete.key, lat, lng);
     }
 });
-// akhir maps
 
   $(document).ready(function(){
 
