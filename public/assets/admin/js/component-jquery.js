@@ -12,7 +12,7 @@ $(document).on("change", ".checkbox", function () {
   });
   html.html(inner);
 });
-// slide
+
 $("#pilihan").on('change', function () {
   var select = document.querySelector('#pilihan')
   if (select.value != '2') {
@@ -31,7 +31,7 @@ $("#pilihan").on('change', function () {
     document.querySelector('#video').style.display = 'block';
   }
 });
-//
+
 $(document).ready(function () {
 
   $(".checkbox").change(function () {
