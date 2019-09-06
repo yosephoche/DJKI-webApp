@@ -68,7 +68,7 @@ class MenusController extends Controller
           'id_menu' => $n->id,
           'menu_title_id' => $n->menu_title_id,
           'menu_title_en' => $n->menu_title_en,
-          'url'   => $n->url,
+          'url'   => asset($n->url),
           'image' => $n->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $n->image)
         ];
       }

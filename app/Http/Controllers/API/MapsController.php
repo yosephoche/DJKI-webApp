@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Maps;
+use App\Settings;
 use General;
 use Response;
 
@@ -17,9 +17,10 @@ class MapsController extends Controller
         $this->response = new Response;
     }
     // get maps
-    public function getMaps(){
+    public function getMaps()
+    {
         // get maps all
-        $maps = Maps::all();
+        $maps = Settings::all();
 
         // maps is not emtpty
         if ($maps->isNotEmpty()) {
@@ -31,6 +32,5 @@ class MapsController extends Controller
             $response = $this->response->formatResponseWithPages("Maps NOT FOUND", [], $this->response->STAT_NOT_FOUND());
             return response()->json($response, $this->response->STAT_NOT_FOUND());
         }
-
     }
 }
