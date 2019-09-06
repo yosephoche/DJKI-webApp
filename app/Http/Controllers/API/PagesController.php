@@ -50,7 +50,8 @@ class PagesController extends MenusController
                 } else {
                     $pages['response'] = [
                         'id' => $data->id,
-                        'title' => $data->title,
+                        'title ID' => $data->title,
+                        'title EN' => $data->title_en,
                         'content_uri' => route('front_pages', ['id' => $data->id, 'slug' => $data->slug]),
                         'data' => [
                             'slideshow' => [],

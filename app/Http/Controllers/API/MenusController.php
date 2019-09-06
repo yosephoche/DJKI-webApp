@@ -30,6 +30,7 @@ class MenusController extends Controller
         $menus[] = [
           'id_parent' => $parent->id,
           'title ID' => $parent->menu_title,
+          'title EN' => $parent->menu_title_en,
           'action_type' => $action['type'],
           'id_target' => $action['id'],
           'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)
@@ -54,7 +55,7 @@ class MenusController extends Controller
         'instagram' => $running_text->instagram,
       ];
 
-      foreach ($slide1->get() as $key => $value) {
+      foreach ($slide1 as $key => $value) {
         $menus['slideshow'][] = [
           'id_slide' => $value->id,
           'title' => $value->title,
@@ -81,7 +82,7 @@ class MenusController extends Controller
           'description_ID' => isset($parent->description) == false ? '' : $parent->description,
           'description_EN' => isset($parent->description_EN) == false ? '' : $parent->description_EN,
           'title_ID' => $parent->menu_title,
-          'title_EN' => $parent->menu_title_EN,
+          'title_EN' => $parent->menu_title_en,
           'action_type' => $action['type'],
           'id_target' => $action['id'],
           'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)
