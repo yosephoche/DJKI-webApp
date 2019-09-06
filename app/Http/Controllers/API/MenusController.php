@@ -36,7 +36,7 @@ class MenusController extends Controller
         ];
       }
     } else {
-      $menu = nav(['position' => 'header'])->where('parent', '0')->where('lang', $r->lang);
+      $menu = nav(['position' => 'header'])->where('parent', '0');
       $running_text = Settings::whereNotNull('running_text')->first();
       $slide1 = Slideshow::orderBy('sort', 'DESC')->where('category', 'Home');
       $horizontal = MenuHorizontal::all();
