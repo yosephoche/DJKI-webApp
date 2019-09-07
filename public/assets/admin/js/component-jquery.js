@@ -114,6 +114,22 @@ $(document).ready(function () {
     }
   });
 
+  $('#about').on('click', function () {
+    $('#link').prop('disabled', true)
+  })
+
+  $('#none').on('click', function () {
+    $('#link').prop('disabled', false)
+  })
+
+  $('#visitor').on('click', function () {
+    $('#link').prop('disabled', false)
+  })
+
+  $('#contact').on('click', function () {
+    $('#link').prop('disabled', false)
+  })
+
   $("#pinned").change(function () {
     $.ajax({
       url: 'setting/runningtext/' + $(this).val(),

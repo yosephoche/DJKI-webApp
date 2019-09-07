@@ -52,10 +52,9 @@
 				</form>
 
 				<div class="clearfix"></div>
-
 				<div id="nestable" class="dd" style="margin-top: 17px">
 					<ol class="dd-list" data-parent="menu">
-						@foreach ($menul as $menu)
+						@foreach ($menus as $menu)
 							<li class="dd-item dd3-item" id="{{ $menu->id }}"
 								data-status="true"
 								data-description="{{$menu->description}}"
@@ -155,7 +154,7 @@
 
 						<div class="form-group">
 							<label>Link</label>
-							<input type="text" name="url" class="form-control" list="menu-header" autocomplete="off" placeholder="This menu link to ...">
+							<input type="text" name="url" class="form-control" list="menu-header" autocomplete="off" placeholder="This menu link to ..." id="link">
 							<datalist id="menu-header" class="datalist">
 								<option value="#">Blank</option>
 								@foreach ($url_pages as $page)
@@ -180,13 +179,13 @@
 							<label for="">Sub menu from:</label>
 							<select class="form-control" name="parent">
 								<option value="0">Not a sub menu</option>
-								@foreach ($menus as $key => $value)
+								{{-- @foreach ($menus as $key => $value)
 									<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
-								@endforeach
-								@foreach ($listUpdate as $menu)
-									@foreach ($menu as $key => $value)
+								@endforeach --}}
+								@foreach ($listHeader as $value)
+									{{-- @foreach ($menu as $key => $value) --}}
 										<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
-									@endforeach
+									{{-- @endforeach --}}
 								@endforeach
 							</select>
 						</div>
@@ -199,6 +198,30 @@
 							</div>
 						</div>
 
+						<div class="radio">
+							<label>
+								<input type="radio" name="flag" value="0" checked id="none">
+								None
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="flag" value="1" id="about">
+								About
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="flag" value="2" id="visitor">
+								visitor
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="flag" value="3" id="contact">
+								contact
+							</label>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -208,76 +231,6 @@
 			</form>
 		</div>
 	</div>
-
-	{{-- <div class="modal fade" id="modal-newEN" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog modal-sm" role="document">
-			<form action="{{ route('menus_store') }}" method="post" enctype="multipart/form-data">
-				{{ csrf_field() }}
-				<input type="hidden" name="option" value="{{ Request::segment(3) }}">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">New Menu {{ Request::segment(3) }} English</h4>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label>Title</label>
-							<input type="text" name="menu_title" class="form-control" placeholder="Title for this menu">
-							<input type="hidden" name="lang" value="EN">
-						</div>
-
-						<div class="form-group">
-							<label>Link</label>
-							<input type="text" name="url" class="form-control" list="menu-header" autocomplete="off" placeholder="This menu link to ...">
-							<datalist id="menu-header" class="datalist">
-								<option value="#">Blank</option>
-								@foreach ($url_pages as $page)
-									<option value="/page/{{ $page->slug }}">{{ $page->title }}</option>
-								@endforeach
-								@foreach ($category as $cat)
-									<option value="/post/category/{{ $cat->slug }}/{{ $cat->id }}">{{ $cat->name }}</option>
-								@endforeach
-								@foreach ($archive as $arc)
-									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->title }}</option>
-								@endforeach
-								@foreach ($archive_item as $arc_item)
-									<option value="{{ asset('uploaded/download/'.$arc_item->file)}}">{{$arc_item->title}}</option>
-								@endforeach
-							</datalist>
-						</div>
-
-						<div class="form-group">
-							<label for="">Sub menu from:</label>
-							<select class="form-control" name="parent">
-								<option value="0">Not a sub menu</option>
-								@foreach ($menus as $key => $value)
-									<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
-								@endforeach
-								@foreach ($listUpdate as $menu)
-									@foreach ($menu as $key => $value)
-										<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
-									@endforeach
-								@endforeach
-							</select>
-						</div>
-
-						<div class="form-group">
-							<label>Featured image</label>
-							<div class="form-group">
-								<img class="previewImage_" src="{{ asset('uploaded/media/default.jpg') }}" width="100%">
-								<input type="file" name="image" class="form-control" accept=".svg, .png">
-							</div>
-						</div>
-
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-						<button type="submit" class="btn btn-primary">Save change</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div> --}}
 
 	<div class="modal fade" id="modal-edit-menus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
@@ -335,6 +288,10 @@
 							<label for="">Sub menu from:</label>
 							<select class="form-control" name="parent">
 								<option value="0">Not a sub menu</option>
+								@foreach ($listHeader as $value)
+									<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
+								@endforeach
+								{{-- <option value="0">Not a sub menu</option>
 								@foreach ($menus as $key => $value)
 									<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
 								@endforeach
@@ -342,7 +299,7 @@
 									@foreach ($menu as $key => $value)
 										<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
 									@endforeach
-								@endforeach
+								@endforeach --}}
 							</select>
 						</div>
 
@@ -354,6 +311,30 @@
 							</div>
 						</div>
 
+						<div class="radio">
+							<label>
+								<input type="radio" name="flag" value="0" checked>
+								None
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="flag" value="1">
+								About
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="flag" value="2">
+								visitor
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="flag" value="3">
+								contact
+							</label>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

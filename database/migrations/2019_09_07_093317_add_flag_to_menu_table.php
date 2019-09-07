@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnTitleEnToTableMenus extends Migration
+class AddFlagToMenuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddColumnTitleEnToTableMenus extends Migration
     public function up()
     {
         Schema::table('menus', function (Blueprint $table) {
-            $table->string('menu_title_en', 50);
-            $table->longText('description_en');
+            $table->string("flag");
         });
     }
 
@@ -27,8 +26,7 @@ class AddColumnTitleEnToTableMenus extends Migration
     public function down()
     {
         Schema::table('menus', function (Blueprint $table) {
-            $table->dropColumn('menu_title_en');
-            $table->dropColumn('description_en');
+            $table->dropColumn("flag");
         });
     }
 }
