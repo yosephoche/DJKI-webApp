@@ -56,7 +56,7 @@ class MenusController extends Controller
 		}
 		/*Data posts and pages*/
 		$data['url_pages'] = Pages::where('deleted_at', null)->orderBy('title')->get();
-		$data['category'] = Category::all();
+		$data['posts'] = Posts::all();
 		$data['archive'] = ArchiveGroup::all();
 		$data['archive_item'] = Archive::all();
 		return view('admin.menus.index', $data);

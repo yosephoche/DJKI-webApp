@@ -80,8 +80,8 @@
 											<li class="dd-item dd3-item" id="{{ $submenu->id }}"
 												data-status="true"
 												data-id="{{ $submenu->id }}"
-												data-description="{{$submenu->description}}"
-												data-description_en="{{$submenu->description_en}}"
+												{{-- data-description="{{$submenu->description}}"
+												data-description_en="{{$submenu->description_en}}" --}}
 												data-title="{{ $submenu->menu_title }}"
 												data-title_eng="{{ $submenu->menu_title_en }}"
 												data-link="{{ $submenu->url }}"
@@ -161,15 +161,18 @@
 								@foreach ($url_pages as $page)
 									<option value="/page/{{ $page->slug }}">{{ $page->title }}</option>
 								@endforeach
-								@foreach ($category as $cat)
+								{{-- @foreach ($category as $cat)
 									<option value="/post/category/{{ $cat->slug }}/{{ $cat->id }}">{{ $cat->name }}</option>
+								@endforeach --}}
+								@foreach ($posts as $post)
+									<option value="/posts/{{ $post->slug }}/{{ $post->id }}">{{ $post->title }}</option>
 								@endforeach
 								@foreach ($archive as $arc)
-									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->title }}</option>
+									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->name }}</option>
 								@endforeach
-								@foreach ($archive_item as $arc_item)
+								{{-- @foreach ($archive_item as $arc_item)
 									<option value="{{ asset('uploaded/download/'.$arc_item->file)}}">{{$arc_item->title}}</option>
-								@endforeach
+								@endforeach --}}
 							</datalist>
 						</div>
 
@@ -313,15 +316,15 @@
 								@foreach ($url_pages as $page)
 									<option value="/page/{{ $page->slug }}">{{ $page->title }}</option>
 								@endforeach
-								@foreach ($category as $cat)
-									<option value="/post/category/{{ $cat->slug }}/{{ $cat->id }}">{{ $cat->name }}</option>
+								@foreach ($posts as $post)
+									<option value="/posts/{{ $post->slug }}/{{ $post->id }}">{{ $post->title }}</option>
 								@endforeach
 								@foreach ($archive as $arc)
-									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->title }}</option>
+									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->name }}</option>
 								@endforeach
-								@foreach ($archive_item as $arc_item)
+								{{-- @foreach ($archive_item as $arc_item)
 									<option value="{{ asset('uploaded/download/'.$arc_item->file)}}">{{$arc_item->title}}</option>
-								@endforeach
+								@endforeach --}}
 							</datalist>
 						</div>
 

@@ -29,8 +29,8 @@ class MenusController extends Controller
         $action = $this->getAction($parent->url, $parent->id);
         $menus[] = [
           'id_parent' => $parent->id,
-          'title ID' => $parent->menu_title,
-          'title EN' => $parent->menu_title_en,
+          'title_ID' => $parent->menu_title,
+          'title_EN' => $parent->menu_title_en,
           'action_type' => $action['type'],
           'id_target' => $action['id'],
           'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)
