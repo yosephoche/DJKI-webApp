@@ -55,7 +55,7 @@
 
 				<div id="nestable" class="dd" style="margin-top: 17px">
 					<ol class="dd-list" data-parent="menu">
-						@foreach ($menus as $menu)
+						@foreach ($menul as $menu)
 							<li class="dd-item dd3-item" id="{{ $menu->id }}"
 								data-status="true"
 								data-description="{{$menu->description}}"
@@ -161,12 +161,12 @@
 								@foreach ($url_pages as $page)
 									<option value="/page/{{ $page->slug }}">{{ $page->title }}</option>
 								@endforeach
-								{{-- @foreach ($category as $cat)
+								@foreach ($category as $cat)
 									<option value="/post/category/{{ $cat->slug }}/{{ $cat->id }}">{{ $cat->name }}</option>
-								@endforeach --}}
-								@foreach ($posts as $post)
-									<option value="/posts/{{ $post->slug }}/{{ $post->id }}">{{ $post->title }}</option>
 								@endforeach
+								{{-- @foreach ($posts as $post)
+									<option value="/posts/{{ $post->slug }}/{{ $post->id }}">{{ $post->title }}</option>
+								@endforeach --}}
 								@foreach ($archive as $arc)
 									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->name }}</option>
 								@endforeach
@@ -316,9 +316,12 @@
 								@foreach ($url_pages as $page)
 									<option value="/page/{{ $page->slug }}">{{ $page->title }}</option>
 								@endforeach
-								@foreach ($posts as $post)
-									<option value="/posts/{{ $post->slug }}/{{ $post->id }}">{{ $post->title }}</option>
+								@foreach ($category as $cat)
+									<option value="/post/category/{{ $cat->slug }}/{{ $cat->id }}">{{ $cat->name }}</option>
 								@endforeach
+								{{-- @foreach ($posts as $post)
+									<option value="/posts/{{ $post->slug }}/{{ $post->id }}">{{ $post->title }}</option>
+								@endforeach --}}
 								@foreach ($archive as $arc)
 									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->name }}</option>
 								@endforeach

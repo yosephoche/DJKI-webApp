@@ -27,13 +27,15 @@ class MenusController extends Controller
 		/*Check params header or footer*/
 		switch ($option) {
 			case 'header':
-				$menus = Menus::where('status', 'header')->orderBy('sort')->get();
+				$menus = Menus::where('status', 'header')->where('url', 'not like', '%posts%')
+					->where('url', 'not like', '%page%')->where('url', 'not like', '%directory%')->orderBy('sort')->get();
+				$menul = Menus::where('status', 'header')->orderBy('sort')->get();
 				$data['menus'] = $menus->where('parent', '0');
 
 				/* Mencari subsparent */
 				$listMenus = array();
 				foreach ($menus->where('parent', '0') as $key => $value) {
-					$listMenus[] = $menus->where('parent', $value->id);
+					$listMenus[] = $menul->where('parent', $value->id);
 				}
 				$data['listUpdate'] = $listMenus;
 				break;
@@ -56,9 +58,9 @@ class MenusController extends Controller
 		}
 		/*Data posts and pages*/
 		$data['url_pages'] = Pages::where('deleted_at', null)->orderBy('title')->get();
-		$data['posts'] = Posts::all();
+		$data['category'] = Category::all();
 		$data['archive'] = ArchiveGroup::all();
-		$data['archive_item'] = Archive::all();
+		// $data['archive_item'] = Archive::all();
 		return view('admin.menus.index', $data);
 	}
 
