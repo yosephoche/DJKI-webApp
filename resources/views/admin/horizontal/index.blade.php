@@ -67,7 +67,7 @@
 								data-preview="{{ $menu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$menu->image) }}">
 								<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{ $menu->menu_title_id }}
 									<div class="pull-right sortable-action">
-										<a href="#" data-toggle="modal" data-target="#modal-edit-menus"><i class="glyphicon glyphicon-pencil"></i></a>
+										<a href="#" data-toggle="modal" data-target="#modal-edit-menus2"><i class="glyphicon glyphicon-pencil"></i></a>
 										&nbsp;&nbsp;
 										<a href="#" data-toggle="modal" data-id="{{ $menu->id }}" data-target="#modal-delete"><i class="glyphicon glyphicon-trash"></i></a>
 									</div>
@@ -88,7 +88,7 @@
 												data-preview="{{ $submenu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$submenu->image) }}">
 												<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{ $submenu->menu_title_id }}
 													<div class="pull-right sortable-action">
-														<a href="#" data-toggle="modal" data-target="#modal-edit-menus"><i class="glyphicon glyphicon-pencil"></i></a>
+														<a href="#" data-toggle="modal" data-target="#modal-edit-menus2"><i class="glyphicon glyphicon-pencil"></i></a>
 														&nbsp;&nbsp;
 														<a href="#" data-toggle="modal" data-id="{{ $submenu->id }}" data-target="#modal-delete"><i class="glyphicon glyphicon-trash"></i></a>
 													</div>
@@ -106,7 +106,7 @@
 																data-preview="{{ $subsubmenu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$subsubmenu->image) }}">
 																<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{ $subsubmenu->menu_title_id }}
 																	<div class="pull-right sortable-action">
-																		<a href="#" data-toggle="modal" data-target="#modal-edit-menus"><i class="glyphicon glyphicon-pencil"></i></a>
+																		<a href="#" data-toggle="modal" data-target="#modal-edit-menus2"><i class="glyphicon glyphicon-pencil"></i></a>
 																		&nbsp;&nbsp;
 																		<a href="#" data-toggle="modal" data-id="{{ $subsubmenu->id }}" data-target="#modal-delete"><i class="glyphicon glyphicon-trash"></i></a>
 																	</div>
@@ -143,52 +143,30 @@
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Title ID</label>
-							<input type="text" name="menu_title" class="form-control" placeholder="Title for this menu ID">
-						</div>
+								<label>Title ID</label>
+								<input type="text" name="menu_title" class="form-control"  placeholder="Title for this menu ENG">
+							</div>
 
 						<div class="form-group">
 							<label>Title EN</label>
-							<input type="text" name="menu_titleEN" class="form-control" placeholder="Title for this menu ENG">
+							<input type="text" name="menu_titleEN" class="form-control"  placeholder="Title for this menu ENG">
 						</div>
 
 						<div class="form-group">
-							<label>Link</label>
-							<input type="text" name="url" class="form-control" list="menu-header" autocomplete="off" placeholder="This menu link to ...">
-							<datalist id="menu-header" class="datalist">
-								<option value="#">Blank</option>
-								@foreach ($url_pages as $page)
-									<option value="/page/{{ $page->slug }}">{{ $page->title }}</option>
-								@endforeach
-								@foreach ($category as $cat)
-									<option value="/post/category/{{ $cat->slug }}/{{ $cat->id }}">{{ $cat->name }}</option>
-								@endforeach
-								@foreach ($archive as $arc)
-									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->title }}</option>
-								@endforeach
-								@foreach ($archive_item as $arc_item)
-									<option value="{{ asset('uploaded/download/'.$arc_item->file)}}">{{$arc_item->title}}</option>
-								@endforeach
-							</datalist>
-						</div>
-{{-- 
-						<div class="form-group">
-							<label for="">Sub menu from:</label>
-							<select class="form-control" name="parent">
-								<option value="0">Not a sub menu</option>
-								@foreach ($menus as $key => $value)
-									<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
-								@endforeach
-								@foreach ($listUpdate as $menu)
-									@foreach ($menu as $key => $value)
-										<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
+							<label>Direct To</label>
+								<select class="form-control" name="direct">
+									<option value="#">Blank</option>
+									@foreach ($menu1 as $n)
+										<option value="{{$n->id }}">
+											@if($n->parent>0)
+												{{$n->menu_title}}
+											@endif</option>
 									@endforeach
-								@endforeach
-							</select>
-						</div> --}}
+								</select>
+						</div>
 
 						<div class="form-group">
-							<label>Featured image</label>
+							<label>Icon</label>
 							<div class="form-group">
 								<img class="previewImage_" src="{{ asset('uploaded/media/default.jpg') }}" width="100%">
 								<input type="file" name="image" class="form-control" accept=".svg, .png">
@@ -205,77 +183,7 @@
 		</div>
 	</div>
 
-	{{-- <div class="modal fade" id="modal-newEN" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog modal-sm" role="document">
-			<form action="{{ route('menus_store') }}" method="post" enctype="multipart/form-data">
-				{{ csrf_field() }}
-				<input type="hidden" name="option" value="{{ Request::segment(3) }}">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">New Menu {{ Request::segment(3) }} English</h4>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label>Title</label>
-							<input type="text" name="menu_title" class="form-control" placeholder="Title for this menu">
-							<input type="hidden" name="lang" value="EN">
-						</div>
-
-						<div class="form-group">
-							<label>Link</label>
-							<input type="text" name="url" class="form-control" list="menu-header" autocomplete="off" placeholder="This menu link to ...">
-							<datalist id="menu-header" class="datalist">
-								<option value="#">Blank</option>
-								@foreach ($url_pages as $page)
-									<option value="/page/{{ $page->slug }}">{{ $page->title }}</option>
-								@endforeach
-								@foreach ($category as $cat)
-									<option value="/post/category/{{ $cat->slug }}/{{ $cat->id }}">{{ $cat->name }}</option>
-								@endforeach
-								@foreach ($archive as $arc)
-									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->title }}</option>
-								@endforeach
-								@foreach ($archive_item as $arc_item)
-									<option value="{{ asset('uploaded/download/'.$arc_item->file)}}">{{$arc_item->title}}</option>
-								@endforeach
-							</datalist>
-						</div>
-
-						<div class="form-group">
-							<label for="">Sub menu from:</label>
-							<select class="form-control" name="parent">
-								<option value="0">Not a sub menu</option>
-								@foreach ($menus as $key => $value)
-									<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
-								@endforeach
-								@foreach ($listUpdate as $menu)
-									@foreach ($menu as $key => $value)
-										<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
-									@endforeach
-								@endforeach
-							</select>
-						</div>
-
-						<div class="form-group">
-							<label>Featured image</label>
-							<div class="form-group">
-								<img class="previewImage_" src="{{ asset('uploaded/media/default.jpg') }}" width="100%">
-								<input type="file" name="image" class="form-control" accept=".svg, .png">
-							</div>
-						</div>
-
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-						<button type="submit" class="btn btn-primary">Save change</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div> --}}
-
-	<div class="modal fade" id="modal-edit-menus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="modal-edit-menus2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
 			<form action="{{ route('menuhorizontal_update') }}" method="post" enctype="multipart/form-data">
 				{{ csrf_field() }}
@@ -298,46 +206,20 @@
 							<label>Title EN</label>
 							<input type="text" name="menu_titleEN" class="form-control" placeholder="Title for this menu ENG">
 						</div>
-						{{-- <select class="form-control" name="lang">
-							<option value="ID">Indonesia</option>
-							<option value="EN">English</option>
-						</select> --}}
-						<div id='textareaEN'></div>
 
 						<div class="form-group">
-							<label>Link</label>
-							<input type="text" name="url" class="form-control" list="menu-header" placeholder="This menu link to ..." autocomplete="off">
-							<datalist id="menu-header" class="datalist">
-								<option value="#">Blank</option>
-								@foreach ($url_pages as $page)
-									<option value="/page/{{ $page->slug }}">{{ $page->title }}</option>
-								@endforeach
-								@foreach ($category as $cat)
-									<option value="/post/category/{{ $cat->slug }}/{{ $cat->id }}">{{ $cat->name }}</option>
-								@endforeach
-								@foreach ($archive as $arc)
-									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->title }}</option>
-								@endforeach
-								@foreach ($archive_item as $arc_item)
-									<option value="{{ asset('uploaded/download/'.$arc_item->file)}}">{{$arc_item->title}}</option>
-								@endforeach
-							</datalist>
-						</div>
+							<label>Direct To</label>
+								<select class="form-control" name="direct">
+									<option value="#">Blank</option>
+									@foreach ($menu1 as $n)
+										<option value="{{$n->id }}">
+											@if($n->parent)
+												{{$n->menu_title}}
+											@endif</option>
 
-						{{-- <div class="form-group">
-							<label for="">Sub menu from:</label>
-							<select class="form-control" name="parent">
-								<option value="0">Not a sub menu</option>
-								@foreach ($menus as $key => $value)
-									<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
-								@endforeach
-								@foreach ($listUpdate as $menu)
-									@foreach ($menu as $key => $value)
-										<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
 									@endforeach
-								@endforeach
-							</select>
-						</div> --}}
+								</select>
+						</div>
 
 						<div class="form-group">
 							<label>Featured image</label>

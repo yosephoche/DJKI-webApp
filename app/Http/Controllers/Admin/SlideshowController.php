@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB, GlobalClass;
 use App\Pages;
+use Illuminate\Support\Str;
 
 class SlideshowController extends Controller
 {
@@ -68,6 +69,7 @@ class SlideshowController extends Controller
 		if ($r->link == true) {
 			$slideshow->title = $r->title;
 			$slideshow->link = $r->link;
+			$slideshow->image = $r->image;
 		} else {
 			$slideshow->title = $r->linkvid;
 			$slideshow->link = $r->linkvid;
@@ -75,7 +77,7 @@ class SlideshowController extends Controller
 		$slideshow->id_inputan = $r->inputan;
 		$slideshow->category = $r->category;
 		$slideshow->sort = $count > 0 ? $sort->sort + 1 : $sort + 1;
-		$slideshow->image = $r->image;
+
 		$slideshow->save();
 
 		/*Success Message*/
@@ -90,9 +92,10 @@ class SlideshowController extends Controller
 		try {
 			$pages = Pages::all();
 			$slideshow = Slideshow::findOrFail($id);
+			$str = Str::after($slideshow->link, 'watch?v=');
 			$data['slideshow'] = $slideshow;
 
-			return view('admin.slideshow.edit', $data, compact('pages'));
+			return view('admin.slideshow.edit', $data, compact('pages', 'str'));
 		} catch (ModelNotFoundException $e) {
 			return redirect()->route('slideshow');
 		}
@@ -129,13 +132,14 @@ class SlideshowController extends Controller
 		if ($r->link == true) {
 			$slideshow->title = $r->title;
 			$slideshow->link = $r->link;
+			$slideshow->image = $r->image;
 		} else {
 			$slideshow->title = $r->linkvid;
 			$slideshow->link = $r->linkvid;
 		}
 		$slideshow->category = $r->category;
 		$slideshow->sort = $sort->sort + 1;
-		$slideshow->image = $r->image;
+
 		$slideshow->save();
 
 		/*Success Message*/

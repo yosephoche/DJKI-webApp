@@ -50,7 +50,8 @@ class PagesController extends MenusController
                 } else {
                     $pages['response'] = [
                         'id' => $data->id,
-                        'title' => $data->title,
+                        'title ID' => $data->title,
+                        'title EN' => $data->title_en,
                         'content_uri' => route('front_pages', ['id' => $data->id, 'slug' => $data->slug]),
                         'data' => [
                             'slideshow' => [],
@@ -121,11 +122,18 @@ class PagesController extends MenusController
             $slide1 = Slideshow::orderBy('sort', 'DESC')->where('category', 'Tentang Kami');
             $data = array();
             foreach ($slide1->get() as $key => $value) {
-                $data[] = [
-                    'title' => $value->title,
-                    'image' => asset('uploaded/media/' . $value->image),
-                    'link' => $value->link
-                ];
+                if ($value->image) {
+                    $data[] = [
+                        'title' => $value->title,
+                        'image' => asset('uploaded/media/' . $value->image),
+                        'link' => $value->link
+                    ];
+                } else {
+                    $data[] = [
+                        'title' => $value->title,
+                        'link' => $value->link
+                    ];
+                }
             }
 
             return $data;
@@ -146,7 +154,8 @@ class PagesController extends MenusController
                     $action = $this->getAction($parent->url, $parent->id); // Extend From MenusController.php
                     $dataMenu = [
                         'id_parent' => $parent->id,
-                        'title' => $parent->menu_title,
+                        'title ID' => $parent->menu_title,
+                        'title EN' => $parent->menu_title,
                         'action_type' => $action['type'],
                         'id_target' => $action['id'],
                         'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)

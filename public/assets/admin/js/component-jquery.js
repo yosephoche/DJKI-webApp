@@ -251,7 +251,7 @@ $(document).ready(function () {
     $("#accordion .in").collapse("hide");
   });
 
-  // menuhorizontal-----------------------------------------------
+  /* menuhorizontal----------------------------------------------- */
   $("#nestable2")
     .nestable({
       group: 1,
@@ -308,7 +308,26 @@ $(document).ready(function () {
       $('#textareaEN').html('');
     }
   });
-  // end menuhorizontal-----------------------------------------------------------
+
+  $('#modal-edit-menus2').on('show.bs.modal', function (e) {
+    var data = $(e.relatedTarget).parents('li').data();
+    console.log(data);
+
+    if (data.submenu) {
+      var parent = data.submenu;
+    } else if (data.subsubmenu) {
+      var parent = data.subsubmenu;
+    }
+    var status = data.status;
+    $(this).find('select[name="parent"]').prop('selectedIndex', 0);
+    $(this).find('input[name="id"]').val(data.id);
+    $(this).find('input[name="menu_title"]').val(data.title);
+    $(this).find('input[name="menu_titleEN"]').val(data.title_eng);
+    $(this).find('input[name="url"]').val(data.link);
+    $(this).find('select[name="parent"] option[value="' + parent + '"]').prop("selected", true);
+    $(this).find('.previewImage_').attr('src', data.preview);
+  });
+  /* end menuhorizontal----------------------------------------------------------- */
 });
 
 /* Slider */
@@ -324,7 +343,7 @@ $(".direktori .btn-upload").click(function () {
   $(".direktori .media-upload").addClass("show");
 });
 
-// slide
+/* slide */
 $("#pilihan").change(function () {
   var select = document.querySelector('#pilihan')
   if (select.value != '2') {
@@ -344,4 +363,4 @@ $("#pilihan").change(function () {
   }
 
 });
-// //endslide
+/* endslide */

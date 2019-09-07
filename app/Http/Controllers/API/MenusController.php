@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Pages;
 use App\Http\Controllers\Controller;
+use App\MenuHorizontal;
 use App\Settings;
 use App\Slideshow;
-use App\MenuHorizontal;
-use General, Response;
+// use App\MenuHorizontal;
+use General, Response, DB;
 
 class MenusController extends Controller
 {
@@ -39,6 +40,10 @@ class MenusController extends Controller
       $menu = nav(['position' => 'header'])->where('parent', '0')->where('lang', $r->lang);
       $running_text = Settings::whereNotNull('running_text')->first();
       $slide1 = Slideshow::orderBy('sort', 'DESC')->where('category', 'Home');
+      // $horizontal = MenuHorizontal::all();
+      // $horizontal = DB::table('menu_horizontals')
+      //   ->join('menus', 'menu_horizontals.id_menu', '=', 'menus.id')
+      //   ->get();
       $horizontal = MenuHorizontal::all();
       // $slide1 = Slideshow::orderBy('sort', 'DESC')->where('category', 'Home');
       // dd($running_text->link);
@@ -63,13 +68,26 @@ class MenusController extends Controller
         ];
       }
 
-      foreach ($horizontal as $key => $n) {
+      foreach ($horizontal as $value) {
+
+        $itemMenu = $value->menu;
+        $action = $this->getAction($itemMenu->url, $itemMenu->id);
+        $data = array();
         $menus['menu_horizontal'][] = [
-          'id_menu' => $n->id,
-          'menu_title_id' => $n->menu_title_id,
-          'menu_title_en' => $n->menu_title_en,
-          'url'   => asset($n->url),
-          'image' => $n->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $n->image)
+          'id_menu' => $value->id,
+          'menu_title_id' => $value->menu_title_id,
+          'menu_title_en' => $value->menu_title_en,
+          'image' => $value->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $value->image),
+          'menu' => [
+            'id_menu' => $itemMenu->id,
+            'title_id' => $itemMenu->menu_title,
+            'title_en'  => $itemMenu->menu_title_en,
+            'id_parent' => $itemMenu->parent,
+            'description_id' => $itemMenu->description,
+            'description_en' => $itemMenu->description_en,
+            'action_type' => $action['type'],
+            'id_target' => $action['id'],
+          ]
         ];
       }
 
@@ -199,4 +217,60 @@ class MenusController extends Controller
       return $res;
     }
   }
+
+  // function menu_horizontal($id)
+  // {
+  //   $menu = MenuHorizontal::find($id)->menu;
+  //   // dd($menu);
+  //   foreach ($menu as $key => $value) {
+  //     $action = $this->getAction($value->url, $value->id);
+  //     $menus[] = [
+  //       'id_menu' => $value->id,
+  //       'id_parent' => $value->parent,
+  //       'description_id' => $value->description,
+  //       'title_id' => $value->menu_title,
+  //       // 'description_id' => $n->description,
+  //       // 'description_en' => $n->description_en,
+  //       'action_type' => $action['type'],
+  //       'id_target' => $action['id']
+  //     ];
+  //   }
+  //   return $menus;
+  // $horizontal = DB::table('menu_horizontals')
+  //   ->join('menus', 'menu_horizontals.id_menu', '=', 'menus.id')
+  //   ->get();
+
+  // $data = array();
+  // foreach ($horizontal as $n) {
+  //   $action = $this->getAction($n->url, $n->id);
+  //   $data[] = [
+  //     'id_menu' => $n->id,
+  //     'title_id' => $n->menu_title,
+  //     'title_en'  => $n->menu_title_en,
+  //     'id_parent' => $n->parent,
+  //     'description_id' => $n->description,
+  //     'description_en' => $n->description_en,
+  //     'action_type' => $action['type'],
+  //     'id_target' => $action['id'],
+  //   ];
+  // }
+
+
+  // $horizontal = DB::table('menu_horizontals')
+  //   ->join('menus', 'menu_horizontals.id_menu', '=', 'menus.id')
+  //   ->get();
+  // $n = $horizontal->first();
+  // $action = $this-> getAction($n->url, $n->id);
+  // $data[] = [
+  //   'id_menu' => $n->id,
+  //   'title_id' => $n->menu_title,
+  //   'title_en'  => $n->menu_title_en,
+  //   'id_parent' => $n->parent,
+  //   'description_id' => $n->description,
+  //   'description_en' => $n->description_en,
+  //   'action_type' => $action['type'],
+  //   'id_target' => $action['id'],
+  // ];
+  // return $data;
+
 }

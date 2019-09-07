@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\MenuHorizontal;
+use App\MenuHorizontal, App\Images;
+use App\Menus;
 //menus
 use App\Pages;
 use App\Category;
@@ -36,7 +37,7 @@ class MenuhorizontalController extends Controller
         $data['category'] = Category::all();
         $data['archive'] = ArchiveGroup::all();
         $data['archive_item'] = Archive::all();
-        // $data['menus'] = MenuHorizontal::all();
+        $data['menu1'] = Menus::where('parent', '>', 0)->get();
         return view('admin.horizontal.index', $data, compact('menus'));
     }
 
@@ -48,7 +49,7 @@ class MenuhorizontalController extends Controller
         $this->validate($r, [
             'option' => 'required',
             'menu_title' => 'required',
-            'url' => 'required'
+            'direct' => 'required'
         ]);
 
         $tabMenus = new MenuHorizontal;
@@ -74,8 +75,7 @@ class MenuhorizontalController extends Controller
             } else {
                 $tabMenus->menu_title_en = $r->menu_title;
             }
-            $tabMenus->url = $r->url;
-            $tabMenus->parent = $r->parent;
+            $tabMenus->id_menu = $r->direct;
             $tabMenus->status = $r->option;
             $tabMenus->save();
             $r->session()->flash('success', 'Menu Successfully Added');
@@ -90,9 +90,8 @@ class MenuhorizontalController extends Controller
         GlobalClass::Roleback(['Customer Service', 'Writer']);
         /*Validation*/
         $this->validate($r, [
-            'id' => 'required',
-            'menu_title' => 'required',
-            'url' => 'required'
+            // 'id' => 'required',
+            // 'menu_title' => 'required'
         ]);
 
         $tabMenus = MenuHorizontal::find($r->id);
@@ -100,7 +99,7 @@ class MenuhorizontalController extends Controller
         if ($r->hasFile('image')) {
 
             /*Remove Old Image*/
-            $old = DB::table('menus')->where('id', $r->id)->first();
+            $old = DB::table('menu_horizontals')->where('id', $r->id)->first();
             GlobalClass::removeFile([
                 array(
                     'path' => 'uploaded/menus',
@@ -120,19 +119,14 @@ class MenuhorizontalController extends Controller
 
         /*Update data*/
         $tabMenus->menu_title_id = $r->menu_title;
-        if (strlen($r->menu_titleEN) > 0) {
+        if (strlen($r->menu_title_en) > 0) {
             $tabMenus->menu_title_en = $r->menu_titleEN;
         } else {
-            $tabMenus->menu_title_en = $r->menu_title;
+            $tabMenus->menu_title_en = $r->menu_titleEN;
         }
-        $tabMenus->url = $r->url;
-        $tabMenus->parent = $r->parent;
-        $tabMenus->description_id = $r->description;
-        if (strlen($r->descriptionEN) > 0) {
-            $tabMenus->description_en = $r->descriptionEN;
-        } else {
-            $tabMenus->description_en = $r->description;
-        }
+
+        $tabMenus->id_menu = $r->id_menu;
+
         $tabMenus->update();
 
         /*Success Message*/
@@ -143,20 +137,24 @@ class MenuhorizontalController extends Controller
 
     public function delete(Request $r)
     {
-        GlobalClass::Roleback(['Customer Service', 'Writer']);
+        //
+        GlobalClass::Roleback(['Customer Service']);
 
-        /*Delete Data*/
-        $tabMenus = new MenuHorizontal;
-        if ($tabMenus::where('parent', $r->id)->count() > 0) {
-            /*Failed Message*/
-            $r->session()->flash('success', 'Please delete sub menu');
-        } else {
-            $tabMenus::find($r->id)->delete();
-            /*Success Message*/
-            $r->session()->flash('success', 'Menu Successfully Deleted');
-        }
+        /* Remove old files */
+        $old = DB::table('menu_horizontals')->where('id', $r->id)->first();
+        Images::where('file_name', $old->image)->delete();
+        GlobalClass::removeFile([
+            array(
+                'path' => 'uploaded/menus',
+                'files' => $old->image
+            ),
+        ]);
+
+        MenuHorizontal::where('id', $r->id)->delete();
+        $r->session()->flash('success', 'Menu Horizontals Successfully Delete');
         return redirect(url()->previous());
     }
+
 
     public function drag(Request $r)
     {
@@ -172,7 +170,6 @@ class MenuhorizontalController extends Controller
         foreach ($menus as $key => $value) {
 
             if ($value['type'] == 'menu') {
-                // $parent = $value['id'];
 
                 $tabMenus::where('id', $value['id'])
                     ->update([
@@ -180,20 +177,6 @@ class MenuhorizontalController extends Controller
                         'parent' => "0",
                     ]);
             }
-            // elseif ($value['type'] == 'submenu') {
-            //     $tabMenus::where('id', $value['id'])
-            //         ->update([
-            //             'sort' => $key,
-            //             'parent' => $parent,
-            //         ]);
-            //     $parentSubmenu = $value['id'];
-            // } else {
-            //     $tabMenus::where('id', $value['id'])
-            //         ->update([
-            //             'sort' => $key,
-            //             'parent' => $parentSubmenu,
-            //         ]);
-            // }
         }
 
         /*Success Message*/
@@ -363,5 +346,26 @@ class MenuhorizontalController extends Controller
             }
             return $res;
         }
+    }
+
+
+    public function setText($id)
+    {
+        $post = menus::where('menu_title', $id)->first();
+        // $post = Posts::find($id);
+        if (!isset($post)) {
+            // $pages = menus::where('url', $id)->first();
+            // $pages = Pages::find($id);
+            $pages = menus::where('id', $id)->first();
+            $data = $pages;
+            // if (!isset($pages)) {
+            //     $data = Archive::where('file', $id)->first();
+            // } else {
+            //     $data = $pages;
+            // }
+        } else {
+            $data = $post;
+        }
+        return response()->json(['success' => true, 'data' => $data]);
     }
 }

@@ -78,7 +78,7 @@
 					@else
 					@if(isset($slideshow->link))
 						<iframe id="youvid" width="560" height="315" 
-						src="{{$slideshow->link}}" frameborder="1" 
+						src="{{"https://www.youtube.com/embed/".$str}}" frameborder="1" 
 						allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 						</iframe>
 					@endif
@@ -159,7 +159,7 @@
 <script type="text/javascript">
 $("#addr").on("change", function () {
 	let additional = $(this).val().replace("\\s","+",);
-	let baseUrl = additional;
+	let baseUrl = "https://www.youtube.com/embed/"+additional;
 	$("#youvid").attr("src", baseUrl);
 	$('#youvid').contentWindow.location.reload(true);
 });

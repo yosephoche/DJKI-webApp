@@ -282,9 +282,6 @@
 @endsection
 
 @section('registerscript')
-{{-- <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
-	<script src="/js/mapInput.js"></script> --}}
-
 <script type="text/javascript">
 $("#addr").on("change", function () {
 	let additional = $(this).val().replace("\\s","+",);

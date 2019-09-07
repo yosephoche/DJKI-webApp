@@ -278,7 +278,7 @@
 
 	<div class="modal fade" id="modal-edit-menus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
-			<form action="{{ route('menus_update') }}" method="post" enctype="multipart/form-data">
+			<form action="{{ route('menuhorizontal_update') }}" method="post" enctype="multipart/form-data">
 				{{ csrf_field() }}
 				<input type="hidden" name="id">
 
@@ -299,46 +299,9 @@
 							<label>Title EN</label>
 							<input type="text" name="menu_titleEN" class="form-control" placeholder="Title for this menu ENG">
 						</div>
-						{{-- <select class="form-control" name="lang">
-							<option value="ID">Indonesia</option>
-							<option value="EN">English</option>
-						</select> --}}
+
 						<div id='textareaEN'></div>
 
-						<div class="form-group">
-							<label>Link</label>
-							<input type="text" name="url" class="form-control" list="menu-header" placeholder="This menu link to ..." autocomplete="off">
-							<datalist id="menu-header" class="datalist">
-								<option value="#">Blank</option>
-								@foreach ($url_pages as $page)
-									<option value="/page/{{ $page->slug }}">{{ $page->title }}</option>
-								@endforeach
-								@foreach ($category as $cat)
-									<option value="/post/category/{{ $cat->slug }}/{{ $cat->id }}">{{ $cat->name }}</option>
-								@endforeach
-								@foreach ($archive as $arc)
-									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->title }}</option>
-								@endforeach
-								@foreach ($archive_item as $arc_item)
-									<option value="{{ asset('uploaded/download/'.$arc_item->file)}}">{{$arc_item->title}}</option>
-								@endforeach
-							</datalist>
-						</div>
-
-						<div class="form-group">
-							<label for="">Sub menu from:</label>
-							<select class="form-control" name="parent">
-								<option value="0">Not a sub menu</option>
-								@foreach ($menus as $key => $value)
-									<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
-								@endforeach
-								@foreach ($listUpdate as $menu)
-									@foreach ($menu as $key => $value)
-										<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
-									@endforeach
-								@endforeach
-							</select>
-						</div>
 
 						<div class="form-group">
 							<label>Featured image</label>
