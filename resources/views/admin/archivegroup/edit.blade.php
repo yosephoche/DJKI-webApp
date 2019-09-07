@@ -37,11 +37,11 @@
 
 							<div class="form-group">
 								<label for="">Title EN</label>
-								<input type="text" name="nameEN" class="form-control input-lg" placeholder="Directory Name" value="{{ $archive->name_EN }}">
+								<input type="text" name="nameEN" class="form-control input-lg" placeholder="Directory Name" value="{{ $archive->name_en }}">
 							</div>
 							<div class="form-group">
 								<label>Description EN</label>
-								<textarea name="descEN" class="editor">{{ $archive->desc_EN }}</textarea>
+								<textarea name="descEN" class="editor">{{ $archive->desc_en }}</textarea>
 							</div>
 						</div>
 					</div>

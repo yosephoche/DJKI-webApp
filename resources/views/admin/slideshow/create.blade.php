@@ -36,12 +36,12 @@
 						<select class="form-control" name="inputan" id="pilihan">
 							<option value="">Choose...</option>
 							<option value="1"><b>Picture</b></option>
-							<option value="2"><b>Video</b></option>	
+							<option value="2"><b>Video</b></option>
 						</select>
 					</div>
 				</div>
 				</div>
-					
+
 					<div class="row" id="title" style="display:none">
 						<div class="col-md-12">
 							<div class="form-group">
@@ -79,12 +79,12 @@
 									<input type="text" name="link" list="pages" class="form-control" autocomplete="off">
 									<datalist id="pages">
 									@foreach ($pages as $item)
-									<option value="{{$item->slug}}">{{$item->title}}</option>	
+									<option value="{{$item->slug}}">{{$item->title}}</option>
 									@endforeach
 									</datalist>
 								</div>
 								{{-- link video --}}
-								<div class="form-group linked" id="linkvid" style="display:none">
+								<div class="form-group linked" id="linkvidi" style="display:none">
 									<label>Link Video</label>
 								<input type="text" name="linkvid" class="form-control" autocomplete="off">
 								</div>
@@ -94,7 +94,7 @@
 									<select class="form-control" name="category">
 										<option value="">Uncategorized</option>
 										<option value="Home">Home</option>
-										<option value="Tentang Kami">Tentang Kami</option>	
+										<option value="Tentang Kami">Tentang Kami</option>
 									</select>
 								</div>
 						</div>

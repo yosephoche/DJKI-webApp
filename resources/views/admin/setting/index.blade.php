@@ -232,13 +232,13 @@
 							</div>
 						</div>
 
-						<div class="col-md-6 col-sm-6">
+						{{-- <div class="col-md-6 col-sm-6">
 							<label>Google+</label>
 							<div class="input-group m-b">
 								<span class="input-group-addon">https://plus.google.com/</span>
 								<input type="text" class="form-control" placeholder="u/0/999998888888877774649" value="{{ $setting->google }}" name="google">
 							</div>
-						</div>
+						</div> --}}
 
 						<div class="col-md-6 col-sm-6">
 							<label>Linkedin</label>

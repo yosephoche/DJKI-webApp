@@ -59,7 +59,7 @@ class SettingController extends Controller
 			'meta_keyword'		=> 'required',
 			'timezone' 			=> 'required',
 			'email' 			=> 'required|email',
-			'phone' 			=> 'required'
+			'phone' 			=> 'required|max:15'
 		]);
 
 		// $post = Posts::where('slug', $r->link)->first();

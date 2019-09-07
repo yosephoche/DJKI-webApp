@@ -56,16 +56,16 @@ class ArchiveController extends Controller
 
     $archiveGroup->name = $r->name;
     if (strlen($r->nameEN) > 0) {
-      $archiveGroup->name_EN = $r->nameEN;
+      $archiveGroup->name_en = $r->nameEN;
     } else {
-      $archiveGroup->name_EN = $r->name;
+      $archiveGroup->name_en = $r->name;
     }
 
     $archiveGroup->desc = $r->desc;
     if (strlen($r->descEN) > 0) {
-      $archiveGroup->desc_EN = $r->descEN;
+      $archiveGroup->desc_en = $r->descEN;
     } else {
-      $archiveGroup->desc_EN = $r->desc;
+      $archiveGroup->desc_en = $r->desc;
     }
 
     $archiveGroup->slug = $count ? "{$slug}-{$count}" : $slug;
@@ -102,16 +102,16 @@ class ArchiveController extends Controller
     $archiveGroup = ArchiveGroup::find($id);
     $archiveGroup->name = $r->name;
     if (strlen($r->nameEN) > 0) {
-      $archiveGroup->name_EN = $r->nameEN;
+      $archiveGroup->name_en = $r->nameEN;
     } else {
-      $archiveGroup->name_EN = $r->name;
+      $archiveGroup->name_en = $r->name;
     }
 
     $archiveGroup->desc = $r->desc;
     if (strlen($r->descEN) > 0) {
-      $archiveGroup->desc_EN = $r->descEN;
+      $archiveGroup->desc_en = $r->descEN;
     } else {
-      $archiveGroup->desc_EN = $r->desc;
+      $archiveGroup->desc_en = $r->desc;
     }
     $archiveGroup->save();
 
@@ -205,9 +205,9 @@ class ArchiveController extends Controller
       $archive->id_group = $r->idgroup;
       $archive->title = $r->title;
       if (strlen($r->titleEN) > 0) {
-        $archive->title_EN = $r->titleEN;
+        $archive->title_en = $r->titleEN;
       } else {
-        $archive->title_EN = $r->title;
+        $archive->title_en = $r->title;
       }
       $archive->tag = $r->tags == '' ? '-' : $r->tags;
       $archive->file = $filename;
