@@ -4,7 +4,7 @@
 
 @section('contents')
 	<div class="bg-light lter b-b wrapper-md">
-		<h1 class="m-n font-thin h3">New Post</h1>
+		<h1 class="m-n font-thin h3">New Posts</h1>
 		<small class="text-muted">With posts, users will feel closer to your business.</small>
 	</div>
 	<div class="wrapper-md">
@@ -39,23 +39,23 @@
 								<div class="col-md-12">
 									<div class="form-group">
 										<label for="">INDONESIA :</label>
-										<input type="text" name="titleID" class="form-control input-lg" placeholder="Post title ID" value="{!! old('title') !!}">
+										<input type="text" name="titleID" class="form-control input-lg" placeholder="Post title ID" value="{!! old('titleID') !!}">
 									</div>
 
 									<div class="form-group">
 										<textarea name="contentID" class="editor">
-											{!! old('content') !!}
+											{!! old('contentID') !!}
 										</textarea>
 									</div>
 
 									<div class="form-group">
 										<label for="">ENGLISH :</label>
-										<input type="text" name="titleEN" class="form-control input-lg" placeholder="Post title EN" value="{!! old('title_EN') !!}">
+										<input type="text" name="titleEN" class="form-control input-lg" placeholder="Post title EN" value="{!! old('titleEN') !!}">
 									</div>
 
 									<div class="form-group">
 										<textarea name="contentEN" class="editor">
-											{!! old('content_EN') !!}
+											{!! old('contentEN') !!}
 										</textarea>
 									</div>
 								</div>
