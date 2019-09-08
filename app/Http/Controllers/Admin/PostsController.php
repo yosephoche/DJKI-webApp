@@ -96,16 +96,16 @@ class PostsController extends Controller
 		$posts->title = $r->titleID;
 
 		if (strlen($r->titleEN) > 0) {
-			$posts->title_EN = $r->titleEN;
+			$posts->title_en = $r->titleEN;
 		} else {
-			$posts->title_EN = $r->titleID;
+			$posts->title_en = $r->titleID;
 		}
 
 		$posts->content = $r->contentID;
 		if (strlen($r->contentEN) > 0) {
-			$posts->content_EN = $r->contentEN;
+			$posts->content_en = $r->contentEN;
 		} else {
-			$posts->content_EN = $r->contentID;
+			$posts->content_en = $r->contentID;
 		}
 
 		$posts->keyword = $r->keyword;
