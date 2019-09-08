@@ -61,7 +61,7 @@
 								data-description_en="{{$menu->description_en}}"
 								data-id="{{ $menu->id }}"
 								data-title="{{$menu->menu_title }}"
-								data-title_eng="{{ $menu->menu_title_en }}"
+								data-title_eng="{{ ($menu->contains('menu_title_en') ? $menu->menu_title_en : 'tidak ada di db' }}"
 								data-link="{{ $menu->url }}"
 								data-submenu="{{ $menu->parent }}"
 								data-preview="{{ $menu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$menu->image) }}">

@@ -28,30 +28,32 @@ class MenusController extends Controller
 		/*Check params header or footer*/
 		switch ($option) {
 			case 'header':
-				$menus = Menus::all();
-				$menusHeader = Menus::where('status', 'header')->where('url', 'not like', '%post%')
-					->where('url', 'not like', '%page%')->where('url', 'not like', '%directory%')->orderBy('sort')->get();
-				$menul = Menus::where('status', 'header')->orderBy('sort')->get();
-				// dd($menusHeader->toArray());
-				$data['menus'] = $menus->where('parent', '0');
+				$menusHeader = Menus::where('status', 'header')
+					->where('url', 'not like', '%post%')
+					->where('url', 'not like', '%page%')
+					->where('url', 'not like', '%directory%')
+					->orderBy('sort')->get();
+				
+				$data['menus'] = Menus::where('parent', '0');
 
 				/* Mencari subsparent */
 				$listMenus = array();
+
+				/** jangan kyak gini bikin variable
+				 * kasih jelas namanya variable ksih jelas 
+				 * sesuai kegunaannya utk tampung data apa*/
 				$listMenus2 = [];
+				
 				foreach ($menusHeader->where('parent', '0') as $key => $value) {
 					$url = $value->url;
-					// dd($url);
 
-					// dd($url, preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $url));
-					// $isStarUrl = ;
 					if (preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $url) == 0) {
 						$listMenus[] = $menusHeader->where('parent', $value->id);
 						$listMenus2[] = $value;
-						// dd($value, $listMenus);
 					}
 				}
 				$data['listUpdate'] = $listMenus;
-				$data['listHeader'] = $listMenus2;
+				$data['listHeader'] = $listMenus2; 
 				break;
 			case 'footer':
 				$menus = Menus::where('status', 'footer')->orderBy('sort')->get();
