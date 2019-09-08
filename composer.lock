@@ -4290,11 +4290,7 @@
                 {
                     "name": "Sebastian Bergmann",
                     "role": "lead",
-<<<<<<< HEAD
-                    "email": "sb@sebastian-bergmann.de"
-=======
                     "email": "sebastian@phpunit.de"
->>>>>>> develop
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -4634,11 +4630,7 @@
                 "xunit"
             ],
             "abandoned": true,
-<<<<<<< HEAD
-            "time": "2017-06-30T09:13:00+00:00"
-=======
             "time": "2018-08-09T05:50:03+00:00"
->>>>>>> develop
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
