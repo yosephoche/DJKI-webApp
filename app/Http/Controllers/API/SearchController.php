@@ -8,21 +8,35 @@ use App\Pages;
 use App\Archive;
 use App\Posts;
 use App\ArchiveGroup;
+use Response, General;
 
 class SearchController extends Controller
 {
+    public function __construct()
+    {
+        $this->helper = new General;
+        $this->response = new Response;
+    }
+
     public function getAllSearch(Request $r)
     {
-        $data = array();
-        $data['response'] = [
+        // $data = array();
+        $data = [
             $this->searchArchive($r),
             $this->searchPage($r),
             $this->searchPosts($r),
             $this->searchGroupArchive($r),
-
+            $this->total($r),
         ];
-
-        return $data;
+        if ($data) {
+            $response = $this->response->formatResponseWithPages("OK", $data, $this->response->STAT_OK());
+            $headers = $this->response->HEADERS_REQUIRED('GET');
+            return response()->json($response, $this->response->STAT_OK());
+        } else {
+            $headers = $this->response->HEADERS_REQUIRED('GET');
+            $response = $this->response->formatResponseWithPages("SEARCH NOT FOUND", [], $this->response->STAT_NOT_FOUND());
+            return response()->json($response, $this->response->STAT_NOT_FOUND());
+        };
     }
 
     // pages
@@ -123,6 +137,22 @@ class SearchController extends Controller
         } else {
             $data = "Data Not Found";
         }
+        return $data;
+    }
+
+    protected function total(Request $r)
+    {
+        $archive = $this->searchArchive($r);
+        $page = $this->searchPage($r);
+        $posts = $this->searchPosts($r);
+        $group = $this->searchGroupArchive($r);
+        $archive = $archive->count();
+        $page = $page->count();
+        $posts = $posts->count();
+        $group = $group->count();
+
+        $data['total'] = ($archive + $page  + $posts  + $group);
+
         return $data;
     }
 }
