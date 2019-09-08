@@ -34,10 +34,10 @@
 								<label for="">INDONESIA</label>
 								<input type="text" name="name" class="form-control input-lg" placeholder="Name Category ID" value="{!! old('name') !!}">
 							</div>
-							<div class="form-group">
+							{{-- <div class="form-group">
 								<label for="">ENGLISH</label>
 								<input type="text" name="nameEN" class="form-control input-lg" placeholder="Name Category EN" value="{!! old('name') !!}">
-							</div>
+							</div> --}}
 						</div>
 					</div>
 					<hr>

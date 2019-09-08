@@ -14,7 +14,7 @@ class AddColumnToPostsCategoryTable extends Migration
     public function up()
     {
         Schema::table('posts_category', function (Blueprint $table) {
-            $table->string('name_EN');
+            $table->string('name_en');
         });
     }
 
@@ -26,7 +26,7 @@ class AddColumnToPostsCategoryTable extends Migration
     public function down()
     {
         Schema::table('posts_category', function (Blueprint $table) {
-            $table->dropColumn('name_EN');
+            $table->dropColumn('name_en');
         });
     }
 }

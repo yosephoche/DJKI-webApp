@@ -11,6 +11,7 @@ use App\Archive;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB, GlobalClass;
+use PhpParser\Node\Stmt\If_;
 
 class MenusController extends Controller
 {
@@ -27,15 +28,30 @@ class MenusController extends Controller
 		/*Check params header or footer*/
 		switch ($option) {
 			case 'header':
-				$menus = Menus::where('status', 'header')->orderBy('sort')->get();
+				$menus = Menus::all();
+				$menusHeader = Menus::where('status', 'header')->where('url', 'not like', '%post%')
+					->where('url', 'not like', '%page%')->where('url', 'not like', '%directory%')->orderBy('sort')->get();
+				$menul = Menus::where('status', 'header')->orderBy('sort')->get();
+				// dd($menusHeader->toArray());
 				$data['menus'] = $menus->where('parent', '0');
 
 				/* Mencari subsparent */
 				$listMenus = array();
-				foreach ($menus->where('parent', '0') as $key => $value) {
-					$listMenus[] = $menus->where('parent', $value->id);
+				$listMenus2 = [];
+				foreach ($menusHeader->where('parent', '0') as $key => $value) {
+					$url = $value->url;
+					// dd($url);
+
+					// dd($url, preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $url));
+					// $isStarUrl = ;
+					if (preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $url) == 0) {
+						$listMenus[] = $menusHeader->where('parent', $value->id);
+						$listMenus2[] = $value;
+						// dd($value, $listMenus);
+					}
 				}
 				$data['listUpdate'] = $listMenus;
+				$data['listHeader'] = $listMenus2;
 				break;
 			case 'footer':
 				$menus = Menus::where('status', 'footer')->orderBy('sort')->get();
@@ -58,7 +74,7 @@ class MenusController extends Controller
 		$data['url_pages'] = Pages::where('deleted_at', null)->orderBy('title')->get();
 		$data['category'] = Category::all();
 		$data['archive'] = ArchiveGroup::all();
-		$data['archive_item'] = Archive::all();
+		// $data['archive_item'] = Archive::all();
 		return view('admin.menus.index', $data);
 	}
 
@@ -91,6 +107,7 @@ class MenusController extends Controller
 		if (in_array($r->option, array('header', 'footer'))) {
 			/*Insert into table*/
 			$tabMenus->menu_title = $r->menu_title;
+			$tabMenus->menu_title = $r->menu_title;
 			if (strlen($r->menu_titleEN) > 0) {
 				$tabMenus->menu_title_EN = $r->menu_titleEN;
 			} else {
@@ -99,6 +116,7 @@ class MenusController extends Controller
 			$tabMenus->url = $r->url;
 			$tabMenus->parent = $r->parent;
 			$tabMenus->status = $r->option;
+			$tabMenus->flag = $r->flag;
 			$tabMenus->save();
 			$r->session()->flash('success', 'Menu Successfully Added');
 		} else {
@@ -182,36 +200,61 @@ class MenusController extends Controller
 
 	public function drag(Request $r)
 	{
+		// dd($r->all());
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 		$tabMenus = new Menus;
-		$id = explode(',', $r->id_menus);
-		$type = explode(',', $r->type);
-		for ($i = 0; $i < count($id); $i++) {
-			$menus[] = array('id' => $id[$i], 'type' => $type[$i]);
-		}
+		$data['id'] = explode(',', $r->id_menus);
+		$data['type'] = explode(',', $r->type);
 
+		$menus = Menus::whereIn('id', explode(',', $r->id_menus))->get()->map(function ($value, $key) use ($data) {
+			$id = $value->id;
+			$type = $data['type'][$key];
+			$url = $value->url;
+			$sort = array_search($value->id, $data['id']);
+
+			return ['id' => $id, 'type' => $type, 'url' => $url, 'sort' => $sort];
+		});
+		// dd($r->all(), $menus);
+
+		// dd($menus);
 		/*Update data*/
 		foreach ($menus as $key => $value) {
+			// dd($value);
 			if ($value['type'] == 'menu') {
-				$parent = $value['id'];
+				$parent = $value;
 				$tabMenus::where('id', $value['id'])
 					->update([
-						'sort' => $key,
+						'sort' => $value['sort'],
 						'parent' => "0",
 					]);
 			} elseif ($value['type'] == 'submenu') {
-				$tabMenus::where('id', $value['id'])
-					->update([
-						'sort' => $key,
-						'parent' => $parent,
-					]);
-				$parentSubmenu = $value['id'];
+				if (
+					strpos($parent['url'], 'post')
+					|| preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $parent['url'])
+					|| strpos($parent['url'], 'page')
+					|| strpos($parent['url'], 'directory')
+				) { } else {
+					$tabMenus::where('id', $value['id'])
+						->update([
+							'sort' => $value['sort'],
+							'parent' => $parent['id'],
+						]);
+					$parentSubmenu = $value;
+				}
+				// dd($parent, $value);
 			} else {
-				$tabMenus::where('id', $value['id'])
-					->update([
-						'sort' => $key,
-						'parent' => $parentSubmenu,
-					]);
+				if (
+					strpos($parent['url'], 'post')
+					|| preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $parent['url'])
+					|| strpos($parent['url'], 'page')
+					|| strpos($parent['url'], 'directory')
+				) { } else {
+					$tabMenus::where('id', $value['id'])
+						->update([
+							'sort' => $value['sort'],
+							'parent' => $parentSubmenu['id'],
+						]);
+				}
 			}
 		}
 

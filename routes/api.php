@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => ['apikey'], 'namespace' => 'API'], function () {
   Route::group(['prefix' => 'v2'], function () {
-    Route::get('menus/{id?}', 'MenusController@getMenus');
+    Route::get('menus', 'MenusController@getMenus');
     Route::get('posts', 'PostsController@getPosts');
     Route::post('postcomments', 'CommentController@postComments');
     Route::get('getcomments', 'CommentController@getComments');

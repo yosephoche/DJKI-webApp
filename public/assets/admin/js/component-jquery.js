@@ -12,6 +12,26 @@ $(document).on("change", ".checkbox", function () {
   });
   html.html(inner);
 });
+
+$("#pilihan").on('change', function () {
+  var select = document.querySelector('#pilihan')
+  if (select.value != '2') {
+    document.querySelector('#title').style.display = 'block';
+    document.querySelector('#image').style.display = 'block';
+    document.querySelector('#category').style.display = 'block';
+    document.querySelector('#link').style.display = 'block';
+    document.querySelector('#linkvid').style.display = 'none';
+    document.querySelector('#video').style.display = 'none';
+  } else {
+    document.querySelector('#title').style.display = 'none';
+    document.querySelector('#image').style.display = 'none';
+    document.querySelector('#category').style.display = 'block';
+    document.querySelector('#link').style.display = 'none';
+    document.querySelector('#linkvid').style.display = 'block';
+    document.querySelector('#video').style.display = 'block';
+  }
+});
+
 $(document).ready(function () {
 
   $(".checkbox").change(function () {
@@ -93,6 +113,22 @@ $(document).ready(function () {
       $('#textareaEN').html('');
     }
   });
+
+  $('#about').on('click', function () {
+    $('#link').prop('disabled', true)
+  })
+
+  $('#none').on('click', function () {
+    $('#link').prop('disabled', false)
+  })
+
+  $('#visitor').on('click', function () {
+    $('#link').prop('disabled', false)
+  })
+
+  $('#contact').on('click', function () {
+    $('#link').prop('disabled', false)
+  })
 
   $("#pinned").change(function () {
     $.ajax({
@@ -250,6 +286,7 @@ $(document).ready(function () {
   $("#accordion").on("show.bs.collapse", function () {
     $("#accordion .in").collapse("hide");
   });
+<<<<<<< HEAD
 
   /* menuhorizontal----------------------------------------------- */
   $("#nestable2")
@@ -328,6 +365,8 @@ $(document).ready(function () {
     $(this).find('.previewImage_').attr('src', data.preview);
   });
   /* end menuhorizontal----------------------------------------------------------- */
+=======
+>>>>>>> master
 });
 
 /* Slider */
@@ -341,6 +380,7 @@ $(".direktori .btn-link").click(function () {
 $(".direktori .btn-upload").click(function () {
   $(".direktori .text-link").removeClass("show");
   $(".direktori .media-upload").addClass("show");
+<<<<<<< HEAD
 });
 
 /* slide */
@@ -364,3 +404,6 @@ $("#pilihan").change(function () {
 
 });
 /* endslide */
+=======
+});
+>>>>>>> master
