@@ -123,11 +123,11 @@ $(document).ready(function () {
   })
 
   $('#visitor').on('click', function () {
-    $('#link').prop('disabled', false)
+    $('#link').prop('disabled', true)
   })
 
   $('#contact').on('click', function () {
-    $('#link').prop('disabled', false)
+    $('#link').prop('disabled', true)
   })
 
   $("#pinned").change(function () {
