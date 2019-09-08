@@ -14,9 +14,9 @@ class AddColumnTitleContentEnToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->text('title_en');
-            $table->longText('content_en');
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+           $table->text('title_en');
+           $table->longText('content_en');
+            //$table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -27,10 +27,10 @@ class AddColumnTitleContentEnToPostsTable extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
+       Schema::table('posts', function (Blueprint $table) {
             $table->dropColumn('title_en');
             $table->dropColumn('content_en');
-            $table->dropForeign(['id_user']);
-        });
+            //$table->dropForeign(['id_user']);
+       });
     }
 }
