@@ -76,7 +76,7 @@ class MenusController extends Controller
 		$data['url_pages'] = Pages::where('deleted_at', null)->orderBy('title')->get();
 		$data['category'] = Category::all();
 		$data['archive'] = ArchiveGroup::all();
-		// $data['archive_item'] = Archive::all();
+		$data['archive_item'] = Archive::all();
 		return view('admin.menus.index', $data);
 	}
 
@@ -109,11 +109,10 @@ class MenusController extends Controller
 		if (in_array($r->option, array('header', 'footer'))) {
 			/*Insert into table*/
 			$tabMenus->menu_title = $r->menu_title;
-			$tabMenus->menu_title = $r->menu_title;
 			if (strlen($r->menu_titleEN) > 0) {
-				$tabMenus->menu_title_EN = $r->menu_titleEN;
+				$tabMenus->menu_title_en = $r->menu_titleEN;
 			} else {
-				$tabMenus->menu_title_EN = $r->menu_title;
+				$tabMenus->menu_title_en = $r->menu_title;
 			}
 			$tabMenus->parent = $r->parent;
 			$tabMenus->status = $r->option;
@@ -168,17 +167,17 @@ class MenusController extends Controller
 		/*Update data*/
 		$tabMenus->menu_title = $r->menu_title;
 		if (strlen($r->menu_titleEN) > 0) {
-			$tabMenus->menu_title_EN = $r->menu_titleEN;
+			$tabMenus->menu_title_en = $r->menu_titleEN;
 		} else {
-			$tabMenus->menu_title_EN = $r->menu_title;
+			$tabMenus->menu_title_en = $r->menu_title;
 		}
 		$tabMenus->url = $r->url;
 		$tabMenus->parent = $r->parent;
 		$tabMenus->description = $r->description;
 		if (strlen($r->descriptionEN) > 0) {
-			$tabMenus->description_EN = $r->descriptionEN;
+			$tabMenus->description_en = $r->descriptionEN;
 		} else {
-			$tabMenus->description_EN = $r->description;
+			$tabMenus->description_en = $r->description;
 		}
 		$tabMenus->update();
 

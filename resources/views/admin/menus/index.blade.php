@@ -169,9 +169,9 @@
 								@foreach ($archive as $arc)
 									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->name }}</option>
 								@endforeach
-								{{-- @foreach ($archive_item as $arc_item)
+								@foreach ($archive_item as $arc_item)
 									<option value="{{ asset('uploaded/download/'.$arc_item->file)}}">{{$arc_item->title}}</option>
-								@endforeach --}}
+								@endforeach
 							</datalist>
 						</div>
 
@@ -273,9 +273,9 @@
 								@foreach ($archive as $arc)
 									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->name }}</option>
 								@endforeach
-								{{-- @foreach ($archive_item as $arc_item)
+								@foreach ($archive_item as $arc_item)
 									<option value="{{ asset('uploaded/download/'.$arc_item->file)}}">{{$arc_item->title}}</option>
-								@endforeach --}}
+								@endforeach
 							</datalist>
 						</div>
 
