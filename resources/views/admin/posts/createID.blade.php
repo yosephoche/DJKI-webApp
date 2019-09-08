@@ -39,23 +39,23 @@
 								<div class="col-md-12">
 									<div class="form-group">
 										<label for="">INDONESIA :</label>
-										<input type="text" name="titleID" class="form-control input-lg" placeholder="Post title ID" value="{!! old('title') !!}">
+										<input type="text" name="titleID" class="form-control input-lg" placeholder="Post title ID" value="{!! old('titleID') !!}">
 									</div>
 
 									<div class="form-group">
 										<textarea name="contentID" class="editor">
-											{!! old('content') !!}
+											{!! old('contentID') !!}
 										</textarea>
 									</div>
 
 									<div class="form-group">
 										<label for="">ENGLISH :</label>
-										<input type="text" name="titleEN" class="form-control input-lg" placeholder="Post title EN" value="{!! old('title_EN') !!}">
+										<input type="text" name="titleEN" class="form-control input-lg" placeholder="Post title EN" value="{!! old('titleEN') !!}">
 									</div>
 
 									<div class="form-group">
 										<textarea name="contentEN" class="editor">
-											{!! old('content_EN') !!}
+											{!! old('contentEN') !!}
 										</textarea>
 									</div>
 								</div>
