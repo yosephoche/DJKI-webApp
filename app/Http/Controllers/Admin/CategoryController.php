@@ -78,11 +78,11 @@ class CategoryController extends Controller
 
 		/*Save to DB*/
 		$category->name = $r->name;
-		if (strlen($r->nameEN) > 0) {
-			$category->name_EN = $r->nameEN;
-		} else {
-			$category->name_EN = $r->name;
-		}
+		// if (strlen($r->nameEN) > 0) {
+		// 	$category->name_EN = $r->nameEN;
+		// } else {
+		// 	$category->name_EN = $r->name;
+		// }
 		$category->slug = str_slug($r->name);
 		$category->save();
 

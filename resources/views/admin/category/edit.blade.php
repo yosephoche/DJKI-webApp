@@ -35,10 +35,10 @@
 								<label for="">INDONESIA</label>
 								<input type="text" name="name" class="form-control input-lg" placeholder="Name Category ID" value="{!! $category->name !!}">
 							</div>
-							<div class="form-group">
+							{{-- <div class="form-group">
 								<label for="">ENGLISH</label>
 								<input type="text" name="nameEN" class="form-control input-lg" placeholder="Name Category EN" value="{!! $category->name_EN !!}">
-							</div>
+							</div> --}}
 						</div>
 					</div>
 					<hr>
