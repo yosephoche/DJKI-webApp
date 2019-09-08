@@ -3000,19 +3000,6 @@
             "time": "2019-08-06T08:03:45+00:00"
         },
         {
-<<<<<<< HEAD
-            "name": "symfony/process",
-            "version": "v3.4.31",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/process.git",
-                "reference": "d822cb654000a95b7855362c0d5b127f6a6d8baa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/d822cb654000a95b7855362c0d5b127f6a6d8baa",
-                "reference": "d822cb654000a95b7855362c0d5b127f6a6d8baa",
-=======
             "name": "symfony/polyfill-mbstring",
             "version": "v1.12.0",
             "source": {
@@ -3024,7 +3011,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/b42a2f66e8f1b15ccf25652c3424265923eb4f17",
                 "reference": "b42a2f66e8f1b15ccf25652c3424265923eb4f17",
->>>>>>> develop
                 "shasum": ""
             },
             "require": {
