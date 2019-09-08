@@ -34,9 +34,7 @@ class SlideshowController extends Controller
 
 	public function store(Request $r)
 	{
-		// dd($r);
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
-
 		/*Validation Store*/
 		if ($r->inputan == 1) {
 			$this->validate($r, [
@@ -67,7 +65,7 @@ class SlideshowController extends Controller
 		$slideshow = new Slideshow();
 
 		/*Save DB*/
-		if (!isset($r->link)) {
+		if ($r->link) {
 			$slideshow->title = $r->title;
 			$slideshow->link = $r->link;
 			$slideshow->image = $r->image;

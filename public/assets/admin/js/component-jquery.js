@@ -378,23 +378,3 @@ $(".direktori .btn-upload").click(function () {
   $(".direktori .text-link").removeClass("show");
   $(".direktori .media-upload").addClass("show");
 });
-
-/* slide */
-$("#pilihan").change(function () {
-  var select = document.querySelector('#pilihan')
-  if (select.value != '2') {
-    document.querySelector('#title').style.display = 'block';
-    document.querySelector('#image').style.display = 'block';
-    document.querySelector('#category').style.display = 'block';
-    document.querySelector('#link').style.display = 'block';
-    document.querySelector('#linkvid').style.display = 'none';
-  } else {
-    document.querySelector('#title').style.display = 'none';
-    document.querySelector('#image').style.display = 'none';
-    document.querySelector('#category').style.display = 'block';
-    document.querySelector('#link').style.display = 'none';
-    document.querySelector('#linkvid').style.display = 'block';
-  }
-
-});
-/* endslide */
