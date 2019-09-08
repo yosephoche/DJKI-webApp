@@ -4,7 +4,7 @@
 
 @section('contents')
 	<div class="bg-light lter b-b wrapper-md">
-		<h1 class="m-n font-thin h3">New Post</h1>
+		<h1 class="m-n font-thin h3">New Posts</h1>
 		<small class="text-muted">With posts, users will feel closer to your business.</small>
 	</div>
 	<div class="wrapper-md">
