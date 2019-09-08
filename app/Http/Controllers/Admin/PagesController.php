@@ -70,15 +70,15 @@ class PagesController extends Controller
 		$pages->slug = $count ? "{$slug}-{$count}" : $slug;
 		$pages->title = $r->title;
 		if (strlen($r->titleEN) > 0) {
-			$pages->title_EN = $r->titleEN;
+			$pages->title_en = $r->titleEN;
 		} else {
-			$pages->title_EN = $r->title;
+			$pages->title_en = $r->title;
 		}
 		$pages->content = $r->content;
 		if (strlen($r->contentEN) > 0) {
-			$pages->content_EN = $r->contentEN;
+			$pages->content_en = $r->contentEN;
 		} else {
-			$pages->content_EN = $r->content;
+			$pages->content_en = $r->content;
 		}
 		$pages->keyword = $r->keyword;
 		$pages->type = $r->type;
@@ -147,15 +147,15 @@ class PagesController extends Controller
 		$pages->slug = $count > 0 ? $slug . "-" . $count : $slug;
 		$pages->title = $r->title;
 		if (strlen($r->titleEN) > 0) {
-			$pages->title_EN = $r->titleEN;
+			$pages->title_en = $r->titleEN;
 		} else {
-			$pages->title_EN = $r->title;
+			$pages->title_en = $r->title;
 		}
 		$pages->content = $r->content;
 		if (strlen($r->contentEN) > 0) {
-			$pages->content_EN = $r->contentEN;
+			$pages->content_en = $r->contentEN;
 		} else {
-			$pages->content_EN = $r->content;
+			$pages->content_en = $r->content;
 		}
 		$pages->keyword = $r->keyword;
 		$pages->type = $r->type;
