@@ -131,6 +131,7 @@ class PagesController extends MenusController
                 } else {
                     $data[] = [
                         'title' => $value->title,
+                        'image' => "",
                         'link' => $value->link
                     ];
                 }

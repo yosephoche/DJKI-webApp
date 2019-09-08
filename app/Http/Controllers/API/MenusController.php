@@ -60,12 +60,21 @@ class MenusController extends Controller
       ];
 
       foreach ($slide1->get() as $key => $value) {
-        $menus['slideshow'][] = [
-          'id_slide' => $value->id,
-          'title' => $value->title,
-          'image' => asset('uploaded/media/' . $value->image),
-          'link' => $value->link
-        ];
+        if ($value->image) {
+          $menus['slideshow'][] = [
+            'id_slide' => $value->id,
+            'title' => $value->title,
+            'image' => asset('uploaded/media/' . $value->image),
+            'link' => $value->link
+          ];
+        } else {
+          $menus['slideshow'][] = [
+            'id_slide' => $value->id,
+            'title' => $value->title,
+            'image' => "",
+            'link' => $value->link
+          ];
+        }
       }
 
       foreach ($horizontal as $value) {
