@@ -36,8 +36,8 @@ class PostsController extends Controller
     /* Data Posts */
     foreach ($dataPosts->items() as $key => $value) {
       $posts[] = [
-        'title ID' => $value->title,
-        'title EN' => $value->title_en,
+        'title_ID' => $value->title,
+        'title_EN' => $value->title_en,
         'content ID' => readMore(['text' => $value->content, 'limit' => 150]),
         'content EN' => readMore(['text' => $value->content_en, 'limit' => 150]),
         'image' => GlobalClass::setImages($value->image) == 'default.jpg' ? '' : asset('uploaded/media/' . GlobalClass::setImages($value->image)),

@@ -86,7 +86,7 @@ class MenusController extends Controller
 		$this->validate($r, [
 			'option' => 'required',
 			'menu_title' => 'required',
-			'url' => 'required'
+			// 'url' => 'required'
 		]);
 
 		$tabMenus = new Menus;
@@ -113,10 +113,15 @@ class MenusController extends Controller
 			} else {
 				$tabMenus->menu_title_EN = $r->menu_title;
 			}
-			$tabMenus->url = $r->url;
 			$tabMenus->parent = $r->parent;
 			$tabMenus->status = $r->option;
 			$tabMenus->flag = $r->flag;
+			if ($r->flag == 1) {
+				$tabMenus->url = "#";
+			} else {
+				$tabMenus->url = $r->url;
+			}
+
 			$tabMenus->save();
 			$r->session()->flash('success', 'Menu Successfully Added');
 		} else {
