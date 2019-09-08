@@ -36,5 +36,6 @@ Route::group(['middleware' => ['apikey'], 'namespace' => 'API'], function () {
     Route::get('maps', 'MapsController@getMaps');
     Route::get('partnership', 'PartnershipController@getPartnership');
     Route::get('visitor', 'VisitorController@getAllVisitor');
+    Route::get('search', 'SearchController@getAllSearch');
   });
 });
