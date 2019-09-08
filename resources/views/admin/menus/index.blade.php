@@ -234,7 +234,7 @@
 
 	<div class="modal fade" id="modal-edit-menus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
-			<form action="{{ route('menus_update') }}" method="post" enctype="multipart/form-data">
+			<form action="{{ route('menuhorizontal_update') }}" method="post" enctype="multipart/form-data">
 				{{ csrf_field() }}
 				<input type="hidden" name="id">
 
@@ -255,11 +255,6 @@
 							<label>Title EN</label>
 							<input type="text" name="menu_titleEN" class="form-control" placeholder="Title for this menu ENG">
 						</div>
-						{{-- <select class="form-control" name="lang">
-							<option value="ID">Indonesia</option>
-							<option value="EN">English</option>
-						</select> --}}
-						<div id='textareaEN'></div>
 
 						<div class="form-group">
 							<label>Link</label>
