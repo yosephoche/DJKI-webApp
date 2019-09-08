@@ -19,9 +19,11 @@ class PagesController extends MenusController
     public function getPages($idPages = null)
     {
         $menuIfExist = (!empty($_GET['menu'])) ? (int) $_GET['menu'] : 0;
+
         try {
             $dataPages = Pages::where('id', $idPages);
             if ($dataPages->count() > 0) {
+
                 /* Filter gambar */
                 $data = $dataPages->first();
                 $images = json_decode($data->image);
@@ -39,25 +41,27 @@ class PagesController extends MenusController
                 if ($menuIfExist != 0) {
                     $pages['response'] = [
                         'id' => $data->id,
-                        'title' => $data->title,
+                        'title_ID' => $data->title,
+                        'title_EN' => $data->title_en,
                         'content_uri' => route('front_pages', ['id' => $data->id, 'slug' => $data->slug]),
-                        'data' => [
-                            'slideshow' => $this->Slideshow(),
-                            'partner' => $this->partner(),
-                            'menu' => $this->menu($menuIfExist)
-                        ],
+                        // 'data' => [
+                        //     'slideshow' => $this->Slideshow(),
+                        //     'partner' => $this->partner(),
+                        //     'menu' => $this->menu($menuIfExist)
+                        // ],
+                        'image' => $arrImages
                     ];
                 } else {
                     $pages['response'] = [
                         'id' => $data->id,
-                        'title ID' => $data->title,
-                        'title EN' => $data->title_en,
+                        'title_ID' => $data->title,
+                        'title_EN' => $data->title_en,
                         'content_uri' => route('front_pages', ['id' => $data->id, 'slug' => $data->slug]),
-                        'data' => [
-                            'slideshow' => [],
-                            'partner' => $this->partner(),
-                            'menu' => []
-                        ],
+                        // 'data' => [
+                        //     'slideshow' => [],
+                        //     'partner' => $this->partner(),
+                        //     'menu' => []
+                        // ],
                         'image' => $arrImages
                     ];
                 }
