@@ -256,10 +256,6 @@
 							<input type="text" name="menu_titleEN" class="form-control" placeholder="Title for this menu ENG">
 						</div>
 
-<<<<<<< HEAD
-						<div id='textareaEN'></div>
-
-=======
 						<div class="form-group">
 							<label>Link</label>
 							<input type="text" name="url" class="form-control" list="menu-header" placeholder="This menu link to ..." autocomplete="off">
@@ -301,7 +297,6 @@
 								@endforeach --}}
 							</select>
 						</div>
->>>>>>> master
 
 						<div class="form-group">
 							<label>Featured image</label>

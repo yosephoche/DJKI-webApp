@@ -84,15 +84,9 @@
 									</datalist>
 								</div>
 								{{-- link video --}}
-<<<<<<< HEAD
 								<div class="form-group linked" id="linkvid" style="display:none">
 									<label>Link Youtube</label>
 								<input type="text" name="linkvid" class="form-control" placeholder="https://www.youtube.com/watch?v=NePJHg1_qCg" autocomplete="off">
-=======
-								<div class="form-group linked" id="linkvidi" style="display:none">
-									<label>Link Video</label>
-								<input type="text" name="linkvid" class="form-control" autocomplete="off">
->>>>>>> master
 								</div>
 
 								<div class="form-group" id="category" style="display:none">

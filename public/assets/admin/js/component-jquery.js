@@ -286,7 +286,6 @@ $(document).ready(function () {
   $("#accordion").on("show.bs.collapse", function () {
     $("#accordion .in").collapse("hide");
   });
-<<<<<<< HEAD
 
   /* menuhorizontal----------------------------------------------- */
   $("#nestable2")
@@ -365,8 +364,6 @@ $(document).ready(function () {
     $(this).find('.previewImage_').attr('src', data.preview);
   });
   /* end menuhorizontal----------------------------------------------------------- */
-=======
->>>>>>> master
 });
 
 /* Slider */
@@ -380,7 +377,6 @@ $(".direktori .btn-link").click(function () {
 $(".direktori .btn-upload").click(function () {
   $(".direktori .text-link").removeClass("show");
   $(".direktori .media-upload").addClass("show");
-<<<<<<< HEAD
 });
 
 /* slide */
@@ -392,18 +388,13 @@ $("#pilihan").change(function () {
     document.querySelector('#category').style.display = 'block';
     document.querySelector('#link').style.display = 'block';
     document.querySelector('#linkvid').style.display = 'none';
-    document.querySelector('#video').style.display = 'none';
   } else {
     document.querySelector('#title').style.display = 'none';
     document.querySelector('#image').style.display = 'none';
     document.querySelector('#category').style.display = 'block';
     document.querySelector('#link').style.display = 'none';
     document.querySelector('#linkvid').style.display = 'block';
-    document.querySelector('#video').style.display = 'block';
   }
 
 });
 /* endslide */
-=======
-});
->>>>>>> master
