@@ -155,7 +155,7 @@
 						<div class="form-group">
 							<label>Direct To</label>
 								<select class="form-control" name="direct">
-									<option value="#">Blank</option>
+									<option value="">Blank</option>
 									@foreach ($menu1 as $n)
 										<option value="{{$n->id }}">
 											@if($n->parent>0)
@@ -210,7 +210,7 @@
 						<div class="form-group">
 							<label>Direct To</label>
 								<select class="form-control" name="direct">
-									<option value="#">Blank</option>
+									<option value="">Blank</option>
 									@foreach ($menu1 as $n)
 										<option value="{{$n->id }}">
 											@if($n->parent)

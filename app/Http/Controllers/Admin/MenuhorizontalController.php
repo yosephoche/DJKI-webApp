@@ -90,8 +90,8 @@ class MenuhorizontalController extends Controller
         GlobalClass::Roleback(['Customer Service', 'Writer']);
         /*Validation*/
         $this->validate($r, [
-            // 'id' => 'required',
-            // 'menu_title' => 'required'
+            'menu_title' => 'required',
+            'direct' => 'required'
         ]);
 
         $tabMenus = MenuHorizontal::find($r->id);
@@ -125,7 +125,7 @@ class MenuhorizontalController extends Controller
             $tabMenus->menu_title_en = $r->menu_titleEN;
         }
 
-        $tabMenus->id_menu = $r->id_menu;
+        $tabMenus->id_menu = $r->direct;
 
         $tabMenus->update();
 
