@@ -86,7 +86,7 @@ class MenusController extends Controller
 		$this->validate($r, [
 			'option' => 'required',
 			'menu_title' => 'required',
-			'url' => 'required'
+			// 'url' => 'required'
 		]);
 
 		$tabMenus = new Menus;
