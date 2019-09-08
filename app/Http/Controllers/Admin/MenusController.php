@@ -34,7 +34,7 @@ class MenusController extends Controller
 					->where('url', 'not like', '%directory%')
 					->orderBy('sort')->get();
 				
-				$data['menus'] = Menus::where('parent', '0');
+				$data['menus'] = Menus::where('parent', '0')->get();
 
 				/* Mencari subsparent */
 				$listMenus = array();
