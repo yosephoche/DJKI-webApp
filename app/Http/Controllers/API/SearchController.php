@@ -20,17 +20,18 @@ class SearchController extends Controller
 
     public function getAllSearch(Request $r)
     {
-        // $data = array();
-        $data = [
-            $this->searchArchive($r),
-            $this->searchPage($r),
-            $this->searchPosts($r),
-            $this->searchGroupArchive($r),
-            $this->total($r),
-        ];
-        if ($data) {
-            $response = $this->response->formatResponseWithPages("OK", $data, $this->response->STAT_OK());
+        $search = array();
+        $search['search'] = array_merge(
+            json_decode($this->searchGroupArchive($r), true),
+            json_decode($this->searchPage($r), true),
+            json_decode($this->searchArchive($r), true),
+            json_decode($this->searchPosts($r), true)
+        );
+        $search['total'] = $this->total($r);
+        if ($search) {
+            $response = $this->response->formatResponseWithPages("OK", $search, $this->response->STAT_OK());
             $headers = $this->response->HEADERS_REQUIRED('GET');
+
             return response()->json($response, $this->response->STAT_OK());
         } else {
             $headers = $this->response->HEADERS_REQUIRED('GET');
@@ -39,7 +40,7 @@ class SearchController extends Controller
         };
     }
 
-    // pages
+    // // pages
     public function searchPage(Request $r)
     {
         $data = $r->search;
@@ -50,11 +51,12 @@ class SearchController extends Controller
                 return [
                     'id' => $value->id,
                     'id_category' => "",
+                    'type' => "",
                     'title_id' => $value->title,
                     'title_en' => $value->title_en,
                     'descrition_id' => "",
                     'descrition_en' => "",
-                    'type' => "pages",
+                    'action_type' => "pages",
                     'link' => asset('uploaded/media/' . $images[0]),
                     'published' => $value->updated_at,
                 ];
@@ -66,6 +68,7 @@ class SearchController extends Controller
         return $page;
     }
 
+
     // archive
     public function searchArchive(Request $r)
     {
@@ -76,11 +79,12 @@ class SearchController extends Controller
                 return [
                     'id' => $value->id,
                     'id_category' => "",
+                    'type' => "",
                     'title_id' => $value->title,
                     'title_en' => $value->title_en,
                     'descrition_id' => $value->desc,
                     'descrition_en' => $value->file_en,
-                    'type' => "",
+                    'action_type' => "",
                     'link' => asset('uploaded/download/' . $value->file),
                     'published' => $value->published,
                 ];
@@ -100,11 +104,12 @@ class SearchController extends Controller
                 return [
                     'id' => $value->id,
                     'id_category' => "",
+                    'type' => "",
                     'title_id' => $value->name,
                     'title_en' => $value->name_en,
                     'descrition_id' => $value->desc,
                     'descrition_en' => $value->desc_en,
-                    'type' => "directory",
+                    'action_type' => "directory",
                     'link' => $value->slug,
                     'published' => $value->updated_at,
                 ];
@@ -119,17 +124,20 @@ class SearchController extends Controller
     {
         $data = $r->search;
         if ($data) {
+
             $posts = Posts::where('title', 'like', "%" . $data . "%")->orWhere('title_en', 'like', "%" . $data . "%")->orWhere('content', 'like', "%" . $data . "%")->get();
             $data = $posts->map(function ($value) {
+                $itemCategori = $value->category_id;
                 $images = json_decode($value->image);
                 return [
                     'id' => $value->id,
                     'id_category' => $value->category,
+                    'type' => $itemCategori->name,
                     'title_id' => $value->title,
                     'title_en' => $value->title_en,
                     'descrition_id' => "",
                     'descrition_en' => "",
-                    'type' => "posts",
+                    'action_type'   => "posts",
                     'link' => asset('uploaded/media/' . $images[0]),
                     'published' => $value->published,
                 ];
@@ -151,7 +159,7 @@ class SearchController extends Controller
         $posts = $posts->count();
         $group = $group->count();
 
-        $data['total'] = ($archive + $page  + $posts  + $group);
+        $data = ($archive + $page  + $posts  + $group);
 
         return $data;
     }
