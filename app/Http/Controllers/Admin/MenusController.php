@@ -32,6 +32,7 @@ class MenusController extends Controller
 				$menusHeader = Menus::where('status', 'header')->where('url', 'not like', '%post%')
 					->where('url', 'not like', '%page%')->where('url', 'not like', '%directory%')->where('flag', 1)
 					->where('flag', 2)->where('flag', 3)->orderBy('sort')->get();
+				// dd($menusHeader);
 				$menul = Menus::where('status', 'header')->orderBy('sort')->get();
 				// dd($menusHeader->toArray());
 				$data['menus'] = $menus->where('parent', '0');
@@ -48,6 +49,7 @@ class MenusController extends Controller
 					if (preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $url) == 0) {
 						$listMenus[] = $menusHeader->where('parent', $value->id);
 						$listMenus2[] = $value;
+						// dd($value);
 						// dd($value, $listMenus);
 					}
 				}

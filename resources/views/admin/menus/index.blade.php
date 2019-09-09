@@ -39,7 +39,7 @@
 				<h4 class="m-t-none m-b">Menus <small>(All of this menu will appear at the top of the page)</small></h4>
 				<div class="btn-group" role="group" aria-label="...">
 					<a href="{{route('menus',['option'=>'header'])}}" class="btn btn-default">Header</a>
-					<a href="{{route('menus',['option'=>'footer'])}}" class="btn btn-default">Footer</a>
+					{{-- <a href="{{route('menus',['option'=>'footer'])}}" class="btn btn-default">Footer</a> --}}
 				</div>
 				<hr>
 
