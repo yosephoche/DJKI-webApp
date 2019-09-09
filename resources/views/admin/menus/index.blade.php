@@ -3,6 +3,7 @@
 @section('title', 'Menu')
 
 @section('contents')
+{{-- {{ use App\Menus; }} --}}
 	<div class="bg-light lter b-b wrapper-md">
 		<h1 class="m-n font-thin h3">Menus</h1>
 	</div>
@@ -198,28 +199,34 @@
 							</div>
 						</div>
 
+						@if ($check_about == null)
+							<div class="radio">
+								<label>
+									<input type="radio" name="flag" value="1" id="about">
+									About
+								</label>
+							</div>
+						@endif
+						@if ($check_visitor ==  null)
+							<div class="radio">
+								<label>
+									<input type="radio" name="flag" value="2" id="visitor">
+									visitor
+								</label>
+							</div>
+						@endif
+						@if ($check_contact ==  null)
+							<div class="radio">
+								<label>
+									<input type="radio" name="flag" value="3" id="contact">
+									contact
+								</label>
+							</div>
+						@endif
 						<div class="radio">
 							<label>
 								<input type="radio" name="flag" value="0" checked id="none">
 								None
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input type="radio" name="flag" value="1" id="about">
-								About
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input type="radio" name="flag" value="2" id="visitor">
-								visitor
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input type="radio" name="flag" value="3" id="contact">
-								contact
 							</label>
 						</div>
 					</div>
@@ -314,7 +321,7 @@
 						</div>
 						<div class="radio">
 							<label>
-								<input type="radio" name="flag" value="1">
+								<input type="radio" name="flag" value="1" disabled>
 								About
 							</label>
 						</div>

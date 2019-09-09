@@ -56,12 +56,12 @@
 
 									<div class="form-group">
 										<label for="">ENGLISH :</label>
-										<input type="text" name="titleEN" class="form-control input-lg" placeholder="Post title english" value="{{ $posts->title_EN }}">
+										<input type="text" name="titleEN" class="form-control input-lg" placeholder="Post title english" value="{{ $posts->title_en }}">
 									</div>
 
 									<div class="form-group">
 										<textarea name="contentEN" class="editor">
-											{{ $posts->content_EN }}
+											{{ $posts->content_en }}
 										</textarea>
 									</div>
 

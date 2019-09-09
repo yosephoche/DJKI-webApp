@@ -77,6 +77,9 @@ class MenusController extends Controller
 		$data['category'] = Category::all();
 		$data['archive'] = ArchiveGroup::all();
 		$data['archive_item'] = Archive::all();
+		$data['check_about'] = Menus::where('flag', 1)->first();
+		$data['check_visitor'] = Menus::where('flag', 2)->first();
+		$data['check_contact'] = Menus::where('flag', 3)->first();
 		return view('admin.menus.index', $data);
 	}
 
@@ -117,7 +120,7 @@ class MenusController extends Controller
 			$tabMenus->parent = $r->parent;
 			$tabMenus->status = $r->option;
 			$tabMenus->flag = $r->flag;
-			if ($r->flag == 1) {
+			if ($r->flag == 1 or $r->flag == 2 or $r->flag == 3) {
 				$tabMenus->url = "#";
 			} else {
 				$tabMenus->url = $r->url;
