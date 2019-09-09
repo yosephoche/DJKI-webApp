@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\MenuHorizontal;
 use App\Settings;
 use App\Slideshow;
-// use App\MenuHorizontal;
+use App\Menus;
 use General, Response, DB;
 
 class MenusController extends Controller
@@ -23,11 +23,14 @@ class MenusController extends Controller
 
   public function getMenus(Request $r)
   {
+    // $action_type = Menus::all();
+    // $visitor = Menus::where('flag', 2)->first();
+    // $contact = Menus::where('flag', 3)->first();
     if ($r->id_menu) {
       /* Kondisi ketika idMenu bernilai true, maka target query adalah submenu dan subsmenu */
       $menu = nav(['position' => 'header'])->where('parent', $r->id_menu);
       foreach ($menu as $key => $parent) {
-        $action = $this->getAction($parent->url, $parent->id);
+        $action = $this->getAction($parent->url, $parent->id, $parent->flag);
         $menus[] = [
           'id_parent' => $parent->id,
           'title_ID' => $parent->menu_title,
@@ -81,7 +84,7 @@ class MenusController extends Controller
       foreach ($horizontal as $value) {
 
         $itemMenu = $value->menu;
-        $action = $this->getAction($itemMenu->url, $itemMenu->id);
+        $action = $this->getAction($itemMenu->url, $itemMenu->id, '');
         $data = array();
         $menus['menu_horizontal'][] = [
           'id_menu' => $value->id,
@@ -102,7 +105,7 @@ class MenusController extends Controller
       }
 
       foreach ($menu as $key => $parent) {
-        $action = $this->getAction($parent->url, $parent->id);
+        $action = $this->getAction($parent->url, $parent->id, $parent->flag);
         $slugs = str_replace(' ', '_', strtolower($parent->menu_title));
         $menus['menus'][] = [
           'id_menu' => $parent->id,
@@ -144,8 +147,9 @@ class MenusController extends Controller
     // );
   }
 
-  public function getAction($url, $parentID)
+  public function getAction($url, $parentID, $flag)
   {
+    // $about = Menus::all();
     $checkPages = explode('/page/', $url);
     $checkPosts = explode('/post/category/', $url);
     $checkArchive = explode('/directory/', $url);
@@ -213,14 +217,25 @@ class MenusController extends Controller
           'type' => 'menu',
           'id' => ''
         ];
-      } elseif ($url == '#') {
+      } elseif ($url == '#' and $flag == 1) {
         /* Jika menu menuju external link */
         $res = [
-          'type' => '',
+          'type' => 'about',
+          'id' => $url
+        ];
+      } elseif ($url == '#' and $flag == 2) {
+        /* Jika menu menuju external link */
+        $res = [
+          'type' => 'visitor',
+          'id' => $url
+        ];
+      } elseif ($url == '#' and $flag == 3) {
+        /* Jika menu menuju external link */
+        $res = [
+          'type' => 'contact',
           'id' => $url
         ];
       } else {
-        /* Jika menu menuju external link */
         $res = [
           'type' => 'link',
           'id' => $url
