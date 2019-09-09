@@ -46,7 +46,7 @@ class CommentController extends Controller
 
     public function getComments(Request $r)
     {
-        $dataComments = Comments::select('name', 'email', 'comment')->where('id_posts', $r->id_post)->paginate(5);
+        $dataComments = Comments::select('name', 'email', 'comment')->where('id_posts', $r->id_post)->paginate(3);
         /* Paginate  */
         $pagination = $this->paging($dataComments);
 
@@ -77,7 +77,7 @@ class CommentController extends Controller
         $object->per_page = $raw->perPage();
         $object->current_page = $raw->currentPage();
         $object->last_page = $raw->lastPage();
-        $object->fromm = $raw->firstItem();
+        $object->from = $raw->firstItem();
         $object->to = $raw->lastItem();
         return $object;
     }

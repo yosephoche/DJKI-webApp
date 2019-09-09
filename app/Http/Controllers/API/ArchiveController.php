@@ -47,8 +47,8 @@ class ArchiveController extends Controller
     foreach ($dataArchive->items() as $key => $value) {
       $archive['response'][] = [
         'id' => $value->id,
-        'title ID' => $value->title,
-        'title EN' => $value->title_EN,
+        'title_ID' => $value->title,
+        'title_EN' => $value->title_EN,
         'image' => asset('uploaded/download/' . $value->file),
         'published' => Carbon\Carbon::parse($value->published)->format('d F Y'),
         'desc' => $value->desc
