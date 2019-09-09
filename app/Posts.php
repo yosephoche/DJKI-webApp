@@ -27,4 +27,9 @@ class Posts extends Model
     {
         return $this->belongsTo('App\Category', 'category');
     }
+
+    public function category_id()
+    {
+        return $this->belongsTo('App\Category', 'category');
+    }
 }
