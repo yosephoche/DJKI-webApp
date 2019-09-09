@@ -152,7 +152,7 @@
 							<input type="text" name="menu_titleEN" class="form-control"  placeholder="Title for this menu ENG">
 						</div>
 
-						{{-- <div class="form-group">
+						<div class="form-group">
 							<label>Direct To</label>
 								<select class="form-control" name="direct">
 									<option value="">Blank</option>
@@ -163,8 +163,8 @@
 											@endif</option>
 									@endforeach
 								</select>
-						</div> --}}
-						<div class="form-group">
+						</div>
+						{{-- <div class="form-group">
 							<label>Link</label>
 							<input type="text" name="url" class="form-control" list="menu-header" placeholder="This menu link to ..." autocomplete="off">
 							<datalist id="direct-view" class="datalist">
@@ -174,7 +174,7 @@
 								@endforeach
 							</datalist>
 							<input type="hidden" name="direct" id="direct-hidden"/>
-						</div>
+						</div> --}}
 						<div class="form-group">
 							<label>Icon</label>
 							<div class="form-group">
@@ -217,7 +217,7 @@
 							<input type="text" name="menu_titleEN" class="form-control" placeholder="Title for this menu ENG">
 						</div>
 
-						{{-- <div class="form-group">
+						<div class="form-group">
 							<label>Direct To</label>
 								<select class="form-control" name="direct">
 									<option value="">Blank</option>
@@ -229,8 +229,8 @@
 
 									@endforeach
 								</select>
-						</div> --}}
-						<div class="form-group">
+						</div>
+						{{-- <div class="form-group">
 							<label>Link</label>
 							<input type="text" name="url" class="form-control" list="menu-header" placeholder="This menu link to ..." autocomplete="off">
 							<datalist id="direct-view" class="datalist">
@@ -240,7 +240,7 @@
 								@endforeach
 							</datalist>
 							<input type="hidden" name="direct" id="direct-hidden"/>
-						</div>
+						</div> --}}
 
 						<div class="form-group">
 							<label>Featured image</label>
@@ -284,24 +284,24 @@
 	@include('admin.images.modals')
 @endsection
 
-@section('registerscript')
-<script type="text/javascript">
-$("#direct-view").keyup(function (){
-	let value = this.val();
-	if(validURL(value)){
-		$("#direct-hidden").val(value);
-	}else{
+{{-- @section('registerscript')
+	<script type="text/javascript">
+		$("#direct-view").keyup(function (){
+			let value = this.val();
+			if(validURL(value)){
+				$("#direct-hidden").val(value);
+			}else{
 
-	}
-});
-function validURL(str) {
-  var pattern = new RegExp('^(http[s]?:\\/\\/)?'+ // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-    '(\\#[-a-z\\d_]*)?$','i') // fragment locator
-	return !!pattern.test(str)
-}
-</script>
-@endsection
+			}
+		});
+		function validURL(str) {
+		var pattern = new RegExp('^(http[s]?:\\/\\/)?'+ // protocol
+			'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+			'((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+			'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+			'(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+			'(\\#[-a-z\\d_]*)?$','i') // fragment locator
+			return !!pattern.test(str)
+		}
+	</script>
+@endsection --}}
