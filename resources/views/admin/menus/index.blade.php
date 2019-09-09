@@ -62,7 +62,7 @@
 								data-description_en="{{$menu->description_en}}"
 								data-id="{{ $menu->id }}"
 								data-title="{{$menu->menu_title }}"
-								data-title_en="{{ $menu->menu_title_en }}"
+								data-title_eng="{{ $menu->menu_title_en }}"
 								data-link="{{ $menu->url }}"
 								data-submenu="{{ $menu->parent }}"
 								data-preview="{{ $menu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$menu->image) }}">
@@ -207,22 +207,18 @@
 								</label>
 							</div>
 						@endif
-						@if ($check_visitor ==  null)
-							<div class="radio">
-								<label>
-									<input type="radio" name="flag" value="2" id="visitor">
-									visitor
-								</label>
-							</div>
-						@endif
-						@if ($check_contact ==  null)
+						<div class="radio">
+							<label>
+								<input type="radio" name="flag" value="2" id="visitor">
+								visitor
+							</label>
+						</div>
 							<div class="radio">
 								<label>
 									<input type="radio" name="flag" value="3" id="contact">
 									contact
 								</label>
 							</div>
-						@endif
 						<div class="radio">
 							<label>
 								<input type="radio" name="flag" value="0" checked id="none">
@@ -241,7 +237,7 @@
 
 	<div class="modal fade" id="modal-edit-menus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
-			<form action="{{ route('menuhorizontal_update') }}" method="post" enctype="multipart/form-data">
+			<form action="{{ route('menus_update') }}" method="post" enctype="multipart/form-data">
 				{{ csrf_field() }}
 				<input type="hidden" name="id">
 
@@ -319,12 +315,14 @@
 								None
 							</label>
 						</div>
-						<div class="radio">
-							<label>
-								<input type="radio" name="flag" value="1" disabled>
-								About
-							</label>
-						</div>
+						@if ($check_about == null)
+							<div class="radio">
+								<label>
+									<input type="radio" name="flag" value="1" disabled>
+									About
+								</label>
+							</div>
+						@endif
 						<div class="radio">
 							<label>
 								<input type="radio" name="flag" value="2">

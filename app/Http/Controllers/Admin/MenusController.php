@@ -28,22 +28,25 @@ class MenusController extends Controller
 		/*Check params header or footer*/
 		switch ($option) {
 			case 'header':
-				$menusHeader = Menus::where('status', 'header')
-					->where('url', 'not like', '%post%')
-					->where('url', 'not like', '%page%')
-					->where('url', 'not like', '%directory%')
-					->orderBy('sort')->get();
-				
+				$menus = Menus::all();
+				// $menusHeader = Menus::where('status', 'header')->where('url', 'not like', '%post%')
+				// ->where('url', 'not like', '%page%')->where('url', 'not like', '%directory%')->where('flag', 1)
+				// ->where('flag', 2)->where('flag', 3)->orderBy('sort')->get();
+				$menusHeader = Menus::where('status', 'header')->where('url', '#')->where('flag', '!=', 2)->where('flag', '!=', 3)->get();
+				// ->where('url', 'not like', "%page%")->where('url', 'not like', "%directory%")->where('url', 'not like', "%post%")->get();
+				// ->where('flag', 2)->where('flag', 3)get();
+				// dd($menusHeader);
+
 				$data['menus'] = Menus::where('parent', '0')->get();
 
 				/* Mencari subsparent */
 				$listMenus = array();
 
 				/** jangan kyak gini bikin variable
-				 * kasih jelas namanya variable ksih jelas 
+				 * kasih jelas namanya variable ksih jelas
 				 * sesuai kegunaannya utk tampung data apa*/
 				$listMenus2 = [];
-				
+
 				foreach ($menusHeader->where('parent', '0') as $key => $value) {
 					$url = $value->url;
 
@@ -53,7 +56,7 @@ class MenusController extends Controller
 					}
 				}
 				$data['listUpdate'] = $listMenus;
-				$data['listHeader'] = $listMenus2; 
+				$data['listHeader'] = $listMenus2;
 				break;
 			case 'footer':
 				$menus = Menus::where('status', 'footer')->orderBy('sort')->get();
@@ -192,6 +195,7 @@ class MenusController extends Controller
 
 	public function delete(Request $r)
 	{
+		// dd($r->id);
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 
 		/*Delete Data*/

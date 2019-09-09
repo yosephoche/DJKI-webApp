@@ -90,8 +90,6 @@ $(document).ready(function () {
   /*Modal edit menus*/
   $('#modal-edit-menus').on('show.bs.modal', function (e) {
     var data = $(e.relatedTarget).parents('li').data();
-    console.log(data);
-
     if (data.submenu) {
       var parent = data.submenu;
     } else if (data.subsubmenu) {
