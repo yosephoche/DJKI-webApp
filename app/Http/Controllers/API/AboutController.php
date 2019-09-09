@@ -22,11 +22,15 @@ class AboutController extends Controller
 
     public function getAbout()
     {
-        $slide = Slideshow::where('category', 'Tentang Kami');
+        $slide = Slideshow::where('category', 'About')->get();;
         $menus = Menus::where('flag', 1)->first();
         $menu_about = Menus::where('parent', $menus->id)->get();
         $partnership = Partnership::all();
-
+        $about = [
+            'slideshow' => [],
+            'menus' => [],
+            'partnership' => [],
+        ];
         foreach ($slide as $key => $value) {
             $about['slideshow'][] = [
                 'id_slide' => $value->id,

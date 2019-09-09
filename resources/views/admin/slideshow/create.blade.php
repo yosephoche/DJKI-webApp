@@ -94,7 +94,7 @@
 									<select class="form-control" name="category">
 										<option value="">Uncategorized</option>
 										<option value="Home">Home</option>
-										<option value="Tentang Kami">Tentang Kami</option>
+										<option value="About">About</option>
 									</select>
 								</div>
 						</div>
