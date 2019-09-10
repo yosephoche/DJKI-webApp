@@ -36,10 +36,10 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<h4 class="m-t-none m-b">Menus Horizontal<small>(All of this menu will appear at home page of apps as a shorcut menu)</small></h4>
-				<div class="btn-group" role="group" aria-label="...">
+				{{-- <div class="btn-group" role="group" aria-label="...">
 					<a href="{{route('menuhorizontal',['option'=>'header'])}}" class="btn btn-default">Header</a>
 					<a href="{{route('menuhorizontal',['option'=>'footer'])}}" class="btn btn-default">Footer</a>
-				</div>
+				</div> --}}
 				<hr>
 
 				<!-- Action -->
