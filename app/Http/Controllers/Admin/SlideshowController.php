@@ -39,9 +39,7 @@ class SlideshowController extends Controller
 		if ($r->inputan == 1) {
 			$this->validate($r, [
 				'title' => 'required',
-				'image' => 'required',
 				'category' => 'required',
-				'link'	=> 'required'
 
 			]);
 		} else if ($r->inputan == 2) {
@@ -66,14 +64,19 @@ class SlideshowController extends Controller
 		$slideshow = new Slideshow();
 
 		/*Save DB*/
-		if ($r->link) {
+		if ($r->inputan == 1) {
 			$slideshow->title = $r->title;
 			$slideshow->link = $r->link;
-			$slideshow->image = $r->image;
+			if ($r->image) {
+				$slideshow->image = $r->image;
+			} else {
+				$slideshow->image = "";
+			}
 		} else {
 			$slideshow->title = $r->linkvid;
 			$slideshow->link = $r->linkvid;
 		}
+
 		$slideshow->id_inputan = $r->inputan;
 		$slideshow->category = $r->category;
 		$slideshow->sort = $count > 0 ? $sort->sort + 1 : $sort + 1;
@@ -109,9 +112,7 @@ class SlideshowController extends Controller
 		if ($r->inputan == 1) {
 			$this->validate($r, [
 				'title' => 'required',
-				'image' => 'required',
-				'category' => 'required',
-				'link'	=> 'required'
+				'category' => 'required'
 
 			]);
 		} else if ($r->inputan == 2) {
@@ -129,10 +130,14 @@ class SlideshowController extends Controller
 		$slideshow = Slideshow::find($id);
 
 		/*Save to DB*/
-		if ($r->link == true) {
+		if ($r->inputan == 1) {
 			$slideshow->title = $r->title;
 			$slideshow->link = $r->link;
-			$slideshow->image = $r->image;
+			if ($r->image) {
+				$slideshow->image = $r->image;
+			} else {
+				$slideshow->image = "";
+			}
 		} else {
 			$slideshow->title = $r->linkvid;
 			$slideshow->link = $r->linkvid;

@@ -43,7 +43,12 @@ class MenusController extends Controller
     } else {
       $menu = nav(['position' => 'header'])->where('parent', '0');
       $running_text = Settings::whereNotNull('running_text')->first();
+<<<<<<< HEAD
       $slide1 = Slideshow::orderBy('sort', 'DESC')->where('category', 'Home');
+=======
+      $slideshow = Slideshow::orderBy('sort', 'DESC')->where('category', 'Home');
+
+>>>>>>> master
       $horizontal = MenuHorizontal::all();
       $result = [
         'pinned' => [],
@@ -63,20 +68,20 @@ class MenusController extends Controller
         'instagram' => $running_text->instagram,
       ];
 
-      foreach ($slide1->get() as $key => $value) {
-        if ($value->image) {
+      foreach ($slideshow->get() as $key => $value) {
+        if ($value->image == "default.jpg" || $value->image == null) {
           $menus['slideshow'][] = [
             'id_slide' => $value->id,
             'title' => $value->title,
-            'image' => asset('uploaded/media/' . $value->image),
-            'link' => $value->link
+            'image' => "",
+            'link' => asset($value->link)
           ];
         } else {
           $menus['slideshow'][] = [
             'id_slide' => $value->id,
             'title' => $value->title,
-            'image' => "",
-            'link' => $value->link
+            'image' => asset('uploaded/media/' . $value->image),
+            'link' => asset($value->link)
           ];
         }
       }
@@ -84,7 +89,7 @@ class MenusController extends Controller
       foreach ($horizontal as $value) {
 
         $itemMenu = $value->menu;
-        $menu_horizontal = [];
+        $menu_horizontal = null;
         if ($itemMenu != null) {
           $action = $this->getAction($itemMenu->url, $itemMenu->id, $itemMenu->flag);
           $menu_horizontal = [
@@ -104,6 +109,7 @@ class MenusController extends Controller
           'menu_title_id' => $value->menu_title_id,
           'menu_title_en' => $value->menu_title_en,
           'image' => $value->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $value->image),
+          'link'      => $value->url,
           'menu' => $menu_horizontal
         ];
       }
@@ -134,22 +140,22 @@ class MenusController extends Controller
       $response = $this->response->formatResponseWithPages("POST NOT FOUND", [], $this->response->STAT_NOT_FOUND());
       return response()->json($response, $this->response->STAT_NOT_FOUND());
     }
-    // if (isset($menus) > 0) {
-    //   $menus['diagnostic'] = [
-    //     'code' => 200,
-    //     'status' => 'ok'
-    //   ];
-    //   return response($menus, 200);
-    // }
-    // return response(
-    //   [
-    //     'diagnostic' => [
-    //       'status' => 'NOT_FOUND',
-    //       'code' => 404
-    //     ]
-    //   ],
-    //   404
-    // );
+    if (isset($menus) > 0) {
+      $menus['diagnostic'] = [
+        'code' => 200,
+        'status' => 'ok'
+      ];
+      return response($menus, 200);
+    }
+    return response(
+      [
+        'diagnostic' => [
+          'status' => 'NOT_FOUND',
+          'code' => 404
+        ]
+      ],
+      404
+    );
   }
 
   public function getAction($url, $parentID, $flag)
@@ -249,60 +255,4 @@ class MenusController extends Controller
       return $res;
     }
   }
-
-  // function menu_horizontal($id)
-  // {
-  //   $menu = MenuHorizontal::find($id)->menu;
-  //   // dd($menu);
-  //   foreach ($menu as $key => $value) {
-  //     $action = $this->getAction($value->url, $value->id);
-  //     $menus[] = [
-  //       'id_menu' => $value->id,
-  //       'id_parent' => $value->parent,
-  //       'description_id' => $value->description,
-  //       'title_id' => $value->menu_title,
-  //       // 'description_id' => $n->description,
-  //       // 'description_en' => $n->description_en,
-  //       'action_type' => $action['type'],
-  //       'id_target' => $action['id']
-  //     ];
-  //   }
-  //   return $menus;
-  // $horizontal = DB::table('menu_horizontals')
-  //   ->join('menus', 'menu_horizontals.id_menu', '=', 'menus.id')
-  //   ->get();
-
-  // $data = array();
-  // foreach ($horizontal as $n) {
-  //   $action = $this->getAction($n->url, $n->id);
-  //   $data[] = [
-  //     'id_menu' => $n->id,
-  //     'title_id' => $n->menu_title,
-  //     'title_en'  => $n->menu_title_en,
-  //     'id_parent' => $n->parent,
-  //     'description_id' => $n->description,
-  //     'description_en' => $n->description_en,
-  //     'action_type' => $action['type'],
-  //     'id_target' => $action['id'],
-  //   ];
-  // }
-
-
-  // $horizontal = DB::table('menu_horizontals')
-  //   ->join('menus', 'menu_horizontals.id_menu', '=', 'menus.id')
-  //   ->get();
-  // $n = $horizontal->first();
-  // $action = $this-> getAction($n->url, $n->id);
-  // $data[] = [
-  //   'id_menu' => $n->id,
-  //   'title_id' => $n->menu_title,
-  //   'title_en'  => $n->menu_title_en,
-  //   'id_parent' => $n->parent,
-  //   'description_id' => $n->description,
-  //   'description_en' => $n->description_en,
-  //   'action_type' => $action['type'],
-  //   'id_target' => $action['id'],
-  // ];
-  // return $data;
-
 }

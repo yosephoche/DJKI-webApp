@@ -357,22 +357,9 @@ $(document).ready(function () {
     $(this).find('input[name="id"]').val(data.id);
     $(this).find('input[name="menu_title"]').val(data.title);
     $(this).find('input[name="menu_titleEN"]').val(data.title_eng);
-    $(this).find('input[name="url"]').val(data.link);
+    $(this).find('input[name="id_menu"]').val(data.link);
     $(this).find('select[name="parent"] option[value="' + parent + '"]').prop("selected", true);
     $(this).find('.previewImage_').attr('src', data.preview);
   });
   /* end menuhorizontal----------------------------------------------------------- */
-});
-
-/* Slider */
-$(".carousel").carousel();
-
-$(".direktori .btn-link").click(function () {
-  $(".direktori .media-upload").removeClass("show");
-  $(".direktori .text-link").addClass("show");
-});
-
-$(".direktori .btn-upload").click(function () {
-  $(".direktori .text-link").removeClass("show");
-  $(".direktori .media-upload").addClass("show");
 });
