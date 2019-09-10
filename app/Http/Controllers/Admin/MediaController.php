@@ -33,7 +33,8 @@ class MediaController extends Controller
 		/*Validation Store*/
 		$this->validate($r, [
 			'name' => 'required',
-			'desc' => 'required'
+			'desc' => 'required',
+			'category' => 'required'
 		]);
 
 		$media = new Galleries();
@@ -75,7 +76,9 @@ class MediaController extends Controller
 
 		/*Validation Update*/
 		$this->validate($r, [
-			'name' => 'required'
+			'name' => 'required',
+			'desc' => 'required',
+			'category' => 'required'
 		]);
 
 		/* Save DB */

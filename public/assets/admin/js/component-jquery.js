@@ -363,16 +363,3 @@ $(document).ready(function () {
   });
   /* end menuhorizontal----------------------------------------------------------- */
 });
-
-/* Slider */
-$(".carousel").carousel();
-
-$(".direktori .btn-link").click(function () {
-  $(".direktori .media-upload").removeClass("show");
-  $(".direktori .text-link").addClass("show");
-});
-
-$(".direktori .btn-upload").click(function () {
-  $(".direktori .text-link").removeClass("show");
-  $(".direktori .media-upload").addClass("show");
-});

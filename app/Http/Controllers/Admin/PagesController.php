@@ -69,7 +69,7 @@ class PagesController extends Controller
 		$pages->id_user = $r->id_user;
 		$pages->slug = $count ? "{$slug}-{$count}" : $slug;
 		$pages->title = $r->title;
-		if (strlen($r->titleEN) > 0) {
+		if ($r->titleEN) {
 			$pages->title_en = $r->titleEN;
 		} else {
 			$pages->title_en = $r->title;
