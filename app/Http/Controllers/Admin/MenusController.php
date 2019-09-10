@@ -235,50 +235,58 @@ class MenusController extends Controller
 			];
 		});
 
+
 		/*Update data*/
-		foreach ($menus as $key => $value) {
-			if ($value['type'] == 'menu') {
-				$parent = $value;
-				$tabMenus::where('id', $value['id'])
-					->update([
-						'sort' => $value['sort'],
-						'parent' => "0",
-					]);
-			} elseif ($value['type'] == 'submenu') {
-				if (
-					strpos($parent['url'], 'post')
-					|| preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $parent['url'])
-					|| strpos($parent['url'], 'page')
-					|| strpos($parent['url'], 'directory')
-					|| $parent['flag'] > 1
-				) { } else {
+		$isValid = $this->validationRule($menus);
+		if(count($isValid) == 0) {			
+			foreach ($menus as $key => $value) {
+				if ($value['type'] == 'menu') {
+					$parent = $value;
 					$tabMenus::where('id', $value['id'])
 						->update([
 							'sort' => $value['sort'],
-							'parent' => $parent['id'],
+							'parent' => "0",
 						]);
-					$parentSubmenu = $value;
-				}
-				// dd($parent, $value);
-			} else {
-				if (
-					strpos($parent['url'], 'post')
-					|| preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $parent['url'])
-					|| strpos($parent['url'], 'page')
-					|| strpos($parent['url'], 'directory')
-					|| $parent['flag'] > 1
-				) { } else {
-					$tabMenus::where('id', $value['id'])
-						->update([
+				} elseif ($value['type'] == 'submenu') {
+					if (
+						strpos($parent['url'], 'post')
+						|| preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $parent['url'])
+						|| strpos($parent['url'], 'page')
+						|| strpos($parent['url'], 'directory')
+						|| $parent['flag'] > 1
+					) { } else {
+						$tabMenus::where('id', $value['id'])
+							->update([
+								'sort' => $value['sort'],
+								'parent' => $parent['id'],
+							]);
+						$parentSubmenu = $value;
+					}
+				} else {
+					if (
+						strpos($parent['url'], 'post')
+						|| preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $parent['url'])
+						|| strpos($parent['url'], 'page')
+						|| strpos($parent['url'], 'directory')
+						|| $parent['flag'] > 1
+					) { } else {
+						$tabMenus::where('id', $value['id'])->update([
 							'sort' => $value['sort'],
 							'parent' => $parentSubmenu['id'],
 						]);
+					}
 				}
 			}
+			/*Success Message*/
+			$r->session()->flash('success', 'Menu Successfully Modified');
+			return redirect(url()->previous());
 		}
-		/*Success Message*/
-		$r->session()->flash('success', 'Menu Successfully Modified');
+
+		/*Error Message*/
+		// TODO Sesuaikan pesan message ketika ada rule yang dilanggar
+		$r->session()->flash('success', 'total rule menu yang dilanggar '. count($isValid));
 		return redirect(url()->previous());
+
 	}
 
 	public function listMenu()
@@ -443,5 +451,34 @@ class MenusController extends Controller
 			}
 			return $res;
 		}
+	}
+
+	protected function validationRule($menus) {
+		$countError = array();
+		foreach ($menus as $key => $value) {
+			if ($value['type'] == 'menu') {
+				$parent = $value;
+			} elseif ($value['type'] == 'submenu') {
+				$check = Menus::find($parent['id']);
+				if($check->flag == 0) {
+					if ($check->url != '#') {
+						$countError[] = true;
+					}
+				} elseif($check->flag != 1) {
+					$countError[] = true;
+				}
+				$parentSubmenu = $value;			
+			} else {
+				$check = Menus::find($value['id']);
+				if($check->flag == 0) {
+					if ($check->url != '#') {
+						$countError[] = true;
+					}
+				} elseif($check->flag != 1) {
+					$countError[] = true;
+				}			
+			}
+		}
+		return $countError;
 	}
 }
