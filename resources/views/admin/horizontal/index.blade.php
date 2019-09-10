@@ -35,7 +35,7 @@
 
 		<div class="row">
 			<div class="col-sm-12">
-				<h4 class="m-t-none m-b">Menus Horizontal<small>(All of this menu will appear at the top of the page)</small></h4>
+				<h4 class="m-t-none m-b">Menus Horizontal<small>(All of this menu will appear at home page of apps as a shorcut menu)</small></h4>
 				<div class="btn-group" role="group" aria-label="...">
 					<a href="{{route('menuhorizontal',['option'=>'header'])}}" class="btn btn-default">Header</a>
 					<a href="{{route('menuhorizontal',['option'=>'footer'])}}" class="btn btn-default">Footer</a>
@@ -43,7 +43,8 @@
 				<hr>
 
 				<!-- Action -->
-				<button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add Menu {{Request::segment(3)}}</button>
+				<button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add horizontal menu</button>
+				{{-- <button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add Menu {{Request::segment(3)}}</button> --}}
 				<form action="{{ route('menuhorizontal_drag') }}" method="post">
 					{{ csrf_field() }}
 					<input type="hidden" name="id_menus">

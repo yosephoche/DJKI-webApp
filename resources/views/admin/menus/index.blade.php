@@ -36,15 +36,16 @@
 
 		<div class="row">
 			<div class="col-sm-12">
-				<h4 class="m-t-none m-b">Menus <small>(All of this menu will appear at the top of the page)</small></h4>
-				<div class="btn-group" role="group" aria-label="...">
+				<h4 class="m-t-none m-b">Menus <small>(This menu is a navigation from the apps)</small></h4>
+				{{-- <div class="btn-group" role="group" aria-label="...">
 					<a href="{{route('menus',['option'=>'header'])}}" class="btn btn-default">Header</a>
-					{{-- <a href="{{route('menus',['option'=>'footer'])}}" class="btn btn-default">Footer</a> --}}
-				</div>
+					<a href="{{route('menus',['option'=>'footer'])}}" class="btn btn-default">Footer</a>
+				</div> --}}
 				<hr>
 
 				<!-- Action -->
-				<button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add Menu {{Request::segment(3)}}</button>
+				{{-- <button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add Menu {{ Request::segment(3) }}</button> --}}
+				<button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add Menu</button>
 				<form action="{{ route('menus_drag') }}" method="post">
 					{{ csrf_field() }}
 					<input type="hidden" name="id_menus">
@@ -144,13 +145,13 @@
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Title ID</label>
-							<input type="text" name="menu_title" class="form-control" placeholder="Title for this menu ID">
+							<label>Title (Indonesia)</label>
+							<input type="text" name="menu_title" class="form-control" placeholder="Title (Indonesia)">
 						</div>
 
 						<div class="form-group">
-							<label>Title EN</label>
-							<input type="text" name="menu_titleEN" class="form-control" placeholder="Title for this menu ENG">
+							<label>Title (English)</label>
+							<input type="text" name="menu_titleEN" class="form-control" placeholder="Title (English)">
 						</div>
 
 						<div class="form-group">
@@ -192,7 +193,7 @@
 						</div>
 
 						<div class="form-group">
-							<label>Featured image</label>
+							<label>Icon</label>
 							<div class="form-group">
 								<img class="previewImage_" src="{{ asset('uploaded/media/default.jpg') }}" width="100%">
 								<input type="file" name="image" class="form-control" accept=".svg, .png">
@@ -210,13 +211,13 @@
 						<div class="radio">
 							<label>
 								<input type="radio" name="flag" value="2" id="visitor">
-								visitor
+								Visitor
 							</label>
 						</div>
 							<div class="radio">
 								<label>
 									<input type="radio" name="flag" value="3" id="contact">
-									contact
+									Contact
 								</label>
 							</div>
 						<div class="radio">
