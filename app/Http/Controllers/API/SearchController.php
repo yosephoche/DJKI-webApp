@@ -8,6 +8,7 @@ use App\Pages;
 use App\Archive;
 use App\Posts;
 use App\ArchiveGroup;
+use Carbon\Carbon;
 use Response, General;
 
 class SearchController extends Controller
@@ -48,6 +49,7 @@ class SearchController extends Controller
             $pages = Pages::where('title', 'like', "%" . $data . "%")->orWhere('content', 'like', "%" . $data . "%")->orWhere('slug', 'like', "%" . $data . "%")->get();
             $page = $pages->map(function ($value) {
                 $images = json_decode($value->image);
+
                 return [
                     'id' => $value->id,
                     'id_category' => "",
@@ -58,7 +60,7 @@ class SearchController extends Controller
                     'descrition_en' => "",
                     'action_type' => "pages",
                     'link' => asset('uploaded/media/' . $images[0]),
-                    'published' => $value->updated_at,
+                    'published' => $value->updated_at->format('Y-m-d'),
                 ];
             });
         } else {
@@ -111,7 +113,7 @@ class SearchController extends Controller
                     'descrition_en' => $value->desc_en,
                     'action_type' => "directory",
                     'link' => $value->slug,
-                    'published' => $value->updated_at,
+                    'published' => $value->updated_at->format('Y-m-d'),
                 ];
             });
         } else {
