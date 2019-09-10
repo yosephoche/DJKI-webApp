@@ -130,10 +130,19 @@
 	</div>
 @endsection
 
+@section('registerscript')
+<script>
+	$("input[name=id_menu]").focusout(function(){
+		var id = $("#menu-headers option[value='" + $('#input_header').val() + "']").attr("data-id");
+		$("#menu_id").attr("value", id);
+	});
+</script>
+@endsection
+
 @section('modal')
 	<div class="modal fade" id="modal-newID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
-			<form action="{{ route('menuhorizontal_store') }}" method="post" enctype="multipart/form-data">
+			<form id="form_menu_horizhontal" action="{{ route('menuhorizontal_store') }}" method="post" enctype="multipart/form-data">
 				{{ csrf_field() }}
 				<input type="hidden" name="option" value="{{ Request::segment(3) }}">
 				<div class="modal-content">
@@ -154,15 +163,14 @@
 
 						<div class="form-group">
 							<label>Direct To</label>
-								<select class="form-control" name="direct">
-									<option value="">Blank</option>
-									@foreach ($menu1 as $n)
-										<option value="{{$n->id }}">
-											@if($n->parent>0)
-												{{$n->menu_title}}
-											@endif</option>
-									@endforeach
-								</select>
+								<input value="" type="hidden" id="menu_id" name="id" class="form-control">
+								<input type="text" id="input_header" name="id_menu" class="form-control" list="menu-headers" placeholder="This menu link to ..." autocomplete="off">
+									<datalist id="menu-headers" class="datalist">
+										<option value="">Blank</option>
+										@foreach ($menu1 as $value)
+										<option value="{{$value->menu_title}}" data-id="{{$value->id}}">{{ $value->url}}</option>
+										@endforeach
+									</datalist>
 						</div>
 
 						<div class="form-group">
@@ -209,20 +217,18 @@
 
 						<div class="form-group">
 							<label>Direct To</label>
-								<select class="form-control" name="direct">
-									<option value="">Blank</option>
-									@foreach ($menu1 as $n)
-										<option value="{{$n->id }}">
-											@if($n->parent)
-												{{$n->menu_title}}
-											@endif</option>
-
-									@endforeach
-								</select>
+								<input value="" type="hidden" id="menu_id" name="id" class="form-control">
+								<input type="text" id="input_header" name="id_menu" class="form-control" list="menu-headers" placeholder="This menu link to ..." autocomplete="off">
+									<datalist id="menu-headers" class="datalist">
+										<option value="">Blank</option>
+										@foreach ($menu1 as $value)
+										<option value="{{$value->menu_title}}" data-id="{{$value->id}}">{{ $value->url}}</option>
+										@endforeach
+									</datalist>
 						</div>
 
 						<div class="form-group">
-							<label>Featured image</label>
+							<label>Icon</label>
 							<div class="form-group">
 								<img class="previewImage_" src="{{ asset('uploaded/media/default.jpg') }}" width="100%">
 								<input type="file" name="image" class="form-control" accept=".svg, .png">
@@ -250,7 +256,7 @@
 					</div>
 					<div class="modal-body">
 						<input type="hidden" name="id">
-						Are you sure you want to delete this menu?
+						Are you sure you want to delete this?
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
@@ -262,3 +268,4 @@
 	</div>
 	@include('admin.images.modals')
 @endsection
+

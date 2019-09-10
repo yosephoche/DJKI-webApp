@@ -67,67 +67,75 @@
 @endsection
 @section('contents')
               
-                <div class="container">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="gambar-tab" data-toggle="tab" href="#gambar" role="tab"
-                                aria-controls="gambar" aria-selected="true">Gambar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="vidio-tab" data-toggle="tab" href="#vidio" role="tab" aria-controls="vidio"
-                                aria-selected="false">Vidio</a>
-                        </li>
-                    </ul>
+               <div class="wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <!-- menu gambar -->
+                            <a class="nav-item nav-link active" id="nav-gambar-tab" data-toggle="tab" href="#nav-gambar"
+                                role="tab" aria-controls="nav-gambar" aria-selected="true">Gambar</a>
 
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="gambar" role="tabpanel" aria-labelledby="gambar-tab">
-                            <from>
-                                <div class="form-group-Img">
-                                    <input class="form-control" type="text" placeholder="Slideshow Title" id="exampletext1">
-                                </div>
+                            <!-- menu Vidio -->
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                role="tab" aria-controls="nav-profile" aria-selected="false">Vidio</a>
+                        </div>
+                    </nav>
 
-                                <div class="form-group">
-                                    <div class="formImg">
+                    <!-- Tabs Content -->
+                    <div class="tab-content" id="nav-tabContent">
+                        <!-- Content Gambar -->
+                        <div class="tab-pane fade show active" id="nav-gambar" role="tabpanel"
+                            aria-labelledby="nav-gambar-tab">
+                            <!-- Slideshow Title -->
+                            <input class="form-control" type="text" placeholder="Slideshow Title" id="slideShow">
+
+                            <div class="wrapImgInput">
+                                <div class="col-md-4">
+                                    <!-- Wrap Img -->
+                                    <div class="wrapImg">
                                         <img src="../assets/img/example.png" width="100%">
                                     </div>
-                                    <div class="formInput">
-                                        <label for="exampleText2">Link</label>
-                                        <input class="form-control" type="text" placeholder="Slideshow Title" id="exampleText2">
+                                </div>
 
-                                        <label for="exampleCategory">Category</label>
-                                        <select class="form-control" id="exampleCategory">
-                                            <option>Uncategorized</option>
-                                            <option>Picture</option>
-                                            <option>Video</option>
-                                        </select>
+                                <div class="col-md-8">
+                                    <!-- Wrap Input -->
+                                    <div class="wrapInput">
+                                        <!-- Wrap Input Link -->
+                                        <div class="wrapInputLink">
+                                            <label for="inputLink">Link</label>
+                                            <input class="form-control" type="text" placeholder="Default input"
+                                                id="inputLink">
+                                        </div>
+
+                                        <!-- Wrap Select -->
+                                        <div class="wrapSelect">
+                                            <label for="Select1">Category</label>
+                                            <select class="form-control" id="Select1">
+                                                <option>Uncategorized</option>
+                                                <option>Picture</option>
+                                                <option>Video</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                            </from>
+
+                            </div>
 
                             <hr class="my-4">
-                            <button type="button" class="btn btn-success">Success</button>
+                            <button type="button" class="btn add">Add new slideshow</button>
                         </div>
 
-                        <div class="tab-pane fade" id="vidio" role="tabpanel" aria-labelledby="vidio-tab">
-                            <form>
-                                <div class="formInput">
-                                    <label for="exampleText3">Link Youtube2</label>
-                                    <input class="form-control" type="text" placeholder="Slideshow Title" id="exampleText3">
-
-                                    <label for="exampleCategory1">Category</label>
-                                    <select class="form-control" id="exampleCategory1">
-                                        <option>Uncategorized</option>
-                                        <option>Picture</option>
-                                        <option>Video</option>
-                                    </select>
-                                </div>
-                            </form>
-
-                            <hr class="my-4">
-                            <button type="button" class="btn btn-success">Success</button>
+                        <!-- content Vidio -->
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <input class="form-control" type="text" placeholder="Default vidio">
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 		{{-- <div class="panel">
 			<div class="panel-body">
 				<form action="{{ route('slideshow_store') }}" method="post" enctype="multipart/form-data">

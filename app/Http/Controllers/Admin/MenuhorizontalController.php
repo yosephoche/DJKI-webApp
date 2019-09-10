@@ -38,19 +38,30 @@ class MenuhorizontalController extends Controller
         $data['archive'] = ArchiveGroup::all();
         $data['archive_item'] = Archive::all();
         $data['menu1'] = Menus::where('parent', '>', 0)->get();
+
+
         return view('admin.horizontal.index', $data, compact('menus'));
     }
 
     public function store(Request $r)
     {
         GlobalClass::Roleback(['Customer Service', 'Writer']);
-
         /*Validation*/
-        $this->validate($r, [
-            'option' => 'required',
-            'menu_title' => 'required',
-            'direct' => 'required'
-        ]);
+        if ($r->id == null) {
+            $this->validate($r, [
+                'option' => 'required',
+                'menu_title' => 'required',
+                'id' => 'required',
+                'id_menu' => 'required'
+            ]);
+        } else {
+            $this->validate($r, [
+                'option' => 'required',
+                'menu_title' => 'required',
+                'id' => 'required'
+            ]);
+        }
+
 
         $tabMenus = new MenuHorizontal;
         if ($r->hasFile('image')) {
@@ -75,7 +86,15 @@ class MenuhorizontalController extends Controller
             } else {
                 $tabMenus->menu_title_en = $r->menu_title;
             }
-            $tabMenus->id_menu = $r->direct;
+
+            if ($r->id == null) {
+                $tabMenus->url = $r->id_menu;
+                $tabMenus->id_menu = 0;
+            } else {
+                $tabMenus->id_menu = $r->id;
+                $tabMenus->url = null;
+            }
+
             $tabMenus->status = $r->option;
             $tabMenus->save();
             $r->session()->flash('success', 'Menu Successfully Added');
@@ -91,7 +110,7 @@ class MenuhorizontalController extends Controller
         /*Validation*/
         $this->validate($r, [
             'menu_title' => 'required',
-            'direct' => 'required'
+            // 'id' => 'required'
         ]);
 
         $tabMenus = MenuHorizontal::find($r->id);
@@ -125,7 +144,13 @@ class MenuhorizontalController extends Controller
             $tabMenus->menu_title_en = $r->menu_titleEN;
         }
 
-        $tabMenus->id_menu = $r->direct;
+        if ($r->id == null) {
+            $tabMenus->url = $r->id_menu;
+            $tabMenus->id_menu = 0;
+        } else {
+            $tabMenus->id_menu = $r->id;
+            $tabMenus->url = null;
+        }
 
         $tabMenus->update();
 
