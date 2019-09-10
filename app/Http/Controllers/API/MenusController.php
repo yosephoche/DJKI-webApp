@@ -65,7 +65,7 @@ class MenusController extends Controller
             'id_slide' => $value->id,
             'title' => $value->title,
             'image' => asset('uploaded/media/' . $value->image),
-            'link' => $value->link
+            'link' => asset($value->link)
           ];
         } else {
           $menus['slideshow'][] = [
@@ -80,7 +80,7 @@ class MenusController extends Controller
       foreach ($horizontal as $value) {
 
         $itemMenu = $value->menu;
-        $menu_horizontal = [];
+        $menu_horizontal = null;
         if ($itemMenu != null) {
           $action = $this->getAction($itemMenu->url, $itemMenu->id, $itemMenu->flag);
           $menu_horizontal = [
@@ -100,6 +100,7 @@ class MenusController extends Controller
           'menu_title_id' => $value->menu_title_id,
           'menu_title_en' => $value->menu_title_en,
           'image' => $value->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $value->image),
+          'link'      => $value->url,
           'menu' => $menu_horizontal
         ];
       }
