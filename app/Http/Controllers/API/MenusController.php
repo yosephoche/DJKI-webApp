@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\MenuHorizontal;
 use App\Settings;
 use App\Slideshow;
-// use App\MenuHorizontal;
 use General, Response, DB;
 
 class MenusController extends Controller
@@ -127,22 +126,22 @@ class MenusController extends Controller
       $response = $this->response->formatResponseWithPages("POST NOT FOUND", [], $this->response->STAT_NOT_FOUND());
       return response()->json($response, $this->response->STAT_NOT_FOUND());
     }
-    // if (isset($menus) > 0) {
-    //   $menus['diagnostic'] = [
-    //     'code' => 200,
-    //     'status' => 'ok'
-    //   ];
-    //   return response($menus, 200);
-    // }
-    // return response(
-    //   [
-    //     'diagnostic' => [
-    //       'status' => 'NOT_FOUND',
-    //       'code' => 404
-    //     ]
-    //   ],
-    //   404
-    // );
+    if (isset($menus) > 0) {
+      $menus['diagnostic'] = [
+        'code' => 200,
+        'status' => 'ok'
+      ];
+      return response($menus, 200);
+    }
+    return response(
+      [
+        'diagnostic' => [
+          'status' => 'NOT_FOUND',
+          'code' => 404
+        ]
+      ],
+      404
+    );
   }
 
   public function getAction($url, $parentID)
