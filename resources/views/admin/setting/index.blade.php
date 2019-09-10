@@ -72,11 +72,11 @@
 							</div>
 							<div class="form-group">
 								<label>Display Text</label>
-								<input type="text" class="form-control" placeholder="Running Text" id="running" name="running_text">
+								<input type="text" class="form-control" placeholder="Running Text" id="running" name="running_text" value="{{ $setting->running_text }}">
 							</div>
 							<div class="form-group">
 								<label>link</label>
-								<input type="text" class="form-control" placeholder="Link" name="alamat" id="linkk" readonly>
+								<input type="text" class="form-control" placeholder="Link" name="alamat" id="linkk" readonly value="{{ $setting->link }}">
 							</div>
 						</div>
 					</div>
