@@ -43,14 +43,9 @@ class MenusController extends Controller
     } else {
       $menu = nav(['position' => 'header'])->where('parent', '0');
       $running_text = Settings::whereNotNull('running_text')->first();
-<<<<<<< HEAD
-      $slide1 = Slideshow::orderBy('sort', 'DESC')->where('category', 'Home');
-=======
       $slideshow = Slideshow::orderBy('sort', 'DESC')->where('category', 'Home');
-
->>>>>>> master
       $horizontal = MenuHorizontal::all();
-      $result = [
+      $menus = [
         'pinned' => [],
         'slideshow' => [],
         'menu_horizontal' => [],
