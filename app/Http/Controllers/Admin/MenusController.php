@@ -210,24 +210,33 @@ class MenusController extends Controller
 		// dd($r->all());
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 		$tabMenus = new Menus;
-		$data['id'] = explode(',', $r->id_menus);
-		$data['type'] = explode(',', $r->type);
+		// $data['id'] = explode(',', $r->id_menus);
+		// $data['type'] = explode(',', $r->type);
+		// $menus = Menus::whereIn('id', explode(',', $r->id_menus))->get()->map(function ($value, $key) use ($data) {
+		// 	$id = $value->id;
+		// 	$type = $data['type'][$key];
+		// 	$url = $value->url;
+		// 	$sort = array_search($value->id, $data['id']);
+		// 	$flag = $value->flag;
+		// 	return ['id' => $id, 'type' => $type, 'url' => $url, 'sort' => $sort, 'flag' => $flag];
+		// });		
 
-		$menus = Menus::whereIn('id', explode(',', $r->id_menus))->get()->map(function ($value, $key) use ($data) {
-			$id = $value->id;
-			$type = $data['type'][$key];
-			$url = $value->url;
-			$sort = array_search($value->id, $data['id']);
-			$flag = $value->flag;
-
-			return ['id' => $id, 'type' => $type, 'url' => $url, 'sort' => $sort, 'flag' => $flag];
+		$listID = explode(',',$r->id_menus);
+		$listType = explode(',',$r->type);
+		$menus = Menus::whereIn('id',$listID)
+		->orderByRaw(DB::raw("FIELD(id, $r->id_menus)"))
+		->get()->map(function($value,$key) use ($listType,$listID) {
+			return [
+				'id'=>$value->id,
+				'type'=>$listType[$key],
+				'url'=>$value->url,
+				'sort'=> array_search($value->id,$listID),
+				'flag'=>$value->flag				
+			];
 		});
-		// dd($r->all(), $menus);
 
-		// dd($menus);
 		/*Update data*/
 		foreach ($menus as $key => $value) {
-			// dd($value);
 			if ($value['type'] == 'menu') {
 				$parent = $value;
 				$tabMenus::where('id', $value['id'])
