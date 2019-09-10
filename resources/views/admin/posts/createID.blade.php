@@ -87,7 +87,7 @@
 									<div class="form-group">
 										<label>Category</label>
 										<select class="form-control" name="category">
-											<option value="0">Uncategorized</option>
+											{{-- <option>Uncategorized</option> --}}
 											@foreach ($categories as $key => $value)
 												<option value="{{$value->id}}">{{$value->name}}</option>
 											@endforeach

@@ -39,8 +39,8 @@ class MenusController extends Controller
 				 * kasih jelas namanya variable ksih jelas
 				 * sesuai kegunaannya utk tampung data apa*/
 				$listMenus2 = [];
-
-				foreach ($menusHeader->where('parent', '0') as $key => $value) {
+				$x = Menus::where('status', 'header')->where('url', '#')->where('flag', '!=', '2')->where('flag', '!=', '3')->orWhere('flag', 1)->get();
+				foreach ($x as $key => $value) {
 					$url = $value->url;
 
 					if (preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $url) == 0) {
@@ -132,6 +132,7 @@ class MenusController extends Controller
 
 	public function update(Request $r)
 	{
+		// dd($r->all());
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 		/*Validation*/
 		$this->validate($r, [
@@ -217,8 +218,9 @@ class MenusController extends Controller
 			$type = $data['type'][$key];
 			$url = $value->url;
 			$sort = array_search($value->id, $data['id']);
+			$flag = $value->flag;
 
-			return ['id' => $id, 'type' => $type, 'url' => $url, 'sort' => $sort];
+			return ['id' => $id, 'type' => $type, 'url' => $url, 'sort' => $sort, 'flag' => $flag];
 		});
 		// dd($r->all(), $menus);
 
@@ -239,6 +241,7 @@ class MenusController extends Controller
 					|| preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $parent['url'])
 					|| strpos($parent['url'], 'page')
 					|| strpos($parent['url'], 'directory')
+					|| $parent['flag'] > 1
 				) { } else {
 					$tabMenus::where('id', $value['id'])
 						->update([
@@ -254,6 +257,7 @@ class MenusController extends Controller
 					|| preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $parent['url'])
 					|| strpos($parent['url'], 'page')
 					|| strpos($parent['url'], 'directory')
+					|| $parent['flag'] > 1
 				) { } else {
 					$tabMenus::where('id', $value['id'])
 						->update([
@@ -263,7 +267,6 @@ class MenusController extends Controller
 				}
 			}
 		}
-
 		/*Success Message*/
 		$r->session()->flash('success', 'Menu Successfully Modified');
 		return redirect(url()->previous());
