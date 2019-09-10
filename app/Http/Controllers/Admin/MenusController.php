@@ -29,25 +29,30 @@ class MenusController extends Controller
 		switch ($option) {
 			case 'header':
 				$menus = Menus::all();
-				$menusHeader = Menus::where('status', 'header')->where('url', 'not like', '%post%')
-					->where('url', 'not like', '%page%')->where('url', 'not like', '%directory%')->orderBy('sort')->get();
-				$menul = Menus::where('status', 'header')->orderBy('sort')->get();
-				// dd($menusHeader->toArray());
-				$data['menus'] = $menus->where('parent', '0');
+				// $menusHeader = Menus::where('status', 'header')->where('url', 'not like', '%post%')
+				// ->where('url', 'not like', '%page%')->where('url', 'not like', '%directory%')->where('flag', 1)
+				// ->where('flag', 2)->where('flag', 3)->orderBy('sort')->get();
+				$menusHeader = Menus::where('status', 'header')->where('url', '#')->where('flag', '!=', 2)->where('flag', '!=', 3)->get();
+				// ->where('url', 'not like', "%page%")->where('url', 'not like', "%directory%")->where('url', 'not like', "%post%")->get();
+				// ->where('flag', 2)->where('flag', 3)get();
+				// dd($menusHeader);
+
+				$data['menus'] = Menus::where('parent', '0')->get();
 
 				/* Mencari subsparent */
 				$listMenus = array();
+
+				/** jangan kyak gini bikin variable
+				 * kasih jelas namanya variable ksih jelas
+				 * sesuai kegunaannya utk tampung data apa*/
 				$listMenus2 = [];
+
 				foreach ($menusHeader->where('parent', '0') as $key => $value) {
 					$url = $value->url;
-					// dd($url);
 
-					// dd($url, preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $url));
-					// $isStarUrl = ;
 					if (preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $url) == 0) {
 						$listMenus[] = $menusHeader->where('parent', $value->id);
 						$listMenus2[] = $value;
-						// dd($value, $listMenus);
 					}
 				}
 				$data['listUpdate'] = $listMenus;
@@ -74,7 +79,10 @@ class MenusController extends Controller
 		$data['url_pages'] = Pages::where('deleted_at', null)->orderBy('title')->get();
 		$data['category'] = Category::all();
 		$data['archive'] = ArchiveGroup::all();
-		// $data['archive_item'] = Archive::all();
+		$data['archive_item'] = Archive::all();
+		$data['check_about'] = Menus::where('flag', 1)->first();
+		$data['check_visitor'] = Menus::where('flag', 2)->first();
+		$data['check_contact'] = Menus::where('flag', 3)->first();
 		return view('admin.menus.index', $data);
 	}
 
@@ -107,16 +115,15 @@ class MenusController extends Controller
 		if (in_array($r->option, array('header', 'footer'))) {
 			/*Insert into table*/
 			$tabMenus->menu_title = $r->menu_title;
-			$tabMenus->menu_title = $r->menu_title;
 			if (strlen($r->menu_titleEN) > 0) {
-				$tabMenus->menu_title_EN = $r->menu_titleEN;
+				$tabMenus->menu_title_en = $r->menu_titleEN;
 			} else {
-				$tabMenus->menu_title_EN = $r->menu_title;
+				$tabMenus->menu_title_en = $r->menu_title;
 			}
 			$tabMenus->parent = $r->parent;
 			$tabMenus->status = $r->option;
 			$tabMenus->flag = $r->flag;
-			if ($r->flag == 1) {
+			if ($r->flag == 1 or $r->flag == 2 or $r->flag == 3) {
 				$tabMenus->url = "#";
 			} else {
 				$tabMenus->url = $r->url;
@@ -166,17 +173,17 @@ class MenusController extends Controller
 		/*Update data*/
 		$tabMenus->menu_title = $r->menu_title;
 		if (strlen($r->menu_titleEN) > 0) {
-			$tabMenus->menu_title_EN = $r->menu_titleEN;
+			$tabMenus->menu_title_en = $r->menu_titleEN;
 		} else {
-			$tabMenus->menu_title_EN = $r->menu_title;
+			$tabMenus->menu_title_en = $r->menu_title;
 		}
 		$tabMenus->url = $r->url;
 		$tabMenus->parent = $r->parent;
 		$tabMenus->description = $r->description;
 		if (strlen($r->descriptionEN) > 0) {
-			$tabMenus->description_EN = $r->descriptionEN;
+			$tabMenus->description_en = $r->descriptionEN;
 		} else {
-			$tabMenus->description_EN = $r->description;
+			$tabMenus->description_en = $r->description;
 		}
 		$tabMenus->update();
 
@@ -188,6 +195,7 @@ class MenusController extends Controller
 
 	public function delete(Request $r)
 	{
+		// dd($r->id);
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 
 		/*Delete Data*/

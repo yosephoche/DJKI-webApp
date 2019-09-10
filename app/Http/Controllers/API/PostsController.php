@@ -29,7 +29,7 @@ class PostsController extends Controller
       ->where('status', 'publish')
       ->where('published', '<=', \DB::raw('now()'))
       ->orderBy('published', 'DESC')
-      ->paginate(20);
+      ->paginate(2);
     /* Paginate  */
     $pagination = $this->paging($dataPosts);
 
@@ -38,8 +38,8 @@ class PostsController extends Controller
       $posts[] = [
         'title_ID' => $value->title,
         'title_EN' => $value->title_en,
-        'content ID' => readMore(['text' => $value->content, 'limit' => 150]),
-        'content EN' => readMore(['text' => $value->content_en, 'limit' => 150]),
+        'content_ID' => readMore(['text' => $value->content, 'limit' => 150]),
+        'content_EN' => readMore(['text' => $value->content_en, 'limit' => 150]),
         'image' => GlobalClass::setImages($value->image) == 'default.jpg' ? '' : asset('uploaded/media/' . GlobalClass::setImages($value->image)),
         'published' => Carbon\Carbon::parse($value->published)->format('d F Y'),
         'category' => $value->category == true ? Category::where('id', $value->category)->first()->name : '',
@@ -93,8 +93,8 @@ class PostsController extends Controller
       }
       $posts['response'] = [
         'id' => $dataPosts->id,
-        'title ID' => $dataPosts->title,
-        'title EN' => $dataPosts->title_en,
+        'title_ID' => $dataPosts->title,
+        'title_EN' => $dataPosts->title_en,
         'image' => $arrImages,
         'published' => Carbon\Carbon::parse($dataPosts->published)->format('d F Y'),
         'category' => $dataPosts->category == true ? Category::where('id', $dataPosts->category)->first()->name : '',

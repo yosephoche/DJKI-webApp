@@ -3,6 +3,7 @@
 @section('title', 'Menu')
 
 @section('contents')
+{{-- {{ use App\Menus; }} --}}
 	<div class="bg-light lter b-b wrapper-md">
 		<h1 class="m-n font-thin h3">Menus</h1>
 	</div>
@@ -38,7 +39,7 @@
 				<h4 class="m-t-none m-b">Menus <small>(All of this menu will appear at the top of the page)</small></h4>
 				<div class="btn-group" role="group" aria-label="...">
 					<a href="{{route('menus',['option'=>'header'])}}" class="btn btn-default">Header</a>
-					<a href="{{route('menus',['option'=>'footer'])}}" class="btn btn-default">Footer</a>
+					{{-- <a href="{{route('menus',['option'=>'footer'])}}" class="btn btn-default">Footer</a> --}}
 				</div>
 				<hr>
 
@@ -169,9 +170,9 @@
 								@foreach ($archive as $arc)
 									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->name }}</option>
 								@endforeach
-								{{-- @foreach ($archive_item as $arc_item)
+								@foreach ($archive_item as $arc_item)
 									<option value="{{ asset('uploaded/download/'.$arc_item->file)}}">{{$arc_item->title}}</option>
-								@endforeach --}}
+								@endforeach
 							</datalist>
 						</div>
 
@@ -198,28 +199,30 @@
 							</div>
 						</div>
 
-						<div class="radio">
-							<label>
-								<input type="radio" name="flag" value="0" checked id="none">
-								None
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input type="radio" name="flag" value="1" id="about">
-								About
-							</label>
-						</div>
+						@if ($check_about == null)
+							<div class="radio">
+								<label>
+									<input type="radio" name="flag" value="1" id="about">
+									About
+								</label>
+							</div>
+						@endif
 						<div class="radio">
 							<label>
 								<input type="radio" name="flag" value="2" id="visitor">
 								visitor
 							</label>
 						</div>
+							<div class="radio">
+								<label>
+									<input type="radio" name="flag" value="3" id="contact">
+									contact
+								</label>
+							</div>
 						<div class="radio">
 							<label>
-								<input type="radio" name="flag" value="3" id="contact">
-								contact
+								<input type="radio" name="flag" value="0" checked id="none">
+								None
 							</label>
 						</div>
 					</div>
@@ -234,7 +237,7 @@
 
 	<div class="modal fade" id="modal-edit-menus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
-			<form action="{{ route('menuhorizontal_update') }}" method="post" enctype="multipart/form-data">
+			<form action="{{ route('menus_update') }}" method="post" enctype="multipart/form-data">
 				{{ csrf_field() }}
 				<input type="hidden" name="id">
 
@@ -273,9 +276,9 @@
 								@foreach ($archive as $arc)
 									<option value="/directory/{{ $arc->slug }}/{{ $arc->id }}">{{ $arc->name }}</option>
 								@endforeach
-								{{-- @foreach ($archive_item as $arc_item)
+								@foreach ($archive_item as $arc_item)
 									<option value="{{ asset('uploaded/download/'.$arc_item->file)}}">{{$arc_item->title}}</option>
-								@endforeach --}}
+								@endforeach
 							</datalist>
 						</div>
 
@@ -312,12 +315,14 @@
 								None
 							</label>
 						</div>
-						<div class="radio">
-							<label>
-								<input type="radio" name="flag" value="1">
-								About
-							</label>
-						</div>
+						@if ($check_about == null)
+							<div class="radio">
+								<label>
+									<input type="radio" name="flag" value="1" disabled>
+									About
+								</label>
+							</div>
+						@endif
 						<div class="radio">
 							<label>
 								<input type="radio" name="flag" value="2">

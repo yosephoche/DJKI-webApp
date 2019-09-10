@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Comments;
 use General;
 use Response;
+use Carbon;
 
 class CommentController extends Controller
 {
@@ -46,16 +47,16 @@ class CommentController extends Controller
 
     public function getComments(Request $r)
     {
-        $dataComments = Comments::select('name', 'email', 'comment')->where('id_posts', $r->id_post)->paginate(5);
+        $dataComments = Comments::select('name', 'email', 'comment')->where('id_posts', $r->id_post)->paginate(3);
         /* Paginate  */
         $pagination = $this->paging($dataComments);
-
         /* Data Posts */
-        foreach ($dataComments->items() as $key => $value) {
+        foreach ($dataComments->items() as $value) {
             $comment[] = [
                 'name' => $value->name,
                 'email' => $value->email,
-                'comment' => $value->comment
+                'comment' => $value->comment,
+                'time' => Carbon\Carbon::parse($value->created_at)->format('c'),
             ];
         }
 
@@ -77,7 +78,7 @@ class CommentController extends Controller
         $object->per_page = $raw->perPage();
         $object->current_page = $raw->currentPage();
         $object->last_page = $raw->lastPage();
-        $object->fromm = $raw->firstItem();
+        $object->from = $raw->firstItem();
         $object->to = $raw->lastItem();
         return $object;
     }

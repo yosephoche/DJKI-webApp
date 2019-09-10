@@ -41,11 +41,12 @@ class SlideshowController extends Controller
 				'title' => 'required',
 				'image' => 'required',
 				'category' => 'required',
-				// 'link'	=> 'required'
+				'link'	=> 'required'
 
 			]);
 		} else if ($r->inputan == 2) {
 			$this->validate($r, [
+				'title' => 'required',
 				'category' => 'required',
 				'linkvid'	=> 'required'
 			]);
