@@ -4,19 +4,19 @@
 version: "3.1"
 services:
 
-    # mysql:
-    #   image: mysql:5.6
-    #   container_name: djki-mysql
-    #   working_dir: /application
-    #   volumes:
-    #     - .:/application
-    #   environment:
-    #     - MYSQL_ROOT_PASSWORD=djki
-    #     - MYSQL_DATABASE=djki-beta
-    #     - MYSQL_USER=djki-beta
-    #     - MYSQL_PASSWORD=djki21`21`
-    #   ports:
-    #     - "2048:3306"
+    mysql:
+      image: mysql:5.6
+      container_name: djki-mysql-beta
+      working_dir: /application
+      volumes:
+        - .:/application
+      environment:
+        - MYSQL_ROOT_PASSWORD=djki
+        - MYSQL_DATABASE=djki-beta
+        - MYSQL_USER=djki-beta
+        - MYSQL_PASSWORD=djki21`21`
+      ports:
+        - "2051:3306"
 
     webserver:
       image: nginx:alpine
