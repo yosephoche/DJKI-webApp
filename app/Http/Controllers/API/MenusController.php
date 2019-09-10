@@ -41,13 +41,9 @@ class MenusController extends Controller
       $menu = nav(['position' => 'header'])->where('parent', '0');
       $running_text = Settings::whereNotNull('running_text')->first();
       $slide1 = Slideshow::orderBy('sort', 'DESC')->where('category', 'Home');
-      // $horizontal = MenuHorizontal::all();
-      // $horizontal = DB::table('menu_horizontals')
-      //   ->join('menus', 'menu_horizontals.id_menu', '=', 'menus.id')
-      //   ->get();
+
       $horizontal = MenuHorizontal::all();
-      // $slide1 = Slideshow::orderBy('sort', 'DESC')->where('category', 'Home');
-      // dd($running_text->link);
+
       /* Kondisi ketika idMenu bernilai false, maka target query adalah parent */
       $menus['pinned'] = [
         'running_text' => $running_text->running_text,
@@ -81,14 +77,10 @@ class MenusController extends Controller
       foreach ($horizontal as $value) {
 
         $itemMenu = $value->menu;
-        $action = $this->getAction($itemMenu->url, $itemMenu->id);
-        $data = array();
-        $menus['menu_horizontal'][] = [
-          'id_menu' => $value->id,
-          'menu_title_id' => $value->menu_title_id,
-          'menu_title_en' => $value->menu_title_en,
-          'image' => $value->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $value->image),
-          'menu' => [
+        $menu_horizontal = [];
+        if ($itemMenu != null) {
+          $action = $this->getAction($itemMenu->url, $itemMenu->id);
+          $menu_horizontal = [
             'id_menu' => $itemMenu->id,
             'title_id' => $itemMenu->menu_title,
             'title_en'  => $itemMenu->menu_title_en,
@@ -97,12 +89,21 @@ class MenusController extends Controller
             'description_en' => $itemMenu->description_en,
             'action_type' => $action['type'],
             'id_target' => $action['id'],
-          ]
+          ];
+        }
+
+        $menus['menu_horizontal'][] = [
+          'id_menu' => $value->id,
+          'menu_title_id' => $value->menu_title_id,
+          'menu_title_en' => $value->menu_title_en,
+          'image' => $value->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $value->image),
+          'menu' => $menu_horizontal
         ];
       }
 
       foreach ($menu as $key => $parent) {
         $action = $this->getAction($parent->url, $parent->id);
+
         $slugs = str_replace(' ', '_', strtolower($parent->menu_title));
         $menus['menus'][] = [
           'id_menu' => $parent->id,
