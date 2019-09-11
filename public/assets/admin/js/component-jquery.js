@@ -345,7 +345,7 @@ $(document).ready(function () {
 
   $('#modal-edit-menus2').on('show.bs.modal', function (e) {
     var data = $(e.relatedTarget).parents('li').data();
-    console.log(data);
+   
 
     if (data.submenu) {
       var parent = data.submenu;
@@ -354,10 +354,9 @@ $(document).ready(function () {
     }
     var status = data.status;
     $(this).find('select[name="parent"]').prop('selectedIndex', 0);
-    $(this).find('input[name="id"]').val(data.id);
     $(this).find('input[name="menu_title"]').val(data.title);
     $(this).find('input[name="menu_titleEN"]').val(data.title_eng);
-    $(this).find('input[name="id_menu"]').val(data.link);
+    $(this).find('input[name="id_menus"]').val(data.link);
     $(this).find('select[name="parent"] option[value="' + parent + '"]').prop("selected", true);
     $(this).find('.previewImage_').attr('src', data.preview);
   });

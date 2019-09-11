@@ -54,8 +54,7 @@ class MenuhorizontalController extends Controller
             ]);
         } else {
             $this->validate($r, [
-                'menu_title' => 'required',
-                'id' => 'required'
+                'menu_title' => 'required'
             ]);
         }
 
@@ -89,7 +88,7 @@ class MenuhorizontalController extends Controller
                 $tabMenus->id_menu = 0;
             } else {
                 $tabMenus->id_menu = $r->id;
-                $tabMenus->url = '';
+                $tabMenus->url = $r->id_menu;
             }
 
             $tabMenus->status = $r->option;
@@ -108,18 +107,17 @@ class MenuhorizontalController extends Controller
         if ($r->id == null) {
             $this->validate($r, [
                 'menu_title' => 'required',
-                'id_menu' => 'required'
+                'id_menus' => 'required'
             ]);
         } else {
             $this->validate($r, [
-                'menu_title' => 'required',
-                'id' => 'required'
+                'menu_title' => 'required'
             ]);
         }
 
-
         $tabMenus = MenuHorizontal::find($r->id);
-
+        
+        
         if ($r->hasFile('image')) {
 
             /*Remove Old Image*/
@@ -143,19 +141,19 @@ class MenuhorizontalController extends Controller
 
         /*Update data*/
         $tabMenus->menu_title_id = $r->menu_title;
-        if (strlen($r->menu_title_en) > 0) {
+        if ($r->menu_titleEN) {
             $tabMenus->menu_title_en = $r->menu_titleEN;
         } else {
-            $tabMenus->menu_title_en = $r->menu_titleEN;
+            $tabMenus->menu_title_en = $r->menu_title;
         }
 
-        if ($r->id == null) {
-            $tabMenus->url = $r->id_menu;
-            $tabMenus->id_menu = 0;
-        } else {
-            $tabMenus->id_menu = $r->id;
-            $tabMenus->url = '';
-        }
+         if ($r->id == null) {
+                $tabMenus->url = $r->id_menus;
+                $tabMenus->id_menu = 0;
+            } else {
+                $tabMenus->id_menu = $r->id;
+                $tabMenus->url = $r->id_menus;
+            }
 
         $tabMenus->update();
 

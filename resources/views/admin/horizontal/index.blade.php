@@ -124,7 +124,7 @@
 						@endforeach
 					</ol>
 				</div>
-				<br>
+				<br>+
 				<br>
 			</div>
 		</div>
@@ -136,6 +136,11 @@
 	$("input[name=id_menu]").focusout(function(){
 		var id = $("#menu-headers option[value='" + $('#input_header').val() + "']").attr("data-id");
 		$("#menu_id").attr("value", id);
+	});
+
+	$("input[name=id_menus]").focusout(function(){
+		var id = $("#menu-headerss option[value='" + $('#input_headerk').val() + "']").attr("data-id");
+		$("#menu_ids").attr("value", id);
 	});
 </script>
 @endsection
@@ -161,10 +166,10 @@
 							<label>Title EN</label>
 							<input type="text" name="menu_titleEN" class="form-control"  placeholder="Title for this menu ENG">
 						</div>
-
+						
 						<div class="form-group">
 							<label>Direct To</label>
-								<input value="" type="hidden" id="menu_id" name="id" class="form-control">
+								<input value="" type="text" id="menu_id" name="id" class="form-control">
 								<input type="text" id="input_header" name="id_menu" class="form-control" list="menu-headers" placeholder="This menu link to ..." autocomplete="off">
 									<datalist id="menu-headers" class="datalist">
 										<option value="">Blank</option>
@@ -173,17 +178,6 @@
 										@endforeach
 									</datalist>
 						</div>
-						{{-- <div class="form-group">
-							<label>Link</label>
-							<input type="text" name="url" class="form-control" list="menu-header" placeholder="This menu link to ..." autocomplete="off">
-							<datalist id="direct-view" class="datalist">
-								<option value="#">Blank</option>
-								@foreach ($menu1 as $itemMenu)
-									<option data-value="{{$itemMenu->id}}" value="{{ $itemMenu->url }}">{{$itemMenu->menu_title}}</option>
-								@endforeach
-							</datalist>
-							<input type="hidden" name="direct" id="direct-hidden"/>
-						</div> --}}
 						<div class="form-group">
 							<label>Icon</label>
 							<div class="form-group">
@@ -202,9 +196,10 @@
 		</div>
 	</div>
 
+	{{-- edit /////////////////////// --}}
 	<div class="modal fade" id="modal-edit-menus2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
-			<form action="{{ route('menuhorizontal_update') }}" method="post" enctype="multipart/form-data">
+			<form action="{{ route('menuhorizontal_update') }}" method="POST" enctype="multipart/form-data">
 				{{ csrf_field() }}
 				<input type="hidden" name="id">
 
@@ -225,29 +220,19 @@
 							<label>Title EN</label>
 							<input type="text" name="menu_titleEN" class="form-control" placeholder="Title for this menu ENG">
 						</div>
-
+			
+					
 						<div class="form-group">
 							<label>Direct To</label>
-								<input value="" type="hidden" id="menu_id" name="id" class="form-control">
-								<input type="text" id="input_header" name="id_menu" class="form-control" list="menu-headers" placeholder="This menu link to ..." autocomplete="off">
-									<datalist id="menu-headers" class="datalist">
+								<input value="" type="text" id="menu_ids" name="id" class="form-control">
+								<input type="text" id="input_headerk" name="id_menus" value="" class="form-control" list="menu-headerss" placeholder="This menu link to ..." autocomplete="off">
+									<datalist id="menu-headerss" class="datalist">
 										<option value="">Blank</option>
 										@foreach ($menu1 as $value)
 										<option value="{{$value->menu_title}}" data-id="{{$value->id}}">{{ $value->url}}</option>
 										@endforeach
 									</datalist>
 						</div>
-						{{-- <div class="form-group">
-							<label>Link</label>
-							<input type="text" name="url" class="form-control" list="menu-header" placeholder="This menu link to ..." autocomplete="off">
-							<datalist id="direct-view" class="datalist">
-								<option value="#">Blank</option>
-								@foreach ($menu1 as $itemMenu)
-									<option data-value="{{ $itemMenu->id }}" value="{{ $itemMenu->url }}">{{$itemMenu->menu_title}}</option>
-								@endforeach
-							</datalist>
-							<input type="hidden" name="direct" id="direct-hidden"/>
-						</div> --}}
 
 						<div class="form-group">
 							<label>Icon</label>
