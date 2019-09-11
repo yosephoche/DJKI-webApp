@@ -130,7 +130,7 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<label>Running Text</label>
-								<input type="text" name="link" class="form-control" id="pinned" list="menu-header" autocomplete="off" placeholder="This menu link to ...">
+								<input type="text" name="link" class="form-control" id="pinned" list="menu-header" autocomplete="off" placeholder="This menu link to ..." value="{{ $setting->link }}">
 								<datalist id="menu-header" class="datalist">
 									<option value="#">Blank</option>
 									@foreach ($url_posts as $posts)

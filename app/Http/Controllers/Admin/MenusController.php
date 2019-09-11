@@ -39,8 +39,8 @@ class MenusController extends Controller
 				 * kasih jelas namanya variable ksih jelas
 				 * sesuai kegunaannya utk tampung data apa*/
 				$listMenus2 = [];
-
-				foreach ($menusHeader->where('parent', '0') as $key => $value) {
+				$x = Menus::where('status', 'header')->where('url', '#')->where('flag', '!=', '2')->where('flag', '!=', '3')->orWhere('flag', 1)->get();
+				foreach ($x as $key => $value) {
 					$url = $value->url;
 
 					if (preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $url) == 0) {
@@ -132,6 +132,7 @@ class MenusController extends Controller
 
 	public function update(Request $r)
 	{
+		// dd($r->all());
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 		/*Validation*/
 		$this->validate($r, [
@@ -209,64 +210,83 @@ class MenusController extends Controller
 		// dd($r->all());
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 		$tabMenus = new Menus;
-		$data['id'] = explode(',', $r->id_menus);
-		$data['type'] = explode(',', $r->type);
+		// $data['id'] = explode(',', $r->id_menus);
+		// $data['type'] = explode(',', $r->type);
+		// $menus = Menus::whereIn('id', explode(',', $r->id_menus))->get()->map(function ($value, $key) use ($data) {
+		// 	$id = $value->id;
+		// 	$type = $data['type'][$key];
+		// 	$url = $value->url;
+		// 	$sort = array_search($value->id, $data['id']);
+		// 	$flag = $value->flag;
+		// 	return ['id' => $id, 'type' => $type, 'url' => $url, 'sort' => $sort, 'flag' => $flag];
+		// });		
 
-		$menus = Menus::whereIn('id', explode(',', $r->id_menus))->get()->map(function ($value, $key) use ($data) {
-			$id = $value->id;
-			$type = $data['type'][$key];
-			$url = $value->url;
-			$sort = array_search($value->id, $data['id']);
-
-			return ['id' => $id, 'type' => $type, 'url' => $url, 'sort' => $sort];
+		$listID = explode(',',$r->id_menus);
+		$listType = explode(',',$r->type);
+		$menus = Menus::whereIn('id',$listID)
+		->orderByRaw(DB::raw("FIELD(id, $r->id_menus)"))
+		->get()->map(function($value,$key) use ($listType,$listID) {
+			return [
+				'id'=>$value->id,
+				'type'=>$listType[$key],
+				'url'=>$value->url,
+				'sort'=> array_search($value->id,$listID),
+				'flag'=>$value->flag				
+			];
 		});
-		// dd($r->all(), $menus);
 
-		// dd($menus);
+
 		/*Update data*/
-		foreach ($menus as $key => $value) {
-			// dd($value);
-			if ($value['type'] == 'menu') {
-				$parent = $value;
-				$tabMenus::where('id', $value['id'])
-					->update([
-						'sort' => $value['sort'],
-						'parent' => "0",
-					]);
-			} elseif ($value['type'] == 'submenu') {
-				if (
-					strpos($parent['url'], 'post')
-					|| preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $parent['url'])
-					|| strpos($parent['url'], 'page')
-					|| strpos($parent['url'], 'directory')
-				) { } else {
+		$isValid = $this->validationRule($menus);
+		if(count($isValid) == 0) {			
+			foreach ($menus as $key => $value) {
+				if ($value['type'] == 'menu') {
+					$parent = $value;
 					$tabMenus::where('id', $value['id'])
 						->update([
 							'sort' => $value['sort'],
-							'parent' => $parent['id'],
+							'parent' => "0",
 						]);
-					$parentSubmenu = $value;
-				}
-				// dd($parent, $value);
-			} else {
-				if (
-					strpos($parent['url'], 'post')
-					|| preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $parent['url'])
-					|| strpos($parent['url'], 'page')
-					|| strpos($parent['url'], 'directory')
-				) { } else {
-					$tabMenus::where('id', $value['id'])
-						->update([
+				} elseif ($value['type'] == 'submenu') {
+					if (
+						strpos($parent['url'], 'post')
+						|| preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $parent['url'])
+						|| strpos($parent['url'], 'page')
+						|| strpos($parent['url'], 'directory')
+						|| $parent['flag'] > 1
+					) { } else {
+						$tabMenus::where('id', $value['id'])
+							->update([
+								'sort' => $value['sort'],
+								'parent' => $parent['id'],
+							]);
+						$parentSubmenu = $value;
+					}
+				} else {
+					if (
+						strpos($parent['url'], 'post')
+						|| preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $parent['url'])
+						|| strpos($parent['url'], 'page')
+						|| strpos($parent['url'], 'directory')
+						|| $parent['flag'] > 1
+					) { } else {
+						$tabMenus::where('id', $value['id'])->update([
 							'sort' => $value['sort'],
 							'parent' => $parentSubmenu['id'],
 						]);
+					}
 				}
 			}
+			/*Success Message*/
+			$r->session()->flash('success', 'Menu Successfully Modified');
+			return redirect(url()->previous());
 		}
 
-		/*Success Message*/
-		$r->session()->flash('success', 'Menu Successfully Modified');
+		/*Error Message*/
+		// TODO Sesuaikan pesan message ketika ada rule yang dilanggar
+		$r->session()->flash('success', 'total rule menu yang dilanggar '. count($isValid));
 		return redirect(url()->previous());
+
 	}
 
 	public function listMenu()
@@ -431,5 +451,34 @@ class MenusController extends Controller
 			}
 			return $res;
 		}
+	}
+
+	protected function validationRule($menus) {
+		$countError = array();
+		foreach ($menus as $key => $value) {
+			if ($value['type'] == 'menu') {
+				$parent = $value;
+			} elseif ($value['type'] == 'submenu') {
+				$check = Menus::find($parent['id']);
+				if($check->flag == 0) {
+					if ($check->url != '#') {
+						$countError[] = true;
+					}
+				} elseif($check->flag != 1) {
+					$countError[] = true;
+				}
+				$parentSubmenu = $value;			
+			} else {
+				$check = Menus::find($value['id']);
+				if($check->flag == 0) {
+					if ($check->url != '#') {
+						$countError[] = true;
+					}
+				} elseif($check->flag != 1) {
+					$countError[] = true;
+				}			
+			}
+		}
+		return $countError;
 	}
 }
