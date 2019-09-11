@@ -74,6 +74,13 @@ class SettingController extends Controller
 			$maintenance = '0';
 		}
 
+		// sosial media
+		$facebook = "https://www.facebook.com/". $r->facebook;
+		$twitter = "https://twitter.com/". $r->twitter;
+		$linkedlin =  "https://www.linkedin.com/". $r->linkedin;
+		$youtube =  "https://www.youtube.com/". $r->youtube;
+		$youtube =  "https://www.youtube.com/". $r->youtube;
+		$instagram =  "https://www.instagram.com/". $r->instagram;
 		// $foo = Posts::find($r->link);
 
 		/*Update DB*/
@@ -85,13 +92,13 @@ class SettingController extends Controller
 			$maintenance,
 			$r->email,
 			$r->phone,
-			$r->facebook,
-			$r->twitter,
+			$facebook,
+			$twitter,
 			$r->google,
-			$r->linkedin,
+			$linkedlin,
 			$r->address,
-			$r->youtube,
-			$r->instagram,
+			$youtube,
+			$instagram,
 			$r->running_text,
 			$r->alamat,
 			// $running_text->title,
