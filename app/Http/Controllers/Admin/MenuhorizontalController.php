@@ -92,7 +92,7 @@ class MenuhorizontalController extends Controller
                 $tabMenus->id_menu = 0;
             } else {
                 $tabMenus->id_menu = $r->id;
-                $tabMenus->url = null;
+                $tabMenus->url = '';
             }
 
             $tabMenus->status = $r->option;
