@@ -54,10 +54,10 @@
                         
                         {{-- image --}}
                         <div class="col-md-4 col-sm-6" id="image" style="display:none">
-                            <div class="col-md-4 col-sm-6">
+                            <div class="col-md-6 col-sm-6">
                                 <label>Featured image</label>
                                     <div class="form-group">
-                                        <img id="previewImage_-" data-toggle="modal" data-target="#modal-galleries" src="{{ asset('uploaded/media/default.jpg') }}" width="100%">
+                                        <img id="previewImage_-" data-toggle="modal" data-target="#modal-galleries" src="{{ asset('uploaded/media/default.jpg') }}" width="150%" height="100%">
                                             <input type="hidden" name="image" id="targetValue_-">
                                              @include('admin.images.modals')
                                     </div>
