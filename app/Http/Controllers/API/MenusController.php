@@ -44,9 +44,13 @@ class MenusController extends Controller
       $menu = nav(['position' => 'header'])->where('parent', '0');
       $running_text = Settings::whereNotNull('running_text')->first();
       $slideshow = Slideshow::orderBy('sort', 'DESC')->where('category', 'Home');
-
       $horizontal = MenuHorizontal::all();
-
+      $menus = [
+        'pinned' => [],
+        'slideshow' => [],
+        'menu_horizontal' => [],
+        'menus' => [],
+      ];
       /* Kondisi ketika idMenu bernilai false, maka target query adalah parent */
       $menus['pinned'] = [
         'running_text' => $running_text->running_text,
