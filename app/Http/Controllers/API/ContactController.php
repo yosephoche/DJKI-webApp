@@ -20,7 +20,7 @@ class ContactController extends Controller
     public function getContact()
     {
         $contact = Settings::first();
-        $kontak = [
+        $kontak['contact'] = [
             'address' => $contact->address,
             'telp' => $contact->phone,
             'email' => $contact->email
