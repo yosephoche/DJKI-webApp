@@ -49,14 +49,11 @@ class MenuhorizontalController extends Controller
         /*Validation*/
         if ($r->id == null) {
             $this->validate($r, [
-                'option' => 'required',
                 'menu_title' => 'required',
-                'id' => 'required',
                 'id_menu' => 'required'
             ]);
         } else {
             $this->validate($r, [
-                'option' => 'required',
                 'menu_title' => 'required',
                 'id' => 'required'
             ]);
@@ -92,7 +89,7 @@ class MenuhorizontalController extends Controller
                 $tabMenus->id_menu = 0;
             } else {
                 $tabMenus->id_menu = $r->id;
-                $tabMenus->url = null;
+                $tabMenus->url = '';
             }
 
             $tabMenus->status = $r->option;
@@ -108,10 +105,18 @@ class MenuhorizontalController extends Controller
     {
         GlobalClass::Roleback(['Customer Service', 'Writer']);
         /*Validation*/
-        $this->validate($r, [
-            'menu_title' => 'required',
-            // 'id' => 'required'
-        ]);
+        if ($r->id == null) {
+            $this->validate($r, [
+                'menu_title' => 'required',
+                'id_menu' => 'required'
+            ]);
+        } else {
+            $this->validate($r, [
+                'menu_title' => 'required',
+                'id' => 'required'
+            ]);
+        }
+
 
         $tabMenus = MenuHorizontal::find($r->id);
 
@@ -149,7 +154,7 @@ class MenuhorizontalController extends Controller
             $tabMenus->id_menu = 0;
         } else {
             $tabMenus->id_menu = $r->id;
-            $tabMenus->url = null;
+            $tabMenus->url = '';
         }
 
         $tabMenus->update();
