@@ -35,15 +35,16 @@
 
 		<div class="row">
 			<div class="col-sm-12">
-				<h4 class="m-t-none m-b">Menus Horizontal<small>(All of this menu will appear at the top of the page)</small></h4>
-				<div class="btn-group" role="group" aria-label="...">
+				<h4 class="m-t-none m-b">Menus Horizontal<small>(All of this menu will appear at home page of apps as a shorcut menu)</small></h4>
+				{{-- <div class="btn-group" role="group" aria-label="...">
 					<a href="{{route('menuhorizontal',['option'=>'header'])}}" class="btn btn-default">Header</a>
 					<a href="{{route('menuhorizontal',['option'=>'footer'])}}" class="btn btn-default">Footer</a>
-				</div>
+				</div> --}}
 				<hr>
 
 				<!-- Action -->
-				<button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add Menu {{Request::segment(3)}}</button>
+				<button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add horizontal menu</button>
+				{{-- <button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add Menu {{Request::segment(3)}}</button> --}}
 				<form action="{{ route('menuhorizontal_drag') }}" method="post">
 					{{ csrf_field() }}
 					<input type="hidden" name="id_menus">
@@ -172,7 +173,17 @@
 										@endforeach
 									</datalist>
 						</div>
-
+						{{-- <div class="form-group">
+							<label>Link</label>
+							<input type="text" name="url" class="form-control" list="menu-header" placeholder="This menu link to ..." autocomplete="off">
+							<datalist id="direct-view" class="datalist">
+								<option value="#">Blank</option>
+								@foreach ($menu1 as $itemMenu)
+									<option data-value="{{$itemMenu->id}}" value="{{ $itemMenu->url }}">{{$itemMenu->menu_title}}</option>
+								@endforeach
+							</datalist>
+							<input type="hidden" name="direct" id="direct-hidden"/>
+						</div> --}}
 						<div class="form-group">
 							<label>Icon</label>
 							<div class="form-group">
@@ -226,6 +237,17 @@
 										@endforeach
 									</datalist>
 						</div>
+						{{-- <div class="form-group">
+							<label>Link</label>
+							<input type="text" name="url" class="form-control" list="menu-header" placeholder="This menu link to ..." autocomplete="off">
+							<datalist id="direct-view" class="datalist">
+								<option value="#">Blank</option>
+								@foreach ($menu1 as $itemMenu)
+									<option data-value="{{ $itemMenu->id }}" value="{{ $itemMenu->url }}">{{$itemMenu->menu_title}}</option>
+								@endforeach
+							</datalist>
+							<input type="hidden" name="direct" id="direct-hidden"/>
+						</div> --}}
 
 						<div class="form-group">
 							<label>Icon</label>

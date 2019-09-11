@@ -11,7 +11,7 @@ use App\Archive;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB, GlobalClass;
-use PhpParser\Node\Stmt\If_;
+// use PhpParser\Node\Stmt\If_;
 
 class MenusController extends Controller
 {
@@ -29,14 +29,7 @@ class MenusController extends Controller
 		switch ($option) {
 			case 'header':
 				$menus = Menus::all();
-				// $menusHeader = Menus::where('status', 'header')->where('url', 'not like', '%post%')
-				// ->where('url', 'not like', '%page%')->where('url', 'not like', '%directory%')->where('flag', 1)
-				// ->where('flag', 2)->where('flag', 3)->orderBy('sort')->get();
 				$menusHeader = Menus::where('status', 'header')->where('url', '#')->where('flag', '!=', 2)->where('flag', '!=', 3)->get();
-				// ->where('url', 'not like', "%page%")->where('url', 'not like', "%directory%")->where('url', 'not like', "%post%")->get();
-				// ->where('flag', 2)->where('flag', 3)get();
-				// dd($menusHeader);
-
 				$data['menus'] = Menus::where('parent', '0')->get();
 
 				/* Mencari subsparent */
@@ -58,18 +51,18 @@ class MenusController extends Controller
 				$data['listUpdate'] = $listMenus;
 				$data['listHeader'] = $listMenus2;
 				break;
-			case 'footer':
-				$menus = Menus::where('status', 'footer')->orderBy('sort')->get();
-				$data['menus'] = $menus->where('parent', '0');
+				// case 'footer':
+				// 	$menus = Menus::where('status', 'footer')->orderBy('sort')->get();
+				// 	$data['menus'] = $menus->where('parent', '0');
 
-				/* Mencari subsparent */
-				$listMenus = array();
-				$listMenus = array();
-				foreach ($menus->where('parent', '0') as $key => $value) {
-					$listMenus[] = $menus->where('parent', $value->id);
-				}
-				$data['listUpdate'] = $listMenus;
-				break;
+				// 	/* Mencari subsparent */
+				// 	$listMenus = array();
+				// 	$listMenus = array();
+				// 	foreach ($menus->where('parent', '0') as $key => $value) {
+				// 		$listMenus[] = $menus->where('parent', $value->id);
+				// 	}
+				// 	$data['listUpdate'] = $listMenus;
+				// 	break;
 			default:
 				/*if params not valid*/
 				return abort(404);
@@ -94,7 +87,7 @@ class MenusController extends Controller
 		$this->validate($r, [
 			'option' => 'required',
 			'menu_title' => 'required',
-			// 'url' => 'required'
+			'url' => 'required'
 		]);
 
 		$tabMenus = new Menus;

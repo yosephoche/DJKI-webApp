@@ -33,8 +33,8 @@ class MenusController extends Controller
         $action = $this->getAction($parent->url, $parent->id, $parent->flag);
         $menus[] = [
           'id_parent' => $parent->id,
-          'title_ID' => $parent->menu_title,
-          'title_EN' => $parent->menu_title_en,
+          'title_id' => $parent->menu_title,
+          'title_en' => $parent->menu_title_en,
           'action_type' => $action['type'],
           'id_target' => $action['id'],
           'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)
@@ -111,10 +111,10 @@ class MenusController extends Controller
         $slugs = str_replace(' ', '_', strtolower($parent->menu_title));
         $menus['menus'][] = [
           'id_menu' => $parent->id,
-          'description_ID' => isset($parent->description) == false ? '' : $parent->description,
-          'description_EN' => isset($parent->description_EN) == false ? '' : $parent->description_EN,
-          'title_ID' => $parent->menu_title,
-          'title_EN' => $parent->menu_title_en,
+          'description_id' => isset($parent->description) == false ? '' : $parent->description,
+          'description_en' => isset($parent->description_EN) == false ? '' : $parent->description_EN,
+          'title_id' => $parent->menu_title,
+          'title_en' => $parent->menu_title_en,
           'action_type' => $action['type'],
           'id_target' => $action['id'],
           'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)
@@ -213,13 +213,13 @@ class MenusController extends Controller
     } elseif ($parentID) {
       /* Kondisi jika url tidak memiliki initial maka akan mengecek parentID */
       $countSubMenu = nav(['position' => 'header'])->where('parent', $parentID);
-      if ($countSubMenu->count() > 0) {
-        /* Jika parent memiliki child */
-        $res = [
-          'type' => 'menu',
-          'id' => ''
-        ];
-      } elseif ($url == '#' and $flag == 1) {
+      // if ($countSubMenu->count() > 0) {
+      //   /* Jika parent memiliki child */
+      //   $res = [
+      //     'type' => 'menu',
+      //     'id' => ''
+      //   ]; }
+      if (($url == '#' and $flag == 1) and ($countSubMenu->count() > 0)) {
         /* Jika menu menuju external link */
         $res = [
           'type' => 'about',
