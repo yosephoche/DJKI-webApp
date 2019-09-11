@@ -133,10 +133,10 @@
 
 @section('registerscript')
 <script>
-	// $("input[name=id_menu]").focusout(function(){
-	// 	var id = $("#menu-headers option[value='" + $('#input_header').val() + "']").attr("data-id");
-	// 	$("#menu_id").attr("value", id);
-	// });
+	$("input[name=id_menu]").focusout(function(){
+		var id = $("#menu-headers option[value='" + $('#input_header').val() + "']").attr("data-id");
+		$("#menu_id").attr("value", id);
+	});
 	// $("input[name=id_menus]").focusout(function(){
 	// 	var id = $("#menu-headerss option[value='" + $('#input_headerk').val() + "']").attr("data-id");
 	// 	$("#menu_ids").attr("value", id);
@@ -158,17 +158,17 @@
 					<div class="modal-body">
 						<div class="form-group">
 								<label>Title ID</label>
-								<input type="text" name="menu_title" class="form-control"  placeholder="Title for this menu ENG">
+								<input type="text" name="menu_title_id" class="form-control"  placeholder="Title for this menu ENG">
 							</div>
 
 						<div class="form-group">
 							<label>Title EN</label>
-							<input type="text" name="menu_titleEN" class="form-control"  placeholder="Title for this menu ENG">
+							<input type="text" name="menu_title_en" class="form-control"  placeholder="Title for this menu ENG">
 						</div>
 						
 						<div class="form-group">
 							<label>Direct To</label>
-								<input type="hidden" id="menu_id" name="id" class="form-control">
+								<input type="text" id="menu_id" name="id" class="form-control">
 								<input type="text" id="input_header" name="id_menu" class="form-control" list="menu-headers" placeholder="This menu link to ..." autocomplete="off">
 									<datalist id="menu-headers" class="datalist">
 										<option value="">Blank</option>

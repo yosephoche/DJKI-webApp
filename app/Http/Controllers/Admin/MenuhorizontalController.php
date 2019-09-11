@@ -49,16 +49,14 @@ class MenuhorizontalController extends Controller
         /*Validation*/
         if ($r->id == null) {
             $this->validate($r, [
-                'menu_title' => 'required',
+                'menu_title_id' => 'required',
                 'id_menu' => 'required'
             ]);
         } else {
             $this->validate($r, [
-                'menu_title' => 'required'
+                'menu_title_id' => 'required'
             ]);
         }
-
-
         $tabMenus = new MenuHorizontal;
         if ($r->hasFile('image')) {
 
@@ -76,11 +74,11 @@ class MenuhorizontalController extends Controller
         /*Check params header or footer*/
         if (in_array($r->option, array('header', 'footer'))) {
             /*Insert into table*/
-            $tabMenus->menu_title_id = $r->menu_title;
-            if (strlen($r->menu_titleEN) > 0) {
-                $tabMenus->menu_title_en = $r->menu_titleEN;
+            $tabMenus->menu_title_id = $r->menu_title_id;
+            if (strlen($r->menu_title_en) > 0) {
+                $tabMenus->menu_title_en = $r->menu_title_en;
             } else {
-                $tabMenus->menu_title_en = $r->menu_title;
+                $tabMenus->menu_title_en = $r->menu_title_id;
             }
 
             if ($r->id == null) {
@@ -116,7 +114,7 @@ class MenuhorizontalController extends Controller
         }
 
         $tabMenus = MenuHorizontal::find($r->id);
-        
+
         if ($r->hasFile('image')) {
 
             /*Remove Old Image*/
@@ -139,7 +137,7 @@ class MenuhorizontalController extends Controller
         }
 
         /*Update data*/
-    
+
         $tabMenus->menu_title_id = $r->menu_title;
         if ($r->menu_titleEN) {
             $tabMenus->menu_title_en = $r->menu_titleEN;
@@ -147,13 +145,13 @@ class MenuhorizontalController extends Controller
             $tabMenus->menu_title_en = $r->menu_title;
         }
 
-         if ($r->id == null) {
-                $tabMenus->url = $r->id_menus;
-                $tabMenus->id_menu = 0;
-            } else {
-                $tabMenus->id_menu = $r->id;
-                $tabMenus->url = $r->id_menus;
-            }
+        if ($r->id == null) {
+            $tabMenus->url = $r->id_menus;
+            $tabMenus->id_menu = 0;
+        } else {
+            $tabMenus->id_menu = $r->id;
+            $tabMenus->url = $r->id_menus;
+        }
 
         $tabMenus->update();
 
