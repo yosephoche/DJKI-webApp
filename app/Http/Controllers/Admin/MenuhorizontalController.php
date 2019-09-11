@@ -117,7 +117,6 @@ class MenuhorizontalController extends Controller
 
         $tabMenus = MenuHorizontal::find($r->id);
         
-        
         if ($r->hasFile('image')) {
 
             /*Remove Old Image*/
@@ -140,6 +139,7 @@ class MenuhorizontalController extends Controller
         }
 
         /*Update data*/
+    
         $tabMenus->menu_title_id = $r->menu_title;
         if ($r->menu_titleEN) {
             $tabMenus->menu_title_en = $r->menu_titleEN;
