@@ -65,7 +65,7 @@
 										<select class="form-control" name="category">
 											@if ($slideshow->category=='Home')
 													<option value="{{$slideshow->category}}">{{$slideshow->category}}</option>
-													<option value="Tentang Kami">Tentang Kami</option>
+													<option value="Tentang Kami">About</option>
 													@else
 													<option value="{{$slideshow->category}}">{{$slideshow->category}}</option>
 													<option value="Home">Home</option>

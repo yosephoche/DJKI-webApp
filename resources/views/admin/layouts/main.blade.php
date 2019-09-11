@@ -6,6 +6,25 @@
 	@include('admin.layouts.partial.meta')
 
 	@yield('styles')
+	<style>
+		.timeMaintenence {
+			padding: 0;
+		}
+
+		.colTimezone, 
+		.colFeaturedImg{
+			padding-left: 0px;
+		}
+
+		/* .colContactMap, .sosmed {
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+
+		.colEmail, .colAddress {
+			padding-left: 0px;
+		} */
+	</style>
 </head>
 <body>
 <div class="app app-header-fixed">
