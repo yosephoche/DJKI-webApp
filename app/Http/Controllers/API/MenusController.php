@@ -216,35 +216,43 @@ class MenusController extends Controller
     } elseif ($parentID) {
       /* Kondisi jika url tidak memiliki initial maka akan mengecek parentID */
       $countSubMenu = nav(['position' => 'header'])->where('parent', $parentID);
-      // if ($countSubMenu->count() > 0) {
-      //   /* Jika parent memiliki child */
-      //   $res = [
-      //     'type' => 'menu',
-      //     'id' => ''
-      //   ]; }
-      if (($url == '#' and $flag == 1) and ($countSubMenu->count() > 0)) {
+      $fecthURL = ($url=='#') ? "" : $url;
+      if ($countSubMenu->count() > 0) {
+        /* Jika parent memiliki child */
+        $res = [
+          'type' => 'menu',
+          'id' => ''
+        ]; 
+      } elseif (($url == '#' and $flag == 1) and ($countSubMenu->count() > 0)) {
         /* Jika menu menuju external link */
         $res = [
           'type' => 'about',
-          'id' => $url
+          'id' => $fecthURL
         ];
       } elseif ($url == '#' and $flag == 2) {
         /* Jika menu menuju external link */
         $res = [
           'type' => 'visitor',
-          'id' => $url
+          'id' => $fecthURL
         ];
       } elseif ($url == '#' and $flag == 3) {
         /* Jika menu menuju external link */
         $res = [
           'type' => 'contact',
-          'id' => $url
+          'id' => $fecthURL
         ];
       } else {
-        $res = [
-          'type' => 'link',
-          'id' => $url
-        ];
+        if ($fecthURL == '') {
+          $res = [
+            'type' => 'menu',
+            'id' => $fecthURL
+          ];
+        } else {
+          $res = [
+            'type' => 'link',
+            'id' => $fecthURL
+          ];          
+        }
       }
       return $res;
     }
