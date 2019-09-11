@@ -29,7 +29,7 @@ class PostsController extends Controller
       ->where('status', 'publish')
       ->where('published', '<=', \DB::raw('now()'))
       ->orderBy('published', 'DESC')
-      ->paginate(2);
+      ->paginate(20);
     /* Paginate  */
     $pagination = $this->paging($dataPosts);
 
