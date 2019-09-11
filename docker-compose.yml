@@ -12,8 +12,8 @@ services:
         - .:/application
       environment:
         - MYSQL_ROOT_PASSWORD=djki
-        - MYSQL_DATABASE=djki
-        - MYSQL_USER=djki
+        - MYSQL_DATABASE=djki-beta
+        - MYSQL_USER=djki-beta
         - MYSQL_PASSWORD=djki21`21`
       ports:
         - "2051:3306"
