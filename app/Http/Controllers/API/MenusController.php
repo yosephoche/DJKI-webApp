@@ -57,7 +57,6 @@ class MenusController extends Controller
         'link' => $running_text->link,
         'facebook' => $running_text->facebook,
         'twitter' => $running_text->twitter,
-        'google' => $running_text->google,
         'linkedlin' => $running_text->linkedin,
         'youtube' => $running_text->youtube,
         'instagram' => $running_text->instagram,

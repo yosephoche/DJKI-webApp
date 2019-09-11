@@ -81,8 +81,8 @@
 											<li class="dd-item dd3-item" id="{{ $submenu->id }}"
 												data-status="true"
 												data-id="{{ $submenu->id }}"
-												{{-- data-description="{{$submenu->description}}"
-												data-description_en="{{$submenu->description_en}}" --}}
+												data-description="{{$submenu->description}}"
+												data-description_en="{{$submenu->description_en}}"
 												data-title="{{ $submenu->menu_title }}"
 												data-title_eng="{{ $submenu->menu_title_en }}"
 												data-link="{{ $submenu->url }}"
@@ -104,6 +104,8 @@
 																data-id="{{ $subsubmenu->id }}"
 																data-title="{{ $subsubmenu->menu_title }}"
 																data-link="{{ $subsubmenu->url }}"
+																data-description="{{$subsubmenu->description}}"
+																data-description_en="{{$subsubmenu->description_en}}"
 																data-subsubmenu="{{ $subsubmenu->parent }}"
 																data-preview="{{ $subsubmenu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$subsubmenu->image) }}">
 																<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{ $subsubmenu->menu_title }}
