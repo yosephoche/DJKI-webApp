@@ -6,31 +6,31 @@ services:
 
     mysql:
       image: mysql:5.6
-      container_name: djki-mysql-beta
+      container_name: djki-mysql
       working_dir: /application
       volumes:
         - .:/application
       environment:
         - MYSQL_ROOT_PASSWORD=djki
-        - MYSQL_DATABASE=djki-beta
-        - MYSQL_USER=djki-beta
+        - MYSQL_DATABASE=djki
+        - MYSQL_USER=djki
         - MYSQL_PASSWORD=djki21`21`
       ports:
-        - "2051:3306"
+        - "2048:3306"
 
     webserver:
       image: nginx:alpine
-      container_name: djki-webserver-beta
+      container_name: djki-webserver
       working_dir: /application
       volumes:
           - .:/application
           - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       ports:
-       - "2050:80"
+       - "2047:80"
 
     php-fpm:
       build: phpdocker/php-fpm
-      container_name: djki-php-fpm-beta
+      container_name: djki-php-fpm
       working_dir: /application
       volumes:
         - .:/application
