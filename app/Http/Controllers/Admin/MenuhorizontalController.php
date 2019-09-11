@@ -49,20 +49,14 @@ class MenuhorizontalController extends Controller
         /*Validation*/
         if ($r->id == null) {
             $this->validate($r, [
-                'option' => 'required',
-                'menu_title' => 'required',
-                'id' => 'required',
+                'menu_title_id' => 'required',
                 'id_menu' => 'required'
             ]);
         } else {
             $this->validate($r, [
-                'option' => 'required',
-                'menu_title' => 'required',
-                'id' => 'required'
+                'menu_title_id' => 'required'
             ]);
         }
-
-
         $tabMenus = new MenuHorizontal;
         if ($r->hasFile('image')) {
 
@@ -80,11 +74,11 @@ class MenuhorizontalController extends Controller
         /*Check params header or footer*/
         if (in_array($r->option, array('header', 'footer'))) {
             /*Insert into table*/
-            $tabMenus->menu_title_id = $r->menu_title;
-            if (strlen($r->menu_titleEN) > 0) {
-                $tabMenus->menu_title_en = $r->menu_titleEN;
+            $tabMenus->menu_title_id = $r->menu_title_id;
+            if (strlen($r->menu_title_en) > 0) {
+                $tabMenus->menu_title_en = $r->menu_title_en;
             } else {
-                $tabMenus->menu_title_en = $r->menu_title;
+                $tabMenus->menu_title_en = $r->menu_title_id;
             }
 
             if ($r->id == null) {
@@ -92,7 +86,7 @@ class MenuhorizontalController extends Controller
                 $tabMenus->id_menu = 0;
             } else {
                 $tabMenus->id_menu = $r->id;
-                $tabMenus->url = '';
+                $tabMenus->url = $r->id_menu;
             }
 
             $tabMenus->status = $r->option;
@@ -108,10 +102,16 @@ class MenuhorizontalController extends Controller
     {
         GlobalClass::Roleback(['Customer Service', 'Writer']);
         /*Validation*/
-        $this->validate($r, [
-            'menu_title' => 'required',
-            // 'id' => 'required'
-        ]);
+        if ($r->id == null) {
+            $this->validate($r, [
+                'menu_title' => 'required',
+                'id_menus' => 'required'
+            ]);
+        } else {
+            $this->validate($r, [
+                'menu_title' => 'required'
+            ]);
+        }
 
         $tabMenus = MenuHorizontal::find($r->id);
 
@@ -137,19 +137,20 @@ class MenuhorizontalController extends Controller
         }
 
         /*Update data*/
+
         $tabMenus->menu_title_id = $r->menu_title;
-        if (strlen($r->menu_title_en) > 0) {
+        if ($r->menu_titleEN) {
             $tabMenus->menu_title_en = $r->menu_titleEN;
         } else {
-            $tabMenus->menu_title_en = $r->menu_titleEN;
+            $tabMenus->menu_title_en = $r->menu_title;
         }
 
         if ($r->id == null) {
-            $tabMenus->url = $r->id_menu;
+            $tabMenus->url = $r->id_menus;
             $tabMenus->id_menu = 0;
         } else {
             $tabMenus->id_menu = $r->id;
-            $tabMenus->url = null;
+            $tabMenus->url = $r->id_menus;
         }
 
         $tabMenus->update();
