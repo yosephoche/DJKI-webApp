@@ -113,19 +113,22 @@ $(document).ready(function () {
   });
 
   $('#about').on('click', function () {
-    $('#link').prop('disabled', true)
+    $('#link').val('#');
+    $('#link').prop('readonly', true)
   })
 
   $('#none').on('click', function () {
-    $('#link').prop('disabled', false)
+    $('#link').prop('readonly', false)
   })
 
   $('#visitor').on('click', function () {
-    $('#link').prop('disabled', true)
+    $('#link').val('#');
+    $('#link').prop('readonly', true)
   })
 
   $('#contact').on('click', function () {
-    $('#link').prop('disabled', true)
+    $('#link').val('#');
+    $('#link').prop('readonly', true)
   })
 
   $("#pinned").change(function () {
@@ -319,7 +322,6 @@ $(document).ready(function () {
   /*Modal edit menus*/
   $('#modal-edit-menus').on('show.bs.modal', function (e) {
     var data = $(e.relatedTarget).parents('li').data();
-    console.log(data);
 
     if (data.submenu) {
       var parent = data.submenu;

@@ -30,7 +30,7 @@ class MenusController extends Controller
 			case 'header':
 				$menus = Menus::all();
 				$menusHeader = Menus::where('status', 'header')->where('url', '#')->where('flag', '!=', 2)->where('flag', '!=', 3)->get();
-				$data['menus'] = Menus::where('parent', '0')->get();
+				$data['menus'] = Menus::where('parent', '0')->orderBy('sort','asc')->get();
 
 				/* Mencari subsparent */
 				$listMenus = array();
@@ -42,14 +42,14 @@ class MenusController extends Controller
 				$x = Menus::where('status', 'header')->where('url', '#')->where('flag', '!=', '2')->where('flag', '!=', '3')->orWhere('flag', 1)->get();
 				foreach ($x as $key => $value) {
 					$url = $value->url;
-
 					if (preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $url) == 0) {
 						$listMenus[] = $menusHeader->where('parent', $value->id);
 						$listMenus2[] = $value;
 					}
-				}
+				}				
 				$data['listUpdate'] = $listMenus;
-				$data['listHeader'] = $listMenus2;
+				$data['listHeader'] = $this->deleteLastDepth($listMenus2);				
+				// $data['listHeader'] = $listMenus2;
 				break;
 				// case 'footer':
 				// 	$menus = Menus::where('status', 'footer')->orderBy('sort')->get();
@@ -82,7 +82,6 @@ class MenusController extends Controller
 	public function store(Request $r)
 	{
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
-
 		/*Validation*/
 		$this->validate($r, [
 			'option' => 'required',
@@ -284,7 +283,7 @@ class MenusController extends Controller
 
 		/*Error Message*/
 		// TODO Sesuaikan pesan message ketika ada rule yang dilanggar
-		$r->session()->flash('success', 'total rule menu yang dilanggar '. count($isValid));
+		$r->session()->flash('success', 'Terjadi kesalahan - About, Contact & Visitor tidak boleh memiliki child');
 		return redirect(url()->previous());
 
 	}
@@ -469,16 +468,32 @@ class MenusController extends Controller
 				}
 				$parentSubmenu = $value;			
 			} else {
-				$check = Menus::find($value['id']);
+				$check = Menus::find($parentSubmenu['id']);
 				if($check->flag == 0) {
 					if ($check->url != '#') {
 						$countError[] = true;
 					}
-				} elseif($check->flag != 1) {
+				}
+				elseif($check->flag != 1) {
 					$countError[] = true;
 				}			
 			}
 		}
 		return $countError;
+	}
+
+	protected function deleteLastDepth($data) {
+		$temp = array();
+		foreach ($data as $key => $value) {
+			if($value->parent != 0) {
+				$check = Menus::find($value->parent);
+				if($check->parent == 0) {
+					$temp[] = $value;
+				}
+			} else {
+				$temp[] = $value;
+			}
+		}	
+		return $temp;			
 	}
 }
