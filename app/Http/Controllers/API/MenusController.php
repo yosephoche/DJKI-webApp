@@ -63,22 +63,76 @@ class MenusController extends Controller
       ];
 
       foreach ($slideshow->get() as $key => $value) {
-        if ($value->image == "default.jpg" || $value->image == null) {
-          $menus['slideshow'][] = [
-            'id_slide' => $value->id,
-            'title' => $value->title,
-            'image' => "",
-            'link' => asset($value->link)
-          ];
+        if ($value->id_inputan == 1) {
+          if ($value->image == "default.jpg" || $value->image == null) {
+            if ($value->link) {
+              $menus['slideshow'][] = [
+                'id_slide' => $value->id,
+                'title' => $value->title,
+                'image' => "",
+                'link' => asset($value->link)
+              ];
+            } else {
+              $menus['slideshow'][] = [
+                'id_slide' => $value->id,
+                'title' => $value->title,
+                'image' => "",
+                'link' => ""
+              ];
+            }
+          } else if ($value->image) {
+            if ($value->link) {
+              $menus['slideshow'][] = [
+                'id_slide' => $value->id,
+                'title' => $value->title,
+                'image' => asset('uploaded/media/' . $value->image),
+                'link' => asset($value->link)
+              ];
+            } else {
+              $menus['slideshow'][] = [
+                'id_slide' => $value->id,
+                'title' => $value->title,
+                'image' => asset('uploaded/media/' . $value->image),
+                'link' => ""
+              ];
+            }
+          }
         } else {
           $menus['slideshow'][] = [
             'id_slide' => $value->id,
             'title' => $value->title,
-            'image' => asset('uploaded/media/' . $value->image),
-            'link' => asset($value->link)
+            'image' => "",
+            'link' => $value->link
           ];
         }
       }
+
+
+
+
+      // 
+
+      // } else if ($value->image && $value->id_inputan == 1) {
+      //   if ($value->link) {
+      //     $menus['slideshow'][] = [
+      //       'id_slide' => $value->id,
+      //       'title' => $value->title,
+      //       'image' => asset('uploaded/media/' . $value->image),
+      //       'link' => asset($value->link)
+      //     ];
+      //   }else {
+      //     $menus['slideshow'][] = [
+      //       'id_slide' => $value->id,
+      //       'title' => $value->title,
+      //       'image' => asset('uploaded/media/' . $value->image),
+      //       'link' => ""
+      //     ];
+      //   }
+      // }
+
+
+
+      // 
 
       foreach ($horizontal as $value) {
 

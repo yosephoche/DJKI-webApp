@@ -112,7 +112,6 @@ class MenuhorizontalController extends Controller
                 'menu_title' => 'required'
             ]);
         }
-
         $tabMenus = MenuHorizontal::find($r->id);
 
         if ($r->hasFile('image')) {
@@ -138,6 +137,7 @@ class MenuhorizontalController extends Controller
 
         /*Update data*/
 
+
         $tabMenus->menu_title_id = $r->menu_title;
         if ($r->menu_titleEN) {
             $tabMenus->menu_title_en = $r->menu_titleEN;
@@ -145,13 +145,13 @@ class MenuhorizontalController extends Controller
             $tabMenus->menu_title_en = $r->menu_title;
         }
 
-        if ($r->id == null) {
-            $tabMenus->url = $r->id_menus;
-            $tabMenus->id_menu = 0;
+        if ($r->ids > 0) {
+            $tabMenus->id_menu = $r->ids;
         } else {
-            $tabMenus->id_menu = $r->id;
-            $tabMenus->url = $r->id_menus;
+            $tabMenus->id_menu = 0;
         }
+
+        $tabMenus->url = $r->id_menus;
 
         $tabMenus->update();
 
