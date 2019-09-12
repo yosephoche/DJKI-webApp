@@ -139,7 +139,7 @@ class MenusController extends Controller
 
         if ($value->id_menu > 0) {
           $itemMenu = $value->menu;
-          $menu_horizontal = [];
+          $menu_horizontal = null;
           if ($itemMenu != null) {
             $action = $this->getAction($itemMenu->url, $itemMenu->id, $itemMenu->flag);
             $menu_horizontal = [
@@ -163,7 +163,7 @@ class MenusController extends Controller
           ];
         } else {
           $itemMenu = $value->menu;
-          $menu_horizontal = [];
+          $menu_horizontal = null;
           if ($itemMenu != null) {
             $action = $this->getAction($itemMenu->url, $itemMenu->id, $itemMenu->flag);
             $menu_horizontal = [
