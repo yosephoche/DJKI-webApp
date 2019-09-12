@@ -53,15 +53,22 @@ class MenusController extends Controller
       ];
       /* Kondisi ketika idMenu bernilai false, maka target query adalah parent */
       $getSplitLink = explode("/", $running_text->link);
+      $dataSplitLink = array();
       $linkAfterSplit = "";
-      if ($getSplitLink[0] == "directory") {
-        $linkAfterSplit = "uploaded/download/" . $getSplitLink[1];
+      if (count($getSplitLink) == 2) {
+        $dataSplitLink = $getSplitLink;
       } else {
-        $linkAfterSplit = $getSplitLink[1];
+        $dataSplitLink = array("", $running_text->link);
       }
+      if ($dataSplitLink[0] == "directory") {
+        $linkAfterSplit = "uploaded/download/" . $dataSplitLink[1];
+      } else {
+        $linkAfterSplit = $dataSplitLink[1];
+      }
+      
       $menus['pinned'] = [
         'running_text' => $running_text->running_text,
-        'action_type' => $getSplitLink[0],
+        'action_type' => $dataSplitLink[0],
         'link' => $linkAfterSplit,
         'facebook' => $running_text->facebook,
         'twitter' => $running_text->twitter,
