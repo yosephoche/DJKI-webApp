@@ -5600,7 +5600,7 @@ a.text-#000000:hover {
   display: none;
 }
 
-.max-width-image tr {
+/* .max-width-image tr {
   padding-bottom: 10px;
   display: block;
 }
@@ -5609,7 +5609,7 @@ a.text-#000000:hover {
   max-width: 100% !important;
   width: initial !important;
   margin-right: 10px;
-}
+} */
 
 .team-item .team-action {
   float: right;
