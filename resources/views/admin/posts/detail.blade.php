@@ -63,7 +63,7 @@
 								</div>
 							</div>
 							<hr>
-							<?php echo $post->content ?>
+							<?php echo $post->content  ?>
 						</div>
 						<div class="line line-lg b-b b-light"></div>
 						{{-- <div class="text-muted">
