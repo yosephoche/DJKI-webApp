@@ -134,23 +134,34 @@
 								<datalist id="menu-header" class="datalist">
 									<option value="#">Blank</option>
 									@foreach ($url_posts as $posts)
-										<option value="{{ $posts->slug }}">{{ $posts->title }}</option>
+								<option value="posts/{{ $posts->slug }}">{{ $posts->title }}</option>
 									@endforeach
 									@foreach ($url_pages as $pages)
-										<option value="{{ $pages->slug }}">{{ $pages->title }}</option>
+										<option value="pages/{{ $pages->slug }}">{{ $pages->title }}</option>
 									@endforeach
 									@foreach ($url_directory as $directory)
-										<option value="{{ $directory->file }}">{{ $directory->title }}</option>
+										<option value="directory/{{ $directory->file }}">{{ $directory->title }}</option>
 									@endforeach
 								</datalist>
 							</div>
 							<div class="form-group">
 								<label>Display Text</label>
+
 								<input type="text" class="form-control" placeholder="Running Text" id="running" name="running_text" value="{{ $setting->running_text }}">
 							</div>
 							<div class="form-group">
 								<label>link</label>
-								<input type="text" class="form-control" placeholder="Link" name="alamat" id="linkk" readonly value="{{ $setting->link }}">
+								<?php
+								$dataSplitLink = array();
+								$splitLink = explode("/", $setting->link); 
+								if (count($splitLink) == 2) {
+									$dataSplitLink = $splitLink;
+								} else {
+									$dataSplitLink = array("", $setting->link);
+								}
+								?>
+								<input type="text" id="action_type" hidden name="action_running" value="{{ $dataSplitLink[0] }} "/>
+								<input type="text" class="form-control" placeholder="Link" name="alamat" id="linkk" readonly value="{{ $dataSplitLink[1] }}">
 							</div>
 						</div>
 						
@@ -211,53 +222,47 @@
 						<div class="col-md-12">
 							<hr>
 							<h4>Link Social Media</h4>
-							<div class="col-md-6 col-sm-6">
-								<label>Facebook</label>
-								<div class="input-group m-b">
-									<span class="input-group-addon">https://www.facebook.com/</span>
-									<input type="text" class="form-control" placeholder="youraccount/" value="{{ $setting->facebook }}" name="facebook">
-								</div>
+						</div>
+
+						<div class="col-md-6 col-sm-6">
+							<label>Facebook</label>
+							<div class="col-md-12">
+								<input type="text" class="form-control" placeholder="" value="{{ $setting->facebook }}" name="facebook">
 							</div>
 
-							<div class="col-md-6 col-sm-6">
-								<label>Twitter</label>
-								<div class="input-group m-b">
-									<span class="input-group-addon">https://twitter.com/</span>
-									<input type="text" class="form-control" placeholder="youraccount" value="{{ $setting->twitter }}" name="twitter">
-								</div>
+						<div class="col-md-6 col-sm-6">
+							<label>Twitter</label>
+							<div class="col-md-12">
+								<input type="text" class="form-control" placeholder="" value="{{ $setting->twitter }}" name="twitter">
 							</div>
 
-							<div class="col-md-6 col-sm-6">
-								<label>Youtube</label>
-								<div class="input-group m-b">
-									<span class="input-group-addon">https://www.youtube.com/</span>
-									<input type="text" class="form-control" placeholder="watch?v=juchgUPL0E8" value="{{ $setting->youtube }}" name="youtube">
-								</div>
+						<div class="col-md-6 col-sm-6">
+							<label>Youtube</label>
+							<div class="col-md-12">
+								<input type="text" class="form-control" placeholder="" value="{{ $setting->youtube }}" name="youtube">
 							</div>
 
-							<div class="col-md-6 col-sm-6">
-								<label>Instagram</label>
-								<div class="input-group m-b">
-									<span class="input-group-addon">https://www.instagram.com/</span>
-									<input type="text" class="form-control" placeholder="your_account/" value="{{ $setting->instagram }}" name="instagram">
-								</div>
+						<div class="col-md-6 col-sm-6">
+							<label>Instagram</label>
+							<div class="col-md-12">
+								<input type="text" class="form-control" placeholder="" value="{{ $setting->instagram }}" name="instagram">
 							</div>
 
-							{{-- <div class="col-md-6 col-sm-6">
-								<label>Google+</label>
-								<div class="input-group m-b">
-									<span class="input-group-addon">https://plus.google.com/</span>
-									<input type="text" class="form-control" placeholder="u/0/999998888888877774649" value="{{ $setting->google }}" name="google">
-								</div>
-							</div> --}}
-
-							<div class="col-md-6 col-sm-6">
-								<label>Linkedin</label>
-								<div class="input-group m-b">
-									<span class="input-group-addon">https://www.linkedin.com/</span>
-									<input type="text" class="form-control" placeholder="in/youraccount-m-99a99999/" value="{{ $setting->linkedin }}" name="linkedin">
-								</div>
+						{{-- <div class="col-md-6 col-sm-6">
+							<label>Google+</label>
+							<div class="col-md-12">
+								<span class="input-group-addon">https://plus.google.com/</span>
+								<input type="text" class="form-control" placeholder="" value="{{ $setting->google }}" name="google">
 							</div>
+						</div> --}}
+
+						<div class="col-md-6 col-sm-6">
+							<label>Linkedin</label>
+							<div class="col-md-12">
+								<input type="text" class="form-control" placeholder="" value="{{ $setting->linkedin }}" name="linkedin">
+							</div>
+						</div>
+					</div>
 
 							<div class="col-md-12 text-right">
 							<button type="submit" class="btn btn-primary">Save Settings</button>

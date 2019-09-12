@@ -30,7 +30,7 @@ class SettingController extends Controller
 		return view('admin.setting.index', $data);
 	}
 
-	public function setText($id)
+	public function setText($id, $action)
 	{
 		$post = Posts::where('slug', $id)->first();
 		// $post = Posts::find($id);
@@ -45,7 +45,7 @@ class SettingController extends Controller
 		} else {
 			$data = $post;
 		}
-		return response()->json(['success' => true, 'data' => $data]);
+		return response()->json(['success' => true, 'data' => $data, 'action' => $action]);
 	}
 
 	public function update(Request $r)
@@ -74,6 +74,13 @@ class SettingController extends Controller
 			$maintenance = '0';
 		}
 
+		// sosial media
+		$facebook 		= 	$r->facebook;
+		$twitter 		=  	$r->twitter;
+		$linkedlin 		= 	$r->linkedin;
+		$youtube 		=  	$r->youtube;
+		$youtube 		=  	$r->youtube;
+		$instagram 		= 	$r->instagram;
 		// $foo = Posts::find($r->link);
 
 		/*Update DB*/
@@ -85,15 +92,15 @@ class SettingController extends Controller
 			$maintenance,
 			$r->email,
 			$r->phone,
-			$r->facebook,
-			$r->twitter,
+			$facebook,
+			$twitter,
 			$r->google,
-			$r->linkedin,
+			$linkedlin,
 			$r->address,
-			$r->youtube,
-			$r->instagram,
+			$youtube,
+			$instagram,
 			$r->running_text,
-			$r->alamat,
+			$r->action_running . "/" . $r->alamat,
 			// $running_text->title,
 			// "posts/" . $running_text->slug,
 		]);

@@ -36,7 +36,7 @@
 						</div>
 
 						<div class="form-group">
-							<input type="text" name="titleEN" value="{{ $pages->title_en }}" class="form-control input-lg" placeholder="Page title ID">
+							<input type="text" name="titleEN" value="{{ $pages->title_en }}" class="form-control input-lg" placeholder="Page title EN">
 						</div>
 						<div class="form-group">
 							<textarea name="contentEN" class="editor">

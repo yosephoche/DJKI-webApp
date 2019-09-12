@@ -113,30 +113,36 @@ $(document).ready(function () {
   });
 
   $('#about').on('click', function () {
-    $('#link').prop('disabled', true)
+    $('#link').val('#');
+    $('#link').prop('readonly', true)
   })
 
   $('#none').on('click', function () {
-    $('#link').prop('disabled', false)
+    $('#link').prop('readonly', false)
   })
 
   $('#visitor').on('click', function () {
-    $('#link').prop('disabled', true)
+    $('#link').val('#');
+    $('#link').prop('readonly', true)
   })
 
   $('#contact').on('click', function () {
-    $('#link').prop('disabled', true)
+    $('#link').val('#');
+    $('#link').prop('readonly', true)
   })
 
   $("#pinned").change(function () {
+    var getData = $(this).val();
+    var splitGetData = getData.split("/");
     $.ajax({
-      url: 'setting/runningtext/' + $(this).val(),
+      url: 'setting/runningtext/' + splitGetData[1] + '/' + splitGetData[0],
       type: 'get',
       data: {},
       success: function (data) {
         $("#running").val(data.data.title);
+        $("#action_type").val(data.action);
         if (data.data.file) {
-          $("#linkk").val("uploaded/download/" + data.data.file);
+          $("#linkk").val(data.data.file);
         } else {
           $("#linkk").val(data.data.slug);
         }
@@ -319,7 +325,6 @@ $(document).ready(function () {
   /*Modal edit menus*/
   $('#modal-edit-menus').on('show.bs.modal', function (e) {
     var data = $(e.relatedTarget).parents('li').data();
-    console.log(data);
 
     if (data.submenu) {
       var parent = data.submenu;

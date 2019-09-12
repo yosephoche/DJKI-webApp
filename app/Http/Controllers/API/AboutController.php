@@ -24,7 +24,6 @@ class AboutController extends Controller
     {
         $slide = Slideshow::where('category', 'About')->get();;
         $menus = Menus::where('flag', 1)->first();
-        $menu_about = Menus::where('parent', $menus->id)->get();
         $partnership = Partnership::all();
         $about = [
             'slideshow' => [],
@@ -40,20 +39,28 @@ class AboutController extends Controller
             ];
         }
 
-        foreach ($menu_about as $key => $parent) {
-            $action = $this->getAction($parent->url, $parent->id);
-            $slugs = str_replace(' ', '_', strtolower($parent->menu_title));
-            $about['menus'][] = [
-                'id_menu' => $parent->id,
-                'description_ID' => isset($parent->description) == false ? '' : $parent->description,
-                'description_EN' => isset($parent->description_en) == false ? '' : $parent->description_en,
-                'title_ID' => $parent->menu_title,
-                'title_EN' => $parent->menu_title_en,
-                'action_type' => $action['type'],
-                'id_target' => $action['id'],
-                'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)
-            ];
+        try {
+            $menu_about = Menus::where('parent', $menus->id)->get();
+            foreach ($menu_about as $key => $parent) {
+                $action = $this->getAction($parent->url, $parent->id);
+                $slugs = str_replace(' ', '_', strtolower($parent->menu_title));
+                $about['menus'][] = [
+                    'id_menu' => $parent->id,
+                    'description_ID' => isset($parent->description) == false ? '' : $parent->description,
+                    'description_EN' => isset($parent->description_en) == false ? '' : $parent->description_en,
+                    'title_ID' => $parent->menu_title,
+                    'title_EN' => $parent->menu_title_en,
+                    'action_type' => $action['type'],
+                    'id_target' => $action['id'],
+                    'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)
+                ];
+            }
+        } catch (\Exception $e) {
+            $headers = $this->response->HEADERS_REQUIRED('GET');
+            $response = $this->response->formatResponseWithPages("ABOUT CHILD NOT FOUND", [], $this->response->STAT_NOT_FOUND());
+            return response()->json($response, $this->response->STAT_NOT_FOUND());
         }
+
 
         foreach ($partnership as $key => $value) {
             $about['partnership'][] = [

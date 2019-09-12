@@ -29,7 +29,7 @@ class PostsController extends Controller
       ->where('status', 'publish')
       ->where('published', '<=', \DB::raw('now()'))
       ->orderBy('published', 'DESC')
-      ->paginate(2);
+      ->paginate(20);
     /* Paginate  */
     $pagination = $this->paging($dataPosts);
 
@@ -73,8 +73,14 @@ class PostsController extends Controller
 
   public function detailsPost($idPosts = null)
   {
+    $fieldName = "";
+    if (is_numeric($idPosts)) {
+      $fieldName = "id";
+    } else {
+      $fieldName = "slug";
+    }
     /* Data Master */
-    $dataPosts = Posts::where('id', $idPosts)
+    $dataPosts = Posts::where($fieldName, $idPosts)
       ->where('status', 'publish')
       ->where('published', '<=', \DB::raw('now()'))->first();
 
