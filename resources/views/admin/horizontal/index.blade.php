@@ -36,15 +36,10 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<h4 class="m-t-none m-b">Menus Horizontal<small>(All of this menu will appear at home page of apps as a shorcut menu)</small></h4>
-				{{-- <div class="btn-group" role="group" aria-label="...">
-					<a href="{{route('menuhorizontal',['option'=>'header'])}}" class="btn btn-default">Header</a>
-					<a href="{{route('menuhorizontal',['option'=>'footer'])}}" class="btn btn-default">Footer</a>
-				</div> --}}
 				<hr>
 
 				<!-- Action -->
 				<button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add horizontal menu</button>
-				{{-- <button class="btn btn-primary btn-addon btn-sm pull-left" data-toggle="modal" data-target="#modal-newID"><i class="fa fa-plus"></i>Add Menu {{Request::segment(3)}}</button> --}}
 				<form action="{{ route('menuhorizontal_drag') }}" method="post">
 					{{ csrf_field() }}
 					<input type="hidden" name="id_menus">
@@ -65,6 +60,7 @@
 								data-title="{{$menu->menu_title_id }}"
 								data-title_eng="{{ $menu->menu_title_en }}"
 								data-link="{{ $menu->url }}"
+								data-id_menu="{{$menu->id_menu}}"
 								data-preview="{{ $menu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$menu->image) }}">
 								<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{ $menu->menu_title_id }}
 									<div class="pull-right sortable-action">
@@ -73,53 +69,6 @@
 										<a href="#" data-toggle="modal" data-id="{{ $menu->id }}" data-target="#modal-delete"><i class="glyphicon glyphicon-trash"></i></a>
 									</div>
 								</div>
-								<?php $submenus = DB::table('menu_horizontals')->where('parent', $menu->id)->orderBy('sort')->get(); ?>
-								@if (count($submenus) > 0)
-									<ol class="dd-list" data-parent="submenu">
-										@foreach ($submenus as $submenu)
-											<li class="dd-item dd3-item" id="{{ $submenu->id }}"
-												data-status="true"
-												data-id="{{ $submenu->id }}"
-												data-description="{{$submenu->description_id}}"
-												data-description_en="{{$submenu->description_en}}"
-												data-title="{{ $submenu->menu_title_id }}"
-												data-title_eng="{{ $submenu->menu_title_en }}"
-												data-link="{{ $submenu->url }}"
-												data-submenu="{{ $submenu->parent }}"
-												data-preview="{{ $submenu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$submenu->image) }}">
-												<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{ $submenu->menu_title_id }}
-													<div class="pull-right sortable-action">
-														<a href="#" data-toggle="modal" data-target="#modal-edit-menus2"><i class="glyphicon glyphicon-pencil"></i></a>
-														&nbsp;&nbsp;
-														<a href="#" data-toggle="modal" data-id="{{ $submenu->id }}" data-target="#modal-delete"><i class="glyphicon glyphicon-trash"></i></a>
-													</div>
-												</div>
-												<?php $subsubmenus = DB::table('menu_horizontals')->where('parent', $submenu->id)->orderBy('sort')->get(); ?>
-												@if (count($subsubmenus) > 0)
-													<ol class="dd-list" data-parent="subsubmenu">
-														@foreach ($subsubmenus as $subsubmenu)
-															<li class="dd-item dd3-item" id="{{ $subsubmenu->id }}"
-																data-status="true"
-																data-id="{{ $subsubmenu->id }}"
-																data-title="{{ $subsubmenu->menu_title_id }}"
-																data-link="{{ $subsubmenu->url }}"
-																data-subsubmenu="{{ $subsubmenu->parent }}"
-																data-preview="{{ $subsubmenu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$subsubmenu->image) }}">
-																<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{ $subsubmenu->menu_title_id }}
-																	<div class="pull-right sortable-action">
-																		<a href="#" data-toggle="modal" data-target="#modal-edit-menus2"><i class="glyphicon glyphicon-pencil"></i></a>
-																		&nbsp;&nbsp;
-																		<a href="#" data-toggle="modal" data-id="{{ $subsubmenu->id }}" data-target="#modal-delete"><i class="glyphicon glyphicon-trash"></i></a>
-																	</div>
-																</div>
-															</li>
-														@endforeach
-													</ol>
-												@endif
-											</li>
-										@endforeach
-									</ol>
-								@endif
 							</li>
 						@endforeach
 					</ol>
@@ -133,6 +82,12 @@
 
 @section('registerscript')
 <script>
+	$("input[name=id_menus]").focusout(function(){
+							$("#menu_idss").attr("value", 0);							
+							var ids = $("#menu-headerss option[value='" + $('#input_headerk').val() + "']").attr("data-id");							
+							$("#menu_idss").attr("value", ids);
+						});
+						
 	$("input[name=id_menu]").focusout(function(){
 		var id = $("#menu-headers option[value='" + $('#input_header').val() + "']").attr("data-id");
 		$("#menu_id").attr("value", id);
@@ -154,17 +109,17 @@
 					<div class="modal-body">
 						<div class="form-group">
 								<label>Title ID</label>
-								<input type="text" name="menu_title" class="form-control"  placeholder="Title for this menu ENG">
+								<input type="text" name="menu_title_id" class="form-control"  placeholder="Title for this menu ENG">
 							</div>
 
 						<div class="form-group">
 							<label>Title EN</label>
-							<input type="text" name="menu_titleEN" class="form-control"  placeholder="Title for this menu ENG">
+							<input type="text" name="menu_title_en" class="form-control"  placeholder="Title for this menu ENG">
 						</div>
-
+						
 						<div class="form-group">
 							<label>Direct To</label>
-								<input value="" type="hidden" id="menu_id" name="id" class="form-control">
+								<input type="hidden" id="menu_id" name="id" class="form-control">
 								<input type="text" id="input_header" name="id_menu" class="form-control" list="menu-headers" placeholder="This menu link to ..." autocomplete="off">
 									<datalist id="menu-headers" class="datalist">
 										<option value="">Blank</option>
@@ -173,17 +128,6 @@
 										@endforeach
 									</datalist>
 						</div>
-						{{-- <div class="form-group">
-							<label>Link</label>
-							<input type="text" name="url" class="form-control" list="menu-header" placeholder="This menu link to ..." autocomplete="off">
-							<datalist id="direct-view" class="datalist">
-								<option value="#">Blank</option>
-								@foreach ($menu1 as $itemMenu)
-									<option data-value="{{$itemMenu->id}}" value="{{ $itemMenu->url }}">{{$itemMenu->menu_title}}</option>
-								@endforeach
-							</datalist>
-							<input type="hidden" name="direct" id="direct-hidden"/>
-						</div> --}}
 						<div class="form-group">
 							<label>Icon</label>
 							<div class="form-group">
@@ -202,9 +146,10 @@
 		</div>
 	</div>
 
+	{{-- edit /////////////////////// --}}
 	<div class="modal fade" id="modal-edit-menus2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
-			<form action="{{ route('menuhorizontal_update') }}" method="post" enctype="multipart/form-data">
+			<form action="{{ route('menuhorizontal_update') }}" method="POST" enctype="multipart/form-data">
 				{{ csrf_field() }}
 				<input type="hidden" name="id">
 
@@ -225,29 +170,21 @@
 							<label>Title EN</label>
 							<input type="text" name="menu_titleEN" class="form-control" placeholder="Title for this menu ENG">
 						</div>
-
+						
+					
 						<div class="form-group">
 							<label>Direct To</label>
-								<input value="" type="hidden" id="menu_id" name="id" class="form-control">
-								<input type="text" id="input_header" name="id_menu" class="form-control" list="menu-headers" placeholder="This menu link to ..." autocomplete="off">
-									<datalist id="menu-headers" class="datalist">
+								<input type="hidden" id="menu_ids" name="id" class="form-control">
+								<input type="hidden" id="menu_ids" name="idm" class="form-control">
+								<input type="hidden" id="menu_idss"  name="ids" class="form-control">
+								<input type="text" id="input_headerk" name="id_menus" value="" class="form-control" list="menu-headerss" placeholder="This menu link to ..." autocomplete="off">
+									<datalist id="menu-headerss" class="datalist">
 										<option value="">Blank</option>
 										@foreach ($menu1 as $value)
 										<option value="{{$value->menu_title}}" data-id="{{$value->id}}">{{ $value->url}}</option>
 										@endforeach
 									</datalist>
 						</div>
-						{{-- <div class="form-group">
-							<label>Link</label>
-							<input type="text" name="url" class="form-control" list="menu-header" placeholder="This menu link to ..." autocomplete="off">
-							<datalist id="direct-view" class="datalist">
-								<option value="#">Blank</option>
-								@foreach ($menu1 as $itemMenu)
-									<option data-value="{{ $itemMenu->id }}" value="{{ $itemMenu->url }}">{{$itemMenu->menu_title}}</option>
-								@endforeach
-							</datalist>
-							<input type="hidden" name="direct" id="direct-hidden"/>
-						</div> --}}
 
 						<div class="form-group">
 							<label>Icon</label>

@@ -44,7 +44,6 @@ class SlideshowController extends Controller
 			]);
 		} else if ($r->inputan == 2) {
 			$this->validate($r, [
-				'title' => 'required',
 				'category' => 'required',
 				'linkvid'	=> 'required'
 			]);
@@ -109,6 +108,7 @@ class SlideshowController extends Controller
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 
 		/*Validation Update*/
+
 		if ($r->inputan == 1) {
 			$this->validate($r, [
 				'title' => 'required',

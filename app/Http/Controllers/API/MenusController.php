@@ -71,49 +71,128 @@ class MenusController extends Controller
       ];
 
       foreach ($slideshow->get() as $key => $value) {
-        if ($value->image == "default.jpg" || $value->image == null) {
-          $menus['slideshow'][] = [
-            'id_slide' => $value->id,
-            'title' => $value->title,
-            'image' => "",
-            'link' => asset($value->link)
-          ];
+        if ($value->id_inputan == 1) {
+          if ($value->image == "default.jpg" || $value->image == null) {
+            if ($value->link) {
+              $menus['slideshow'][] = [
+                'id_slide' => $value->id,
+                'title' => $value->title,
+                'image' => "",
+                'link' => asset($value->link)
+              ];
+            } else {
+              $menus['slideshow'][] = [
+                'id_slide' => $value->id,
+                'title' => $value->title,
+                'image' => "",
+                'link' => ""
+              ];
+            }
+          } else if ($value->image) {
+            if ($value->link) {
+              $menus['slideshow'][] = [
+                'id_slide' => $value->id,
+                'title' => $value->title,
+                'image' => asset('uploaded/media/' . $value->image),
+                'link' => asset($value->link)
+              ];
+            } else {
+              $menus['slideshow'][] = [
+                'id_slide' => $value->id,
+                'title' => $value->title,
+                'image' => asset('uploaded/media/' . $value->image),
+                'link' => ""
+              ];
+            }
+          }
         } else {
           $menus['slideshow'][] = [
             'id_slide' => $value->id,
             'title' => $value->title,
-            'image' => asset('uploaded/media/' . $value->image),
-            'link' => asset($value->link)
+            'image' => "",
+            'link' => $value->link
           ];
         }
       }
 
+
+
+
+      // 
+
+      // } else if ($value->image && $value->id_inputan == 1) {
+      //   if ($value->link) {
+      //     $menus['slideshow'][] = [
+      //       'id_slide' => $value->id,
+      //       'title' => $value->title,
+      //       'image' => asset('uploaded/media/' . $value->image),
+      //       'link' => asset($value->link)
+      //     ];
+      //   }else {
+      //     $menus['slideshow'][] = [
+      //       'id_slide' => $value->id,
+      //       'title' => $value->title,
+      //       'image' => asset('uploaded/media/' . $value->image),
+      //       'link' => ""
+      //     ];
+      //   }
+      // }
+
+
+
+      // 
+
       foreach ($horizontal as $value) {
 
-        $itemMenu = $value->menu;
-        $menu_horizontal = null;
-        if ($itemMenu != null) {
-          $action = $this->getAction($itemMenu->url, $itemMenu->id, $itemMenu->flag);
-          $menu_horizontal = [
-            'id_menu' => $itemMenu->id,
-            'title_id' => $itemMenu->menu_title,
-            'title_en'  => $itemMenu->menu_title_en,
-            'id_parent' => $itemMenu->parent,
-            'description_id' => $itemMenu->description,
-            'description_en' => $itemMenu->description_en,
-            'action_type' => $action['type'],
-            'id_target' => $action['id'],
+        if ($value->id_menu > 0) {
+          $itemMenu = $value->menu;
+          $menu_horizontal = [];
+          if ($itemMenu != null) {
+            $action = $this->getAction($itemMenu->url, $itemMenu->id, $itemMenu->flag);
+            $menu_horizontal = [
+              'id_menu' => $itemMenu->id,
+              'title_id' => $itemMenu->menu_title,
+              'title_en'  => $itemMenu->menu_title_en,
+              'id_parent' => $itemMenu->parent,
+              'description_id' => $itemMenu->description,
+              'description_en' => $itemMenu->description_en,
+              'action_type' => $action['type'],
+              'id_target' => $action['id'],
+            ];
+          }
+          $menus['menu_horizontal'][] = [
+            'id_menu' => $value->id,
+            'menu_title_id' => $value->menu_title_id,
+            'menu_title_en' => $value->menu_title_en,
+            'image' => $value->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $value->image),
+            'link'      => "",
+            'menu' => $menu_horizontal
+          ];
+        } else {
+          $itemMenu = $value->menu;
+          $menu_horizontal = [];
+          if ($itemMenu != null) {
+            $action = $this->getAction($itemMenu->url, $itemMenu->id, $itemMenu->flag);
+            $menu_horizontal = [
+              'id_menu' => $itemMenu->id,
+              'title_id' => $itemMenu->menu_title,
+              'title_en'  => $itemMenu->menu_title_en,
+              'id_parent' => $itemMenu->parent,
+              'description_id' => $itemMenu->description,
+              'description_en' => $itemMenu->description_en,
+              'action_type' => $action['type'],
+              'id_target' => $action['id'],
+            ];
+          }
+          $menus['menu_horizontal'][] = [
+            'id_menu' => $value->id,
+            'menu_title_id' => $value->menu_title_id,
+            'menu_title_en' => $value->menu_title_en,
+            'image' => $value->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $value->image),
+            'link'      => $value->url,
+            'menu' => $menu_horizontal
           ];
         }
-
-        $menus['menu_horizontal'][] = [
-          'id_menu' => $value->id,
-          'menu_title_id' => $value->menu_title_id,
-          'menu_title_en' => $value->menu_title_en,
-          'image' => $value->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $value->image),
-          'link'      => $value->url,
-          'menu' => $menu_horizontal
-        ];
       }
 
       foreach ($menu as $key => $parent) {
