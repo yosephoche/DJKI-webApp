@@ -137,10 +137,6 @@
 		var id = $("#menu-headers option[value='" + $('#input_header').val() + "']").attr("data-id");
 		$("#menu_id").attr("value", id);
 	});
-	// $("input[name=id_menus]").focusout(function(){
-	// 	var id = $("#menu-headerss option[value='" + $('#input_headerk').val() + "']").attr("data-id");
-	// 	$("#menu_ids").attr("value", id);
-	// });
 </script>
 @endsection
 
@@ -168,7 +164,7 @@
 						
 						<div class="form-group">
 							<label>Direct To</label>
-								<input type="text" id="menu_id" name="id" class="form-control">
+								<input type="hidden" id="menu_id" name="id" class="form-control">
 								<input type="text" id="input_header" name="id_menu" class="form-control" list="menu-headers" placeholder="This menu link to ..." autocomplete="off">
 									<datalist id="menu-headers" class="datalist">
 										<option value="">Blank</option>
