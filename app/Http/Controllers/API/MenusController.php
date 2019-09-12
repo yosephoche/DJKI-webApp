@@ -225,13 +225,13 @@ class MenusController extends Controller
       /* Kondisi jika url tidak memiliki initial maka akan mengecek parentID */
       $countSubMenu = nav(['position' => 'header'])->where('parent', $parentID);
       $fecthURL = ($url == '#') ? "" : $url;
-      if ($countSubMenu->count() > 0) {
-        /* Jika parent memiliki child */
-        $res = [
-          'type' => 'menu',
-          'id' => ''
-        ];
-      } elseif (($url == '#' and $flag == 1) and ($countSubMenu->count() > 0)) {
+      // if ($countSubMenu->count() > 0) {
+      //   /* Jika parent memiliki child */
+      //   $res = [
+      //     'type' => 'menu',
+      //     'id' => ''
+      //   ];} 
+      if (($url == '#' and $flag == 1) and ($countSubMenu->count() > 0)) {
         /* Jika menu menuju external link */
         $res = [
           'type' => 'about',

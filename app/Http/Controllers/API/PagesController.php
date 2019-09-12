@@ -162,7 +162,7 @@ class PagesController extends MenusController
                 $menus = array();
                 $countSubMenu = nav(['position' => 'header'])->where('parent', $idMenu);
                 foreach ($countSubMenu as $key => $parent) {
-                    $action = $this->getAction($parent->url, $parent->id, null); // Extend From MenusController.php
+                    $action = $this->getAction($parent->url, $parent->id, $parent->flag); // Extend From MenusController.php
                     $dataMenu = [
                         'id_parent' => $parent->id,
                         'title ID' => $parent->menu_title,

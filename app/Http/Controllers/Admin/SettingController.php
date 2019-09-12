@@ -75,12 +75,12 @@ class SettingController extends Controller
 		}
 
 		// sosial media
-		$facebook = "https://www.facebook.com/". $r->facebook;
-		$twitter = "https://twitter.com/". $r->twitter;
-		$linkedlin =  "https://www.linkedin.com/". $r->linkedin;
-		$youtube =  "https://www.youtube.com/". $r->youtube;
-		$youtube =  "https://www.youtube.com/". $r->youtube;
-		$instagram =  "https://www.instagram.com/". $r->instagram;
+		$facebook 		= 	$r->facebook;
+		$twitter 		=  	$r->twitter;
+		$linkedlin 		= 	$r->linkedin;
+		$youtube 		=  	$r->youtube;
+		$youtube 		=  	$r->youtube;
+		$instagram 		= 	$r->instagram;
 		// $foo = Posts::find($r->link);
 
 		/*Update DB*/
