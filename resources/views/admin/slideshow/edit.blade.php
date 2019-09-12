@@ -33,6 +33,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
+								<input type="hidden" value="{{$slideshow->id_inputan}}" name="id_inputan">
 								<input type="text" name="title" class="form-control input-lg" placeholder="Slideshow title" value="{{ $slideshow->title }}">
 							</div>
 						</div>
@@ -65,7 +66,7 @@
 										<select class="form-control" name="category">
 											@if ($slideshow->category=='Home')
 													<option value="{{$slideshow->category}}">{{$slideshow->category}}</option>
-													<option value="Tentang Kami">About</option>
+													<option value="About">About</option>
 													@else
 													<option value="{{$slideshow->category}}">{{$slideshow->category}}</option>
 													<option value="Home">Home</option>
@@ -88,6 +89,7 @@
 								{{-- link video --}}
 								<div class="form-group linked" id="linkvid" >
 									<label>Link Video</label>
+								<input type="hidden" value="{{$slideshow->id_inputan}}" name="id_inputan">
 								<input type="text" name="linkvid" value="{{$slideshow->link}}" id="addr" class="form-control" autocomplete="off">
 								</div>
 		
@@ -97,7 +99,7 @@
 										<select class="form-control" name="category">
 											@if ($slideshow->category=='Home')
 													<option value="{{$slideshow->category}}">{{$slideshow->category}}</option>
-													<option value="Tentang Kami">Tentang Kami</option>
+													<option value="About">About</option>
 													@else
 													<option value="{{$slideshow->category}}">{{$slideshow->category}}</option>
 													<option value="Home">Home</option>
