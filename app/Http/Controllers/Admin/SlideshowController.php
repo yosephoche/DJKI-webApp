@@ -108,6 +108,7 @@ class SlideshowController extends Controller
 		GlobalClass::Roleback(['Customer Service', 'Writer']);
 
 		/*Validation Update*/
+
 		if ($r->inputan == 1) {
 			$this->validate($r, [
 				'title' => 'required',

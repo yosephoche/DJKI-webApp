@@ -52,9 +52,24 @@ class MenusController extends Controller
         'menus' => [],
       ];
       /* Kondisi ketika idMenu bernilai false, maka target query adalah parent */
+      $getSplitLink = explode("/", $running_text->link);
+      $dataSplitLink = array();
+      $linkAfterSplit = "";
+      if (count($getSplitLink) == 2) {
+        $dataSplitLink = $getSplitLink;
+      } else {
+        $dataSplitLink = array("", $running_text->link);
+      }
+      if ($dataSplitLink[0] == "directory") {
+        $linkAfterSplit = "uploaded/download/" . $dataSplitLink[1];
+      } else {
+        $linkAfterSplit = $dataSplitLink[1];
+      }
+
       $menus['pinned'] = [
         'running_text' => $running_text->running_text,
-        'link' => $running_text->link,
+        'action_type' => $dataSplitLink[0],
+        'link' => $linkAfterSplit,
         'facebook' => $running_text->facebook,
         'twitter' => $running_text->twitter,
         'linkedlin' => $running_text->linkedin,
@@ -63,28 +78,82 @@ class MenusController extends Controller
       ];
 
       foreach ($slideshow->get() as $key => $value) {
-        if ($value->image == "default.jpg" || $value->image == null) {
-          $menus['slideshow'][] = [
-            'id_slide' => $value->id,
-            'title' => $value->title,
-            'image' => "",
-            'link' => asset($value->link)
-          ];
+        if ($value->id_inputan == 1) {
+          if ($value->image == "default.jpg" || $value->image == null) {
+            if ($value->link) {
+              $menus['slideshow'][] = [
+                'id_slide' => $value->id,
+                'title' => $value->title,
+                'image' => "",
+                'link' => asset($value->link)
+              ];
+            } else {
+              $menus['slideshow'][] = [
+                'id_slide' => $value->id,
+                'title' => $value->title,
+                'image' => "",
+                'link' => ""
+              ];
+            }
+          } else if ($value->image) {
+            if ($value->link) {
+              $menus['slideshow'][] = [
+                'id_slide' => $value->id,
+                'title' => $value->title,
+                'image' => asset('uploaded/media/' . $value->image),
+                'link' => asset($value->link)
+              ];
+            } else {
+              $menus['slideshow'][] = [
+                'id_slide' => $value->id,
+                'title' => $value->title,
+                'image' => asset('uploaded/media/' . $value->image),
+                'link' => ""
+              ];
+            }
+          }
         } else {
           $menus['slideshow'][] = [
             'id_slide' => $value->id,
             'title' => $value->title,
-            'image' => asset('uploaded/media/' . $value->image),
-            'link' => asset($value->link)
+            'image' => "",
+            'link' => $value->link
           ];
         }
       }
+
+
+
+
+      //
+
+      // } else if ($value->image && $value->id_inputan == 1) {
+      //   if ($value->link) {
+      //     $menus['slideshow'][] = [
+      //       'id_slide' => $value->id,
+      //       'title' => $value->title,
+      //       'image' => asset('uploaded/media/' . $value->image),
+      //       'link' => asset($value->link)
+      //     ];
+      //   }else {
+      //     $menus['slideshow'][] = [
+      //       'id_slide' => $value->id,
+      //       'title' => $value->title,
+      //       'image' => asset('uploaded/media/' . $value->image),
+      //       'link' => ""
+      //     ];
+      //   }
+      // }
+
+
+
+      //
 
       foreach ($horizontal as $value) {
 
         if ($value->id_menu > 0) {
           $itemMenu = $value->menu;
-          $menu_horizontal = [];
+          $menu_horizontal = null;
           if ($itemMenu != null) {
             $action = $this->getAction($itemMenu->url, $itemMenu->id, $itemMenu->flag);
             $menu_horizontal = [
@@ -108,7 +177,7 @@ class MenusController extends Controller
           ];
         } else {
           $itemMenu = $value->menu;
-          $menu_horizontal = [];
+          $menu_horizontal = null;
           if ($itemMenu != null) {
             $action = $this->getAction($itemMenu->url, $itemMenu->id, $itemMenu->flag);
             $menu_horizontal = [
@@ -241,14 +310,14 @@ class MenusController extends Controller
     } elseif ($parentID) {
       /* Kondisi jika url tidak memiliki initial maka akan mengecek parentID */
       $countSubMenu = nav(['position' => 'header'])->where('parent', $parentID);
-      $fecthURL = ($url=='#') ? "" : $url;
-      if ($countSubMenu->count() > 0) {
-        /* Jika parent memiliki child */
-        $res = [
-          'type' => 'menu',
-          'id' => ''
-        ]; 
-      } elseif (($url == '#' and $flag == 1) and ($countSubMenu->count() > 0)) {
+      $fecthURL = ($url == '#') ? "" : $url;
+      // if ($countSubMenu->count() > 0) {
+      //   /* Jika parent memiliki child */
+      //   $res = [
+      //     'type' => 'menu',
+      //     'id' => ''
+      //   ];}
+      if ($url == '#' and $flag == 1) {
         /* Jika menu menuju external link */
         $res = [
           'type' => 'about',
@@ -276,7 +345,7 @@ class MenusController extends Controller
           $res = [
             'type' => 'link',
             'id' => $fecthURL
-          ];          
+          ];
         }
       }
       return $res;

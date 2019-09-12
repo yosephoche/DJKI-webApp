@@ -7,6 +7,7 @@
 
 	@yield('styles')
 	<style>
+		/* menu Setting index blade */
 		.timeMaintenence {
 			padding: 0;
 		}
@@ -14,6 +15,10 @@
 		.colTimezone, 
 		.colFeaturedImg{
 			padding-left: 0px;
+		}
+
+		.wrapSosmed input {
+			margin-bottom: 1em;
 		}
 
 		/* .colContactMap, .sosmed {
@@ -24,6 +29,18 @@
 		.colEmail, .colAddress {
 			padding-left: 0px;
 		} */
+
+		/* Index Posts */
+		.max-width-image tr {
+			padding-bottom: 10px;
+			display: block;
+		}
+
+		.max-width-image img {
+			max-width: 100% !important;
+			width: auto !important;
+			margin-right: 10px;
+		}
 	</style>
 </head>
 <body>
