@@ -52,9 +52,17 @@ class MenusController extends Controller
         'menus' => [],
       ];
       /* Kondisi ketika idMenu bernilai false, maka target query adalah parent */
+      $getSplitLink = explode("/", $running_text->link);
+      $linkAfterSplit = "";
+      if ($getSplitLink[0] == "directory") {
+        $linkAfterSplit = "uploaded/download/" . $getSplitLink[1];
+      } else {
+        $linkAfterSplit = $getSplitLink[1];
+      }
       $menus['pinned'] = [
         'running_text' => $running_text->running_text,
-        'link' => $running_text->link,
+        'action_type' => $getSplitLink[0],
+        'link' => $linkAfterSplit,
         'facebook' => $running_text->facebook,
         'twitter' => $running_text->twitter,
         'linkedlin' => $running_text->linkedin,
@@ -216,13 +224,13 @@ class MenusController extends Controller
     } elseif ($parentID) {
       /* Kondisi jika url tidak memiliki initial maka akan mengecek parentID */
       $countSubMenu = nav(['position' => 'header'])->where('parent', $parentID);
-      // if ($countSubMenu->count() > 0) {
-      //   /* Jika parent memiliki child */
-      //   $res = [
-      //     'type' => 'menu',
-      //     'id' => ''
-      //   ]; }
-      if (($url == '#' and $flag == 1) and ($countSubMenu->count() > 0)) {
+      if ($countSubMenu->count() > 0) {
+        /* Jika parent memiliki child */
+        $res = [
+          'type' => 'menu',
+          'id' => $url
+        ];
+      } elseif (($url == '#' and $flag == 1) and ($countSubMenu->count() > 0)) {
         /* Jika menu menuju external link */
         $res = [
           'type' => 'about',

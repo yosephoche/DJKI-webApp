@@ -30,7 +30,7 @@ class SettingController extends Controller
 		return view('admin.setting.index', $data);
 	}
 
-	public function setText($id)
+	public function setText($id, $action)
 	{
 		$post = Posts::where('slug', $id)->first();
 		// $post = Posts::find($id);
@@ -45,7 +45,7 @@ class SettingController extends Controller
 		} else {
 			$data = $post;
 		}
-		return response()->json(['success' => true, 'data' => $data]);
+		return response()->json(['success' => true, 'data' => $data, 'action' => $action]);
 	}
 
 	public function update(Request $r)
@@ -100,7 +100,7 @@ class SettingController extends Controller
 			$youtube,
 			$instagram,
 			$r->running_text,
-			$r->alamat,
+			$r->action_running . "/" . $r->alamat,
 			// $running_text->title,
 			// "posts/" . $running_text->slug,
 		]);

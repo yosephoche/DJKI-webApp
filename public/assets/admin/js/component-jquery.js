@@ -132,14 +132,17 @@ $(document).ready(function () {
   })
 
   $("#pinned").change(function () {
+    var getData = $(this).val();
+    var splitGetData = getData.split("/");
     $.ajax({
-      url: 'setting/runningtext/' + $(this).val(),
+      url: 'setting/runningtext/' + splitGetData[1] + '/' + splitGetData[0],
       type: 'get',
       data: {},
       success: function (data) {
         $("#running").val(data.data.title);
+        $("#action_type").val(data.action);
         if (data.data.file) {
-          $("#linkk").val("uploaded/download/" + data.data.file);
+          $("#linkk").val(data.data.file);
         } else {
           $("#linkk").val(data.data.slug);
         }
