@@ -46,10 +46,10 @@ class AboutController extends Controller
                 $slugs = str_replace(' ', '_', strtolower($parent->menu_title));
                 $about['menus'][] = [
                     'id_menu' => $parent->id,
-                    'description_ID' => isset($parent->description) == false ? '' : $parent->description,
-                    'description_EN' => isset($parent->description_en) == false ? '' : $parent->description_en,
-                    'title_ID' => $parent->menu_title,
-                    'title_EN' => $parent->menu_title_en,
+                    'description_id' => isset($parent->description) == false ? '' : $parent->description,
+                    'description_en' => isset($parent->description_en) == false ? '' : $parent->description_en,
+                    'title_id' => $parent->menu_title,
+                    'title_en' => $parent->menu_title_en,
                     'action_type' => $action['type'],
                     'id_target' => $action['id'],
                     'image' => $parent->image == 'default.jpg' ? '' : asset("uploaded/menus/" . $parent->image)
