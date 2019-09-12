@@ -40,23 +40,20 @@ class VisitorController extends Controller
     {
         $star = Carbon::now()->startOfWeek();
         $end = Carbon::now()->endOfWeek();
-        $minggu = Tracker::whereBetween('created_at', [$star, $end])->get();
-        $minggu = count($minggu);
+        $minggu = Tracker::whereBetween('created_at', [$star, $end])->count();
 
         return $minggu;
     }
     public function getAllMonth()
     {
         $month = Carbon::now();
-        $bulan = Tracker::whereMonth('date', '=', $month->month)->get();
-        $bulan = count($bulan);
+        $bulan = Tracker::whereMonth('date', '=', $month->month)->count();
         return $bulan;
     }
     public function getAllYear()
     {
         $year = Carbon::now();
-        $tahun = Tracker::whereYear('date', '=', $year->year)->get();
-        $tahun = count($tahun);
+        $tahun = Tracker::whereYear('date', '=', $year->year)->count();
         return $tahun;
     }
 }
