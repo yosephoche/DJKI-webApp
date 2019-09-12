@@ -160,7 +160,13 @@ class PagesController extends Controller
 		$pages->keyword = $r->keyword;
 		$pages->type = $r->type;
 		$pages->category = 'default';
-		$pages->save();
+		if ($pages->save()) {
+			// # code...
+			dd('saved');
+		} else {
+			dd('not saved');
+		}
+		// $pages->save();
 
 		/*Success Message*/
 		$r->session()->flash('success', 'Pages Successfully Modified');
