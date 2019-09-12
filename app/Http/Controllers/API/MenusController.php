@@ -65,7 +65,7 @@ class MenusController extends Controller
       } else {
         $linkAfterSplit = $dataSplitLink[1];
       }
-      
+
       $menus['pinned'] = [
         'running_text' => $running_text->running_text,
         'action_type' => $dataSplitLink[0],
@@ -125,7 +125,7 @@ class MenusController extends Controller
 
 
 
-      // 
+      //
 
       // } else if ($value->image && $value->id_inputan == 1) {
       //   if ($value->link) {
@@ -147,7 +147,7 @@ class MenusController extends Controller
 
 
 
-      // 
+      //
 
       foreach ($horizontal as $value) {
 
@@ -316,8 +316,8 @@ class MenusController extends Controller
       //   $res = [
       //     'type' => 'menu',
       //     'id' => ''
-      //   ];} 
-      if (($url == '#' and $flag == 1) and ($countSubMenu->count() > 0)) {
+      //   ];}
+      if ($url == '#' and $flag == 1) {
         /* Jika menu menuju external link */
         $res = [
           'type' => 'about',
