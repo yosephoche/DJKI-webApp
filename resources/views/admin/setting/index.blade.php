@@ -197,7 +197,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-4 col-sm-6">
+							<div class="col-md-4 col-sm-6 colPhone">
 								<div class="form-group">
 									<label>Phone</label>
 									<input type="tel" ui-jq="tagsinput" ui-options="" name="phone" class="form-control" value="{{ $setting->phone }}" required>
@@ -284,8 +284,6 @@
 					</div>
 				</div>
 
-			</div>
-		</div>
 	</div>
 @endsection
 
