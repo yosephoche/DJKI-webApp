@@ -32,7 +32,9 @@ class MenusController extends Controller
       foreach ($menu as $key => $parent) {
         $action = $this->getAction($parent->url, $parent->id, $parent->flag);
         $menus[] = [
-          'id_parent' => $parent->id,
+          'id_menu' => $parent->id,
+          'description_id' => isset($parent->description) == false ? '' : $parent->description,
+          'description_en' => isset($parent->description_EN) == false ? '' : $parent->description_EN,
           'title_id' => $parent->menu_title,
           'title_en' => $parent->menu_title_en,
           'action_type' => $action['type'],
