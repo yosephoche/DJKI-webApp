@@ -52,7 +52,7 @@ class VisitorController extends Controller
     public function getAllYear()
     {
         $year = Carbon::now();
-        $tahun =  DB::table('visitors')->whereYear('date', '=', $year->year)->count();
+        $tahun = Tracker::whereYear('date', '=', $year->year)->count();
         return $tahun;
     }
 }
