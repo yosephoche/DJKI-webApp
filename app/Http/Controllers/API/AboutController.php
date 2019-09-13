@@ -30,16 +30,26 @@ class AboutController extends Controller
             'menus' => [],
             'partnership' => [],
         ];
-        foreach ($slide as $key => $value) {
+        foreach ($slide as $value) {
             if ($value->id_inputan == 1) {
                 if ($value->image == "default.jpg" || $value->image == null) {
                     if ($value->link) {
-                        $about['slideshow'][] = [
-                            'id_slide' => $value->id,
-                            'title' => $value->title,
-                            'image' => "",
-                            'link' => asset($value->link)
-                        ];
+                        $url_valid = preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $value->link);
+                        if ($url_valid) {
+                            $about['slideshow'][] = [
+                                'id_slide' => $value->id,
+                                'title' => $value->title,
+                                'image' => "",
+                                'link' => $value->link
+                            ];
+                        } else {
+                            $about['slideshow'][] = [
+                                'id_slide' => $value->id,
+                                'title' => $value->title,
+                                'image' => "",
+                                'link' => asset($value->link)
+                            ];
+                        }
                     } else {
                         $about['slideshow'][] = [
                             'id_slide' => $value->id,
@@ -50,12 +60,22 @@ class AboutController extends Controller
                     }
                 } else if ($value->image) {
                     if ($value->link) {
-                        $about['slideshow'][] = [
-                            'id_slide' => $value->id,
-                            'title' => $value->title,
-                            'image' => asset('uploaded/media/' . $value->image),
-                            'link' => asset($value->link)
-                        ];
+                        $url_valid = preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $value->link);
+                        if ($url_valid) {
+                            $about['slideshow'][] = [
+                                'id_slide' => $value->id,
+                                'title' => $value->title,
+                                'image' => asset('uploaded/media/' . $value->image),
+                                'link' => $value->link
+                            ];
+                        } else {
+                            $about['slideshow'][] = [
+                                'id_slide' => $value->id,
+                                'title' => $value->title,
+                                'image' => asset('uploaded/media/' . $value->image),
+                                'link' => asset($value->link)
+                            ];
+                        }
                     } else {
                         $about['slideshow'][] = [
                             'id_slide' => $value->id,
@@ -66,6 +86,7 @@ class AboutController extends Controller
                     }
                 }
             } else {
+                //api link youtube
                 $about['slideshow'][] = [
                     'id_slide' => $value->id,
                     'title' => $value->title,
@@ -74,6 +95,7 @@ class AboutController extends Controller
                 ];
             }
         }
+
 
         try {
             $menu_about = Menus::where('parent', $menus->id)->get();

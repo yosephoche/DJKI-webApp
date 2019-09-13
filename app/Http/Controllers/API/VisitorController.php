@@ -20,7 +20,7 @@ class VisitorController extends Controller
     public function getAllVisitor()
     {
         $data = array();
-        $data['Visitor'] = [
+        $data['visitor'] = [
             'weeks' => $this->getAllWeek(),
             'month' => $this->getAllMonth(),
             'year' => $this->getAllYear(),
