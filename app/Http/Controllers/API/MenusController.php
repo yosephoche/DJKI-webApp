@@ -144,32 +144,6 @@ class MenusController extends Controller
       }
 
 
-
-
-      //
-
-      // } else if ($value->image && $value->id_inputan == 1) {
-      //   if ($value->link) {
-      //     $menus['slideshow'][] = [
-      //       'id_slide' => $value->id,
-      //       'title' => $value->title,
-      //       'image' => asset('uploaded/media/' . $value->image),
-      //       'link' => asset($value->link)
-      //     ];
-      //   }else {
-      //     $menus['slideshow'][] = [
-      //       'id_slide' => $value->id,
-      //       'title' => $value->title,
-      //       'image' => asset('uploaded/media/' . $value->image),
-      //       'link' => ""
-      //     ];
-      //   }
-      // }
-
-
-
-      //
-
       foreach ($horizontal as $value) {
 
         if ($value->id_menu > 0) {
