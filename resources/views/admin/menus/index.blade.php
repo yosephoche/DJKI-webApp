@@ -66,6 +66,7 @@
 								data-title_eng="{{ $menu->menu_title_en }}"
 								data-link="{{ $menu->url }}"
 								data-submenu="{{ $menu->parent }}"
+								data-flaging="{{ $menu->flag }}"
 								data-preview="{{ $menu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$menu->image) }}">
 								<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{ $menu->menu_title }}
 									<div class="pull-right sortable-action">
@@ -292,15 +293,6 @@
 								@foreach ($listHeader as $value)
 									<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
 								@endforeach
-								{{-- <option value="0">Not a sub menu</option>
-								@foreach ($menus as $key => $value)
-									<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
-								@endforeach
-								@foreach ($listUpdate as $menu)
-									@foreach ($menu as $key => $value)
-										<option value="{{ $value->id }}">{{ $value->menu_title }}</option>
-									@endforeach
-								@endforeach --}}
 							</select>
 						</div>
 
@@ -314,27 +306,25 @@
 
 						<div class="radio">
 							<label>
-								<input type="radio" name="flag" value="0" checked>
+								<input type="radio" name="flag" value="0" id="editnone">
 								None
 							</label>
 						</div>
-						@if ($check_about == null)
-							<div class="radio">
-								<label>
-									<input type="radio" name="flag" value="1" disabled>
-									About
-								</label>
-							</div>
-						@endif
 						<div class="radio">
 							<label>
-								<input type="radio" name="flag" value="2">
+								<input type="radio" name="flag" value="1" id="editabout" disabled>
+								About
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="flag" value="2" id="editvisitor">
 								visitor
 							</label>
 						</div>
 						<div class="radio">
 							<label>
-								<input type="radio" name="flag" value="3">
+								<input type="radio" name="flag" value="3" id="editcontact">
 								contact
 							</label>
 						</div>
