@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Tracker;
 use General;
-use Response;
+use Response, DB;
 use Carbon\Carbon;
 
 class VisitorController extends Controller
@@ -41,7 +41,6 @@ class VisitorController extends Controller
         $star = Carbon::now()->startOfWeek();
         $end = Carbon::now()->endOfWeek();
         $minggu = Tracker::whereBetween('created_at', [$star, $end])->count();
-
         return $minggu;
     }
     public function getAllMonth()
@@ -53,7 +52,7 @@ class VisitorController extends Controller
     public function getAllYear()
     {
         $year = Carbon::now();
-        $tahun = Tracker::whereYear('date', '=', $year->year)->count();
+        $tahun =  DB::table('visitors')->whereYear('date', '=', $year->year)->count();
         return $tahun;
     }
 }

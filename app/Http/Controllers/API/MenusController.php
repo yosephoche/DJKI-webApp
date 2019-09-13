@@ -81,12 +81,22 @@ class MenusController extends Controller
         if ($value->id_inputan == 1) {
           if ($value->image == "default.jpg" || $value->image == null) {
             if ($value->link) {
-              $menus['slideshow'][] = [
-                'id_slide' => $value->id,
-                'title' => $value->title,
-                'image' => "",
-                'link' => asset($value->link)
-              ];
+              $url_valid = preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $value->link);
+              if ($url_valid) {
+                $menus['slideshow'][] = [
+                  'id_slide' => $value->id,
+                  'title' => $value->title,
+                  'image' => "",
+                  'link' => $value->link
+                ];
+              } else {
+                $menus['slideshow'][] = [
+                  'id_slide' => $value->id,
+                  'title' => $value->title,
+                  'image' => "",
+                  'link' => asset($value->link)
+                ];
+              }
             } else {
               $menus['slideshow'][] = [
                 'id_slide' => $value->id,
@@ -97,12 +107,22 @@ class MenusController extends Controller
             }
           } else if ($value->image) {
             if ($value->link) {
-              $menus['slideshow'][] = [
-                'id_slide' => $value->id,
-                'title' => $value->title,
-                'image' => asset('uploaded/media/' . $value->image),
-                'link' => asset($value->link)
-              ];
+              $url_valid = preg_match("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$^", $value->link);
+              if ($url_valid) {
+                $menus['slideshow'][] = [
+                  'id_slide' => $value->id,
+                  'title' => $value->title,
+                  'image' => asset('uploaded/media/' . $value->image),
+                  'link' => $value->link
+                ];
+              } else {
+                $menus['slideshow'][] = [
+                  'id_slide' => $value->id,
+                  'title' => $value->title,
+                  'image' => asset('uploaded/media/' . $value->image),
+                  'link' => asset($value->link)
+                ];
+              }
             } else {
               $menus['slideshow'][] = [
                 'id_slide' => $value->id,
@@ -113,6 +133,7 @@ class MenusController extends Controller
             }
           }
         } else {
+          //api link youtube
           $menus['slideshow'][] = [
             'id_slide' => $value->id,
             'title' => $value->title,
@@ -153,7 +174,7 @@ class MenusController extends Controller
 
         if ($value->id_menu > 0) {
           $itemMenu = $value->menu;
-          $menu_horizontal = [];
+          $menu_horizontal = null;
           if ($itemMenu != null) {
             $action = $this->getAction($itemMenu->url, $itemMenu->id, $itemMenu->flag);
             $menu_horizontal = [
@@ -177,7 +198,7 @@ class MenusController extends Controller
           ];
         } else {
           $itemMenu = $value->menu;
-          $menu_horizontal = [];
+          $menu_horizontal = null;
           if ($itemMenu != null) {
             $action = $this->getAction($itemMenu->url, $itemMenu->id, $itemMenu->flag);
             $menu_horizontal = [

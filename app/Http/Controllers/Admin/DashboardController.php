@@ -37,6 +37,7 @@ class DashboardController extends Controller
 
     /* Get Data */
     $params = $r->input();
+
     if (isset($params['m']) == '' and isset($params['y']) == '') {
       $data['visitor_filter'] = DB::table('visitors')->orderBy('date', 'DESC')->paginate(20);
       $data['visitor_filter_total'] = DB::table('visitors')->orderBy('date', 'DESC')->count();
@@ -51,6 +52,7 @@ class DashboardController extends Controller
         ->count();
     }
     $data['visitors_detail'] = DB::table('visitors')->select('ip_address', 'country', 'city', DB::raw('sum(hits) as sum'))->groupBy('ip_address', 'country', 'city')->where('date', date('Y-m-d'))->get();
+    // dd($params['m']);
     return view('admin.dashboard.index', $data);
   }
 }

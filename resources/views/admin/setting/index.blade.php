@@ -197,7 +197,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-4 col-sm-6">
+							<div class="col-md-4 col-sm-6 colPhone">
 								<div class="form-group">
 									<label>Phone</label>
 									<input type="tel" ui-jq="tagsinput" ui-options="" name="phone" class="form-control" value="{{ $setting->phone }}" required>
@@ -218,35 +218,31 @@
 					</div>
 		
 		
-					<div class="row">
+					<div class="row col-md-12 wrapSosmed">
 						<div class="col-md-12">
 							<hr>
 							<h4>Link Social Media</h4>
 						</div>
 
-						<div class="col-md-6 col-sm-6">
+						<div class="col-md-6 col-sm-6 wrapFacebook">
 							<label>Facebook</label>
-							<div class="col-md-12">
-								<input type="text" class="form-control" placeholder="" value="{{ $setting->facebook }}" name="facebook">
-							</div>
+							<input type="text" class="form-control" placeholder="www.facebook.com" value="{{ $setting->facebook }}" name="facebook">
+						</div>
 
-						<div class="col-md-6 col-sm-6">
+						<div class="col-md-6 col-sm-6 wrapTwitter">
 							<label>Twitter</label>
-							<div class="col-md-12">
-								<input type="text" class="form-control" placeholder="" value="{{ $setting->twitter }}" name="twitter">
-							</div>
+							<input type="text" class="form-control" placeholder="www.twitter..com" value="{{ $setting->twitter }}" name="twitter">
+						</div>
 
-						<div class="col-md-6 col-sm-6">
+						<div class="col-md-6 col-sm-6 wrapYoutube">
 							<label>Youtube</label>
-							<div class="col-md-12">
-								<input type="text" class="form-control" placeholder="" value="{{ $setting->youtube }}" name="youtube">
-							</div>
+							<input type="text" class="form-control" placeholder="www.youtube.com" value="{{ $setting->youtube }}" name="youtube">
+						</div>
 
-						<div class="col-md-6 col-sm-6">
+						<div class="col-md-6 col-sm-6 wrapInstagram">
 							<label>Instagram</label>
-							<div class="col-md-12">
-								<input type="text" class="form-control" placeholder="" value="{{ $setting->instagram }}" name="instagram">
-							</div>
+							<input type="text" class="form-control" placeholder="www.instagram.com" value="{{ $setting->instagram }}" name="instagram">
+						</div>
 
 						{{-- <div class="col-md-6 col-sm-6">
 							<label>Google+</label>
@@ -256,11 +252,9 @@
 							</div>
 						</div> --}}
 
-						<div class="col-md-6 col-sm-6">
+						<div class="col-md-6 col-sm-6 wrapLinkedin">
 							<label>Linkedin</label>
-							<div class="col-md-12">
-								<input type="text" class="form-control" placeholder="" value="{{ $setting->linkedin }}" name="linkedin">
-							</div>
+							<input type="text" class="form-control" placeholder="www.linkedin.com" value="{{ $setting->linkedin }}" name="linkedin">
 						</div>
 					</div>
 
@@ -290,8 +284,6 @@
 					</div>
 				</div>
 
-			</div>
-		</div>
 	</div>
 @endsection
 
