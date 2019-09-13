@@ -42,7 +42,7 @@ class AboutController extends Controller
         try {
             $menu_about = Menus::where('parent', $menus->id)->get();
             foreach ($menu_about as $key => $parent) {
-                $action = $this->getAction($parent->url, $parent->id);
+                $action = $this->getAction($parent->url, $parent->id, $parent->flag);
                 $slugs = str_replace(' ', '_', strtolower($parent->menu_title));
                 $about['menus'][] = [
                     'id_menu' => $parent->id,
@@ -82,8 +82,9 @@ class AboutController extends Controller
         }
     }
 
-    public function getAction($url, $parentID)
+    public function getAction($url, $parentID, $flag)
     {
+        // $about = Menus::all();
         $checkPages = explode('/page/', $url);
         $checkPosts = explode('/post/category/', $url);
         $checkArchive = explode('/directory/', $url);
@@ -145,24 +146,43 @@ class AboutController extends Controller
         } elseif ($parentID) {
             /* Kondisi jika url tidak memiliki initial maka akan mengecek parentID */
             $countSubMenu = nav(['position' => 'header'])->where('parent', $parentID);
-            if ($countSubMenu->count() > 0) {
-                /* Jika parent memiliki child */
-                $res = [
-                    'type' => 'menu',
-                    'id' => ''
-                ];
-            } elseif ($url == '#') {
+            $fecthURL = ($url == '#') ? "" : $url;
+            // if ($countSubMenu->count() > 0) {
+            //   /* Jika parent memiliki child */
+            //   $res = [
+            //     'type' => 'menu',
+            //     'id' => ''
+            //   ];}
+            if ($url == '#' and $flag == 1) {
                 /* Jika menu menuju external link */
                 $res = [
-                    'type' => '',
-                    'id' => $url
+                    'type' => 'about',
+                    'id' => $fecthURL
+                ];
+            } elseif ($url == '#' and $flag == 2) {
+                /* Jika menu menuju external link */
+                $res = [
+                    'type' => 'visitor',
+                    'id' => $fecthURL
+                ];
+            } elseif ($url == '#' and $flag == 3) {
+                /* Jika menu menuju external link */
+                $res = [
+                    'type' => 'contact',
+                    'id' => $fecthURL
                 ];
             } else {
-                /* Jika menu menuju external link */
-                $res = [
-                    'type' => 'link',
-                    'id' => $url
-                ];
+                if ($fecthURL == '') {
+                    $res = [
+                        'type' => 'menu',
+                        'id' => $fecthURL
+                    ];
+                } else {
+                    $res = [
+                        'type' => 'link',
+                        'id' => $fecthURL
+                    ];
+                }
             }
             return $res;
         }
