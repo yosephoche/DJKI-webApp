@@ -88,6 +88,7 @@
 												data-title_eng="{{ $submenu->menu_title_en }}"
 												data-link="{{ $submenu->url }}"
 												data-submenu="{{ $submenu->parent }}"
+												data-flaging="{{ $submenu->flag }}"
 												data-preview="{{ $submenu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$submenu->image) }}">
 												<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{ $submenu->menu_title }}
 													<div class="pull-right sortable-action">
@@ -108,6 +109,7 @@
 																data-description="{{$subsubmenu->description}}"
 																data-description_en="{{$subsubmenu->description_en}}"
 																data-subsubmenu="{{ $subsubmenu->parent }}"
+																data-flaging="{{ $subsubmenu->flag }}"
 																data-preview="{{ $subsubmenu->image=="default.jpg"?asset("uploaded/media/default.jpg"):asset("uploaded/menus/".$subsubmenu->image) }}">
 																<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{ $subsubmenu->menu_title }}
 																	<div class="pull-right sortable-action">

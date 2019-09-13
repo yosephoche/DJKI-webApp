@@ -115,13 +115,17 @@ $(document).ready(function () {
     /* penentuan checked about, visitor, dan contact */
     if (flag == 0) {
       $('#editnone').prop('checked', true);
+      $('#editabout').prop('disabled', true);
     } else if (flag == 1) {
       $('#editabout').prop('checked', true);
       $('#editabout').prop('disabled', false);
     } else if (flag == 2) {
       $('#editvisitor').prop('checked', true);
+      $('#editabout').prop('disabled', true);
     } else {
       $('#editcontact').prop('checked', true);
+      $('#editabout').prop('disabled', true);
+
     }
   });
 
