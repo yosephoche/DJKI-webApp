@@ -1,8 +1,8 @@
 @extends('front.djki.partial.contents')
 @section('contents')
   @if ({{ Request::is('/blog/*?lang=en') }})
-    {!!$post->content!!}
+    {!!$post->content_en!!}
   @else
-    {!!$post->content_en !!}
+    {!! $post->content !!}
   @endif
 @endsection
