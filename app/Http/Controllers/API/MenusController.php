@@ -63,7 +63,7 @@ class MenusController extends Controller
         $dataSplitLink = array("", $running_text->link);
       }
       if ($dataSplitLink[0] == "directory") {
-        $linkAfterSplit = "uploaded/download/" . $dataSplitLink[1];
+        $linkAfterSplit = asset("uploaded/download/") . $dataSplitLink[1];
       } else {
         $linkAfterSplit = $dataSplitLink[1];
       }

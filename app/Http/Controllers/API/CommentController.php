@@ -47,10 +47,11 @@ class CommentController extends Controller
 
     public function getComments(Request $r)
     {
-        $dataComments = Comments::select('name', 'email', 'comment')->where('id_posts', $r->id_post)->paginate(3);
+        $dataComments = Comments::select('name', 'email', 'comment', 'created_at')->where('id_posts', $r->id_post)->paginate(5);
         /* Paginate  */
         $pagination = $this->paging($dataComments);
         /* Data Posts */
+        // dd($dataComments->toArray());
         foreach ($dataComments->items() as $value) {
             $comment[] = [
                 'name' => $value->name,

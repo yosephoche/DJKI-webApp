@@ -14,7 +14,8 @@ class BlogsController extends Controller
 	private $setting;
 	private $activeTheme;
 
-	public function __construct() {
+	public function __construct()
+	{
 		/*Get active theme*/
 		$this->activeTheme = TemplateModule::activeTheme();
 
@@ -26,37 +27,38 @@ class BlogsController extends Controller
 		parent::__construct();
 	}
 
-	public function filterCategory(Request $r) {
-		$posts = Posts::where('category',$r->category);
+	public function filterCategory(Request $r)
+	{
+		$posts = Posts::where('category', $r->category);
 		if ($posts->count()) {
 			/* Title */
 			$data['title'] = ucwords(strtolower($r->category));
 			/* Posts First */
-			$data['posts_first'] = blogs(['limit'=>False])->first();
+			$data['posts_first'] = blogs(['limit' => False])->first();
 			/* Posts category */
-			$data['posts_category'] = blogs(['limit'=>False])->get();
+			$data['posts_category'] = blogs(['limit' => False])->get();
 			/* Posts Filter */
 			$data['posts'] = $posts->paginate(10);
-			return view('front.'.$this->activeTheme->path.'.blog.filter', $data);
+			return view('front.' . $this->activeTheme->path . '.blog.filter', $data);
 		} else {
 			return abort(404);
 		}
 	}
 
-	public function blogDetail($id,$slug)
+	public function blogDetail($id, $slug)
 	{
 		/*Relation Posts with Users*/
-		$data['post'] = Posts::with('users')->where(array('id'=>$id,'slug'=>$slug))->firstOrFail();
-		return view('front.'.$this->activeTheme->path.'.blog.detail', $data);
+		$data['post'] = Posts::with('users')->where(array('id' => $id, 'slug' => $slug))->firstOrFail();
+		return view('front.' . $this->activeTheme->path . '.blog.detail', $data);
 	}
 
 	public function blogSearch(Request $r)
 	{
-    /* Get params key and category */
-    $data['request'] = ['key'=>$r->key];
-		$data['posts'] = blogs(['limit'=>False])
-    ->where('title','like','%'.$r->key.'%')
-    ->paginate(10);
-		return view('front.'.$this->activeTheme->path.'.search.index',$data);
+		/* Get params key and category */
+		$data['request'] = ['key' => $r->key];
+		$data['posts'] = blogs(['limit' => False])
+			->where('title', 'like', '%' . $r->key . '%')
+			->paginate(10);
+		return view('front.' . $this->activeTheme->path . '.search.index', $data);
 	}
 }
