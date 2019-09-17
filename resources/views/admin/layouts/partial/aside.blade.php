@@ -54,7 +54,7 @@
 						<span>Main Menus</span>
 					</li>
 					<li>
-						<a href="https://play.google.com/store/apps/details?id=id.co.dgip" target="_blank">
+						<a href="https://play.google.com/store/apps/details?id=id.dtc.portal.djki" target="_blank">
 							<i class="icon-screen-desktop text-warning"></i>
 							<span>View this app</span>
 						</a>

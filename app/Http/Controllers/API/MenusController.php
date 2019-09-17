@@ -46,7 +46,7 @@ class MenusController extends Controller
       $menu = nav(['position' => 'header'])->where('parent', '0');
       $running_text = Settings::whereNotNull('running_text')->first();
       $slideshow = Slideshow::orderBy('sort', 'DESC')->where('category', 'Home');
-      $horizontal = MenuHorizontal::all();
+      $horizontal = MenuHorizontal::orderBY('sort', 'ASC')->get();
       $menus = [
         'pinned' => [],
         'slideshow' => [],
@@ -63,7 +63,7 @@ class MenusController extends Controller
         $dataSplitLink = array("", $running_text->link);
       }
       if ($dataSplitLink[0] == "directory") {
-        $linkAfterSplit = "uploaded/download/" . $dataSplitLink[1];
+        $linkAfterSplit = asset('uploaded/download/' . $dataSplitLink[1]);
       } else {
         $linkAfterSplit = $dataSplitLink[1];
       }
