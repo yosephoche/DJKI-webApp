@@ -16,7 +16,9 @@ class CommentController extends Controller
             $key = '';
         }
 
-        $data['comments'] = Comments::with('post')->where('name', 'like', '%' . $key . '%')
+        $data['comments'] = Comments::whereHas('post', function ($query) use ($key) {
+            $query->where('slug', 'like', '%' . $key . '%');
+        })->orWhere('name', 'like', '%' . $key . '%')
             ->orWhere('email', 'like', '%' . $key . '%')->paginate(10);
 
         return view('admin.comment.index', $data);
