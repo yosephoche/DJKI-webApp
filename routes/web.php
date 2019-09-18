@@ -235,6 +235,12 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::post('/delete', 'PostsController@delete')->name('posts_delete');
         });
 
+        /* komentar */
+        Route::group(['prefix' => '/comment'], function () {
+            Route::get('/', 'CommentController@index')->name('comments');
+            Route::post('/delete', 'CommentController@delete')->name('comments_delete');
+        });
+
         /* Posts Category */
         Route::group(['prefix' => '/category'], function () {
             Route::get('/', 'CategoryController@index')->name('category');

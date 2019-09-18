@@ -141,10 +141,19 @@
 					@endif
 
 					@if ($status == 'Super Admin' OR $status == 'Admin')
-					<li {{ Request::is('admin/pages*') ? 'class=active' : '' }}>
+					<li {{ Request::is('dtcms/pages*') ? 'class=active' : '' }}>
 						<a href="{{ route('pages') }}">
 							<i class="icon-doc"></i>
 							<span>Pages</span>
+						</a>
+					</li>
+					@endif
+
+					@if ($status == 'Super Admin' OR $status == 'Admin')
+					<li {{ Request::is('dtcms/comment*') ? 'class=active' : '' }}>
+						<a href="{{ route('comments') }}">
+							<i class="far fa-comment"></i>
+							<span>Comment</span>
 						</a>
 					</li>
 					@endif

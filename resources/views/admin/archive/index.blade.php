@@ -46,7 +46,7 @@
 							</tr>
 						@empty
 							<tr>
-								<td colspan="6" align="center">No Directory <a href='{{route('item_archive',['id'=>Request::segment(4)])}}'>Back</a> </td>
+								<td colspan="6" align="center">No Comments <a href='{{route('item_archive',['id'=>Request::segment(4)])}}'>Back</a> </td>
 							</tr>
 						@endforelse
 					</tbody>
